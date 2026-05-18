@@ -1,0 +1,155 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+
+  --color-vault: var(--vault-bg);
+  --color-amber: var(--amber);
+  --color-amber-bright: var(--amber-bright);
+  --color-amber-dim: var(--amber-dim);
+  --color-amber-glow: var(--amber);
+  --color-electric: var(--electric);
+  --color-ember: var(--ember);
+
+  --shadow-amber: var(--amber-shadow);
+
+  --font-mono: 'Courier New', Courier, monospace;
+
+  --animate-pulse-slow: pulse-slow 3s ease-in-out infinite;
+}
+
+:root {
+  --vault-bg: #0e0b06;
+  --amber: #ffb000;
+  --amber-bright: #ffd060;
+  --amber-dim: #7a5800;
+  --electric: #70d8ff;
+  --ember: #ff6030;
+  --amber-shadow: 0 0 18px #ffb00044, 0 0 48px #ffb00018;
+
+  --background: 30 40% 5%;
+  --foreground: 40 100% 60%;
+  --border: 40 100% 30%;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: var(--vault-bg);
+    color: var(--amber);
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--amber-dim);
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .brass-btn {
+    background: transparent;
+    border: 1px solid var(--amber);
+    color: var(--amber);
+    padding: 18px 20px;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    text-align: left;
+    min-height: 64px;
+    transition: background-color 0.12s, color 0.12s, box-shadow 0.12s;
+    display: block;
+    width: 100%;
+  }
+
+  .brass-btn:hover {
+    background-color: #1f1200;
+    color: var(--amber-bright);
+    box-shadow: 0 0 8px #ffb00033;
+  }
+
+  .brass-btn:active {
+    background-color: #2e1a00;
+  }
+
+  .brass-btn-special {
+    border-color: var(--electric);
+    color: var(--electric);
+  }
+
+  .brass-btn-special:hover {
+    background-color: #001a2a;
+    color: #a8eeff;
+    box-shadow: 0 0 10px #70d8ff44;
+  }
+
+  .brass-btn-disabled {
+    border-style: dashed;
+    color: #7a5200 !important;
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 1;
+  }
+
+  .bg-vault {
+    background-color: var(--vault-bg);
+  }
+
+  .border-amber-glow {
+    border-color: var(--amber);
+  }
+
+  .shadow-amber {
+    box-shadow: var(--amber-shadow);
+  }
+
+  .text-amber {
+    color: var(--amber);
+  }
+
+  .text-amber-bright {
+    color: var(--amber-bright);
+  }
+
+  .text-amber-dim {
+    color: var(--amber-dim);
+  }
+
+  .text-electric {
+    color: var(--electric);
+  }
+
+  .text-ember {
+    color: var(--ember);
+  }
+
+  .bg-amber-glow {
+    background-color: var(--amber);
+  }
+
+  .border-electric {
+    border-color: var(--electric);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
