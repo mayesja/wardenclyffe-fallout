@@ -31,6 +31,8 @@ export default function Game() {
   const [joules, setJoules] = useState(0);
   const [wiring, setWiring] = useState(0);
   const [coils, setCoils] = useState(0);
+  const [wireStorageCap, setWireStorageCap] = useState(20);
+  const [logisticsBlocked, setLogisticsBlocked] = useState(false);
 
   // Branch A — AC path
   const [acGenerators, setAcGenerators] = useState(0);
@@ -180,13 +182,21 @@ export default function Game() {
     return () => clearInterval(interval);
   }, [loomBuilt]);
 
-  // Loom wire production — reruns when tension changes or loom is repaired
+ // Loom wire production — reruns when tension changes or loom is repaired
   useEffect(() => {
     if (!loomBuilt || loomBroken) return;
     const tension = loomTension;
     const cfg = LOOM[tension];
 
     const interval = setInterval(() => {
+      // --- CAP CHECK FOR AUTOMATION ---
+      if (wiring >= wireStorageCap) {
+        setLogisticsBlocked(true);
+        return;
+      }
+      setLogisticsBlocked(false);
+      // --------------------------------
+
       if (tension === "high" && Math.random() < 0.1) {
         loomBrokenRef.current = true;
         setLoomBroken(true);
@@ -205,6 +215,9 @@ export default function Game() {
         addLog(`Loom [${cfg.label}]: +1 Wiring. [${total} total]`, "action");
       }
     }, cfg.interval);
+
+    return () => clearInterval(interval);
+  }, [loomBuilt, loomBroken, loomTension, wiring, wireStorageCap, addLog]);
 
     return () => clearInterval(interval);
   }, [loomBuilt, loomBroken, loomTension, addLog]);
@@ -339,7 +352,20 @@ export default function Game() {
     });
   };
 
-  const handleForgeWiring = () => {
+const handleForgeWire = () => {
+    if (wiring >= wireStorageCap) {
+      addLog("Cannot forge: Wire Spool Warehouse is completely full!", "warning");
+      return;
+    }
+    if (joules >= 10) {
+      setJoules(prev => prev - 10);
+      setWiring(prev => prev + 1);
+      addLog("Manually forged 1 length of copper wiring.", "action");
+    } else {
+      addLog("Insufficient Joules to forge wire.", "system");
+    }
+  };
+  
     if (joules >= 20) {
       setJoules((prev) => prev - 20);
       setWiring((prev) => {
@@ -669,14 +695,43 @@ export default function Game() {
               </button>
             )}
 
-            {/* Pneumatic Loom — unlocks once wiring is possible */}
-            {wiringUnlocked && !loomBuilt && (
+{wiringUnlocked && !loomBuilt && (
               <button onClick={handleBuildLoom} className={`brass-btn w-full ${joules < 50 ? "brass-btn-disabled" : ""}`}>
                 <span className="text-base">[ BUILD PNEUMATIC LOOM ]</span>
                 <span className="block text-xs text-amber-dim mt-1">
                   Cost: 50 Joules — Automates wiring production
                 </span>
               </button>
+            )}
+
+            {/* Expand Warehouse Capacity Upgrade */}
+            {wiringUnlocked && (
+              <div className="border border-amber-glow border-opacity-30 p-3 flex flex-col gap-2 bg-black bg-opacity-20">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-bold tracking-wide text-amber">EXPAND WIRE SPOOL RACK</span>
+                  <span className="text-xs font-mono text-amber-dim">Cost: 150J · 15 Wire</span>
+                </div>
+                <p className="text-xs text-amber-dim leading-relaxed">
+                  Expand floor logistics. Permanently increases Wire inventory storage limit by +20.
+                </p>
+                <button
+                  onClick={() => {
+                    if (joules >= 150 && wiring >= 15) {
+                      setJoules(prev => prev - 150);
+                      setWiring(prev => prev - 15);
+                      setWireStorageCap(prev => prev + 20);
+                      setLogisticsBlocked(false);
+                      addLog("🏗 Warehouse expanded! Wire Spool Racks upgraded (+20 Capacity).", "unlock");
+                    } else {
+                      addLog("Insufficient resources to build expansion.", "warning");
+                    }
+                  }}
+                  disabled={joules < 150 || wiring < 15}
+                  className="w-full py-2 text-xs border border-amber bg-amber bg-opacity-10 text-amber disabled:opacity-30 font-bold tracking-widest hover:bg-opacity-20 transition-all"
+                >
+                  BUILD EXPANSION
+                </button>
+              </div>
             )}
 
             {/* Capacitor Overcharge — one-time emergency, unlocks after loom is built */}
@@ -836,7 +891,7 @@ export default function Game() {
             )}
 
             {/* Status badges */}
-            {morseStarted && !morseDecoded && (
+{morseStarted && !morseDecoded && (
               <div className="border border-electric border-opacity-30 px-4 py-3 text-xs text-electric tracking-widest">
                 ▸ MORSE RECEIVER ACTIVE — DECODING... ◂
                 <div className="text-amber-dim mt-1 animate-pulse-slow">
@@ -856,13 +911,20 @@ export default function Game() {
                 ★ GRID SECURED. EDISON TRUST DEFEATED. ★
               </div>
             )}
+
+            {/* --- LOGISTICS BLOCKED WARNING BANNER --- */}
+            {logisticsBlocked && (
+              <div className="border border-ember bg-ember bg-opacity-10 px-4 py-2 text-xs text-ember tracking-widest text-center font-bold animate-pulse mt-2">
+                ⚠ LOGISTICS BLOCKED: WIRE STORAGE WAREHOUSE FULL
+              </div>
+            )}
           </div>
         </div>
 
         {/* Footer */}
         <div className="px-4 py-2 border-t border-amber-glow border-opacity-20 text-xs text-amber-dim tracking-widest flex flex-wrap gap-x-4">
           <span>J: {joules}{morseChoice === "B" ? `/${maxJoules}` : ""}</span>
-          <span>W: {wiring}</span>
+          <span>W: {wiring} / {wireStorageCap}</span>
           {totalPassive > 0 && <span className={underAttack ? "text-ember" : "text-electric"}>+{totalPassive}J/sec{underAttack ? " [OFF]" : ""}</span>}
           {loomBuilt && <span className={loomBroken ? "text-ember" : "text-amber"}>LOOM:{loomBroken ? "HALT" : LOOM[loomTension].label}</span>}
           {trustActivated && !victoryAchieved && <span className="text-ember">TRUST ⚠</span>}
