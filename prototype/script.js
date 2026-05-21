@@ -85,6 +85,8 @@ const btnBuildAcGen = document.getElementById("btn-build-ac-gen");
 const btnBuildLeyden = document.getElementById("btn-build-leyden");
 const btnBuildFaraday = document.getElementById("btn-build-faraday");
 const btnBuildJunction = document.getElementById("btn-build-junction");
+const btnChoiceAC = document.getElementById("btn-choiceAC");
+const btnChoiceDC = document.getElementById("btn-choiceDC");
 
 const panelWarehouse = document.getElementById("panel-warehouse");
 const btnExpandWarehouse = document.getElementById("btn-expand-warehouse");
@@ -134,12 +136,18 @@ function writeLog(text, type = "system") {
     elTerminalLog.scrollTop = elTerminalLog.scrollHeight;
 }
 
-// Safely caps values (e.g. limiting your current wiring item stack to match your warehouse expansion limits)
 function enforceBoundaries() {
-    // If user path choice is "B" (Leyden Jar), cap electricity reserves to a hard max ceiling limit
+    // ENFORCING DESIGN LIMITATION: Joules cannot exceed the capacity of your field array
+    let maxJouleCap = 100; 
+    
+    // If user later path choices unlock Leyden Jars, that cap doubles to 200
     if (morseChoice === "B") {
-        const maxCapacityCeiling = 200; // Leyden Jar option doubles energy capability limit
-        if (joules > maxCapacityCeiling) joules = maxCapacityCeiling;
+        maxJouleCap = 200; 
+    }
+    
+    // Clamp Joules to the current maximum allowance
+    if (joules > maxJouleCap) {
+        joules = maxJouleCap;
     }
     
     // Wire inventories cannot cross the active structural storage caps
@@ -163,19 +171,33 @@ function renderUI() {
     footJoules.innerText = `J: ${Math.floor(joules)}`;
     footWiring.innerText = `W: ${wiring} / ${wireStorageCap}`;
 
-    // Handle Conditional Secondary Energy Readout tags (Specific to Leyden Jars branch path)
+    // Always show the current energy storage ceiling layout so players track their waste thresholds
+    elMaxJoules.classList.remove("hidden");
     if (morseChoice === "B") {
-        elMaxJoules.classList.remove("hidden");
-        elMaxJoules.innerText = "/ 200";
+        elMaxJoules.innerText = "/ 200"; // Expanded via Leyden tech
+    } else {
+        elMaxJoules.innerText = "/ 100"; // Standard baseline starting array max
     }
 
     // Toggle Visibility of Action Buttons based on Progression thresholds
     if (joules >= 10 || wiring > 0) btnForge.classList.remove("hidden");
     if (wiring >= 2 || loomBuilt) btnBuildLoom.classList.remove("hidden");
-    if ((wiring >= 5 && !capacitorOvercharged) || capacitorOvercharged) {
-        if (!capacitorOvercharged) btnOvercharge.classList.remove("hidden");
+    
+    // EARLY PROGRESSION: Reveal Tesla Coil assembly as soon as player proves they can make wire
+    if (wiring >= 3 || teslaCoils > 0) {
+        btnAssembleCoil.classList.remove("hidden");
     }
 
+    // --- CAPACITOR OVERCHARGE VISIBILITY TRIGGER ---
+    // This emergency button should only appear if the player is on Path A (AC),
+    // has at least 5 Wires to handle the arc, and hasn't spent their one-time blast yet.
+    if (morseChoice === "A" && wiring >= 5 && !capacitorOvercharged) {
+        btnOvercharge.classList.remove("hidden");
+    } else {
+        // Keep it hidden otherwise (or hide it immediately after it is clicked)
+        btnOvercharge.classList.add("hidden");
+    }
+    
     // Handle Logistics Spool-Rack Overflow Overload banners
     if (wiring >= wireStorageCap) {
         bannerLogisticsBlocked.classList.remove("hidden");
@@ -516,11 +538,16 @@ setInterval(() => {
     // Part B: Passive Generation Accumulation
     // --------------------------------------
     let generatedJoules = 0;
+    
     if (morseChoice === "A") {
-        generatedJoules = acGenerators * 5;
+        // Alternating Current path swaps your primary engine over to heavy generators
+        generatedJoules = acGenerators * 5; 
     } else {
-        generatedJoules = teslaCoils * 1;
+        // Baseline and DC path: Every individual calibrated Tesla Coil stack adds +1 Joule every tick
+        generatedJoules = teslaCoils * 1; 
     }
+    
+    // Only accumulate electricity if we aren't currently frozen by an active Edison raid lockout
     joules += generatedJoules;
 
     // --------------------------------------
