@@ -1,0 +1,277 @@
+/* --- 1. THE ARCHIVAL BASEMARE (Theme Variables) --- */
+:root {
+    --bg-dark: #0a0705;
+    --amber-bright: #ffb000;
+    --amber-glow: rgba(255, 176, 0, 0.25);
+    --amber-dim: #a67300;
+    --electric-cyan: #00f0ff;
+    --electric-glow: rgba(0, 240, 255, 0.2);
+    --ember-red: #ff3b00;
+    --ember-glow: rgba(255, 59, 0, 0.15);
+    --surface-card: #140f0b;
+    --border-subtle: #241a12;
+}
+
+/* --- 2. GLOBAL RESET & MOBILE SCROLL LAYER --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--amber-bright);
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* --- 3. STICKY TOP LAYER ALERT --- */
+#alert-banner {
+    background-color: var(--ember-red);
+    color: var(--bg-dark);
+    padding: 8px;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(255, 59, 0, 0.4);
+    animation: alarm-pulse 1.5s infinite;
+}
+
+/* --- 4. MAIN CONTAINER LAYOUT --- */
+.app-container {
+    max-w: 512px; /* Emulates phone width max-w-lg */
+    width: 100%;
+    margin: 0 auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 16px;
+}
+
+.game-header {
+    border: 1px solid var(--amber-dim);
+    background-color: var(--surface-card);
+    padding: 12px;
+    text-align: center;
+}
+
+.station-title {
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+}
+
+.status-row {
+    font-size: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 8px;
+    background-color: rgba(0,0,0,0.4);
+    border: 1px solid var(--border-subtle);
+}
+
+.status-offline { color: var(--ember-red); }
+.status-online { color: var(--electric-cyan); }
+
+/* --- 5. THE TERMINAL VIEWPORT (Auto-scrolling Container) --- */
+.log-box {
+    height: 160px;
+    border: 1px solid var(--amber-dim);
+    background-color: #050302;
+    padding: 10px;
+    font-size: 0.75rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+}
+
+.log-entry { line-height: 1.3; }
+.log-system { color: var(--amber-dim); }
+.log-action { color: #ffffff; }
+.log-unlock { color: var(--electric-cyan); }
+.log-warning { color: var(--ember-red); }
+
+/* --- 6. THE RESOURCE READOUT DASHBOARD --- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.stat-card {
+    border: 1px solid var(--amber-dim);
+    background-color: var(--surface-card);
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 0 8px var(--amber-glow);
+}
+
+.double-width { grid-column: span 2; }
+
+.stat-label {
+    font-size: 0.7rem;
+    color: var(--amber-dim);
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    text-shadow: 0 0 6px var(--amber-bright);
+}
+
+.stat-sublabel {
+    font-size: 0.75rem;
+    color: var(--amber-dim);
+}
+
+/* --- 7. ACTION BUTTONS & UPGRADE CARDS --- */
+.actions-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-grow: 1;
+}
+
+.brass-btn {
+    background-color: var(--surface-card);
+    color: var(--amber-bright);
+    border: 1px solid var(--amber-bright);
+    padding: 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: background 0.1s;
+}
+
+.brass-btn:active {
+    background-color: var(--amber-glow);
+}
+
+.btn-text { font-size: 0.9rem; letter-spacing: 0.05em; }
+.btn-subtext { font-size: 0.65rem; color: var(--amber-dim); }
+
+/* Special Variations */
+.btn-danger {
+    border-color: var(--ember-red);
+    color: var(--ember-red);
+}
+.btn-danger:active { background-color: var(--ember-glow); }
+
+.btn-special {
+    border-color: var(--electric-cyan);
+    color: var(--electric-cyan);
+}
+.btn-special:active { background-color: var(--electric-glow); }
+
+/* Card Containers */
+.upgrade-card, .control-card, .encounter-card {
+    border: 1px solid var(--amber-dim);
+    background-color: var(--surface-card);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.upgrade-row, .control-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    border-bottom: 1px dashed var(--border-subtle);
+    padding-bottom: 6px;
+}
+
+.upgrade-desc { font-size: 0.7rem; color: var(--amber-dim); line-height: 1.3; }
+.build-sub-btn {
+    background: transparent;
+    border: 1px solid var(--amber-dim);
+    color: var(--amber-bright);
+    padding: 6px;
+    font-family: inherit;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+/* --- 8. TENSION TOGGLE BUTTON GROUP --- */
+.tension-button-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+}
+
+.tension-btn {
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    color: var(--amber-dim);
+    padding: 8px 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.tension-btn.active {
+    border-color: var(--amber-bright);
+    color: var(--amber-bright);
+    background-color: var(--amber-glow);
+}
+
+/* --- 9. BANNERS & ANIMATIONS --- */
+.hidden { display: none !important; }
+
+.depleted-banner, .blocked-banner, .status-banner, .victory-banner {
+    border: 1px solid var(--border-subtle);
+    padding: 10px;
+    font-size: 0.75rem;
+    text-align: center;
+    letter-spacing: 0.05em;
+}
+
+.blocked-banner {
+    border-color: var(--ember-red);
+    color: var(--ember-red);
+    animation: text-pulse 1s infinite alternate;
+}
+
+.victory-banner {
+    border-color: var(--electric-cyan);
+    color: var(--electric-cyan);
+    box-shadow: 0 0 12px var(--electric-glow);
+}
+
+/* --- 10. FIXED FIXED LOWER DASHBOARD BAR --- */
+.game-footer {
+    border-top: 1px solid rgba(255, 176, 0, 0.15);
+    padding-top: 12px;
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.7rem;
+    color: var(--amber-dim);
+    letter-spacing: 0.05em;
+}
+
+/* Animation Framework */
+@keyframes alarm-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.75; }
+}
+@keyframes text-pulse {
+    0% { opacity: 0.4; }
+    100% { opacity: 1; }
+}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wardenclyffe Field Station</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="alert-banner" class="hidden">
+        <span id="alert-text">▸ NEW SIGNAL INCOMING — TAP TO VIEW ◂</span>
+    </div>
+
+    <div class="app-container">
+        
+        <header class="game-header">
+            <div class="station-title">▓▒░ WARDENCLYFFE FIELD STATION ░▒▓</div>
+            <div class="status-row">
+                <span>LOCAL GRID STATUS</span>
+                <span id="grid-status" class="status-offline">OFFLINE</span>
+            </div>
+            <div id="passive-generation-banner" class="generation-rate hidden"></div>
+            <div id="loom-status-banner" class="loom-rate hidden"></div>
+            <div id="threat-status-banner" class="threat-rate hidden"></div>
+        </header>
+
+        <main class="game-body">
+            <div id="terminal-log" class="log-box">
+                </div>
+
+            <div class="stats-grid">
+                <div class="stat-card double-width">
+                    <div class="stat-label">JOULES</div>
+                    <div id="stat-joules" class="stat-value">0</div>
+                    <div id="stat-max-joules" class="stat-sublabel hidden">/ 100</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">WIRING</div>
+                    <div id="stat-wiring" class="stat-value">0</div>
+                </div>
+                <div class="stat-card">
+                    <div id="dynamic-stat-label" class="stat-label">COILS</div>
+                    <div id="stat-machines" class="stat-value">0</div>
+                </div>
+            </div>
+
+            <div class="actions-panel">
+                <button id="btn-crank" class="brass-btn">
+                    <span class="btn-text">[ CRANK DYNAMO ]</span>
+                    <span class="btn-subtext">+1 Joule per crank</span>
+                </button>
+
+                <button id="btn-forge" class="brass-btn hidden">
+                    <span class="btn-text">[ FORGE COPPER WIRING ]</span>
+                    <span class="btn-subtext">Cost: 10 Joules → +1 Wiring</span>
+                </button>
+
+                <button id="btn-build-loom" class="brass-btn hidden">
+                    <span class="btn-text">[ BUILD PNEUMATIC LOOM ]</span>
+                    <span class="btn-subtext">Cost: 50 Joules — Automates wiring</span>
+                </button>
+
+                <div id="panel-warehouse" class="upgrade-card hidden">
+                    <div class="upgrade-row">
+                        <span class="upgrade-title">EXPAND WIRE SPOOL RACK</span>
+                        <span class="upgrade-cost">Cost: 150J · 15 Wire</span>
+                    </div>
+                    <p class="upgrade-desc">Expand floor logistics. Permanently increases Wire inventory storage limit by +20.</p>
+                    <button id="btn-expand-warehouse" class="build-sub-btn">BUILD EXPANSION</button>
+                </div>
+
+                <button id="btn-overcharge" class="brass-btn btn-danger hidden">
+                    <span class="btn-text">[ CAPACITOR OVERCHARGE ]</span>
+                    <span class="btn-subtext">ONE-TIME · Dumps all Joules into Wiring</span>
+                </button>
+                <div id="panel-overcharge-depleted" class="depleted-banner hidden">
+                    ◈ CAPACITOR OVERCHARGE — DEPLETED
+                </div>
+
+                <div id="panel-loom-controls" class="control-card hidden">
+                    <div class="control-header">
+                        <span>◈ PNEUMATIC LOOM</span>
+                        <span id="loom-runtime-status">RUNNING</span>
+                    </div>
+                    <div class="control-label">LOOM TENSION</div>
+                    <div class="tension-button-group">
+                        <button id="btn-tension-low" class="tension-btn active">LOW<span class="sub">2J/s</span></button>
+                        <button id="btn-tension-med" class="tension-btn">MED<span class="sub">5J/s</span></button>
+                        <button id="btn-tension-high" class="tension-btn text-danger">HIGH<span class="sub">15J/s</span></button>
+                    </div>
+                    <div id="tension-description" class="control-footer">
+                        LOW — 2J/sec drain · 1 Wire every 10s · No snap risk
+                    </div>
+                    <button id="btn-repair-loom" class="brass-btn btn-danger hidden">
+                        <span class="btn-text">[ REPAIR LOOM ]</span>
+                        <span class="btn-subtext">Cost: 10 Joules — Re-thread the wire</span>
+                    </button>
+                </div>
+
+                <div id="panel-morse-encounter" class="encounter-card hidden">
+                    <div class="encounter-alert">▸ INCOMING TRANSMISSION — STATION OMAHA ◂</div>
+                    <p class="encounter-text">The receiver clicks out a decoded message:</p>
+                    <p class="encounter-quote">"STATION OMAHA CALLING. WE HAVE TESLA'S AC SCHEMATICS BUT NEED COPPER TO REPAIR OUR SHIELDING. WILL TRADE FOR 15 WIRING."</p>
+                    <p class="encounter-subtext">Your response will define this station's future.</p>
+                    <div class="encounter-choices">
+                        <button id="btn-choiceAC" class="brass-btn btn-special">
+                            <span class="btn-text">[A] Accept AC Schematics</span>
+                            <span class="btn-subtext">Cost: 15 Wiring — Unlocks AC Tech</span>
+                        </button>
+                        <button id="btn-choiceDC" class="brass-btn">
+                            <span class="btn-text">[B] Reject & Build Leyden Jar</span>
+                            <span class="btn-subtext">Cost: 10 Wiring — Unlocks DC Tech</span>
+                        </button>
+                    </div>
+                </div>
+
+                <button id="btn-assemble-coil" class="brass-btn btn-special hidden">
+                    <span class="btn-text">[ ASSEMBLE TESLA COIL ]</span>
+                    <span class="btn-subtext">Cost: 10 Wiring — +1J/sec</span>
+                </button>
+
+                <button id="btn-build-ac-gen" class="brass-btn btn-special hidden">
+                    <span class="btn-text">[ BUILD AC GENERATOR ]</span>
+                    <span class="btn-subtext">Cost: 20J + 5 Wiring — +5J/sec</span>
+                </button>
+
+                <button id="btn-build-leyden" class="brass-btn hidden">
+                    <span class="btn-text">[ BUILD LEYDEN JAR ]</span>
+                    <span class="btn-subtext">Cost: 5 Wiring — Doubles max Joules</span>
+                </button>
+
+                <button id="btn-build-faraday" class="brass-btn btn-danger hidden">
+                    <span class="btn-text">[ BUILD FARADAY CAGE ]</span>
+                    <span class="btn-subtext">Cost: 20 Wiring — Slows attacks</span>
+                </button>
+
+                <button id="btn-build-junction" class="brass-btn btn-danger hidden">
+                    <span class="btn-text">[ BUILD JUNCTION BOX ]</span>
+                    <span class="btn-subtext">Cost: 200J — Halves attack damage</span>
+                </button>
+
+                <div id="marker-morse-decoding" class="status-banner hidden">
+                    ▸ MORSE RECEIVER ACTIVE — DECODING... ◂
+                    <div class="morse-animation">— · — · &nbsp; · — · · &nbsp; — — —</div>
+                </div>
+
+                <div id="marker-grid-branch" class="status-banner hidden"></div>
+
+                <div id="marker-victory" class="victory-banner hidden">
+                    ★ GRID SECURED. EDISON TRUST DEFEATED. ★
+                </div>
+
+                <div id="banner-logistics-blocked" class="blocked-banner hidden">
+                    ⚠ LOGISTICS BLOCKED: WIRE STORAGE WAREHOUSE FULL
+                </div>
+            </div>
+        </main>
+
+        <footer class="game-footer">
+            <span id="foot-joules">J: 0</span>
+            <span id="foot-wiring">W: 0 / 20</span>
+            <span id="foot-generation" class="hidden"></span>
+            <span id="foot-loom" class="hidden"></span>
+            <span id="foot-threat" class="hidden">TRUST ⚠</span>
+            <span id="foot-defenses" class="hidden"></span>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
