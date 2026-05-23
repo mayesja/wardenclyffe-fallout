@@ -1,6 +1,6 @@
 # Factory Survival — Other Game Analysis Framework
 **Status**: Draft  
-**Owner**: Unofficial 4th Collaborator (via JK)  
+**Owner**: Unofficial 4th Collaborator (via JM)  
 **Description**: Objective quantitative matrix used to evaluate outside video games, harvest high-leverage mechanics, and isolate design anti-patterns for Factory Survival.
 
 ---
