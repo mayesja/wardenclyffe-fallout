@@ -1,0 +1,138 @@
+# Wardenclyffe Field Station: Master Development Manual
+
+This master manual unifies the technical file architecture, layout specifications, mechanical engines, narrative walkthroughs, and current milestone logs for **Wardenclyffe Field Station**. It serves as the single source of truth for the project's technical framework and ongoing gameplay experiments.
+
+---
+
+## 1. CODEBASE & INTERFACE ARCHITECTURE
+
+### A. Three-File System Map
+The codebase is intentionally separated into three clean, standard files to optimize local execution and ease of management on Chromebook viewports:
+1.  **`index.html` (The Structure):** Defines the hard physical layout grid, structural buttons, text injection nodes, and hidden overlay panels.
+2.  **`style.css` (The Presentation):** Handles the terminal aesthetic, applying a 512px width constraint to emulate a phone screen, text glowing shadows, animation clocks, and color variables.
+3.  **`script.js` (The Logic):** Holds the master core state variables, hooks player button actions, tracks processing intervals, and manages the 1Hz interval clock loop.
+
+### B. Viewport Modules & Visual Geometry
+The mobile interface divides the 512px application frame vertically into five distinct modules:
+* **The Fixed Header HUD:** Contains the station visual banner and a live layout connector mapping `LOCAL GRID STATUS` (`OFFLINE`, `OPERATIONAL POWERED`, or `SABOTAGED LOCKOUT`). It includes the `#alert-banner` element which forces itself onto the top layer of the layout during decoding sequences (Cyan highlight) or attacks (Ember Red).
+* **The Terminal Log Box (`#terminal-log`):** A fixed 160px high viewport window with a hidden scrolling layout. It continuously accepts stylized diagnostic logging text (`log-system`, `log-action`, `log-unlock`, `log-warning`) and automatically forces its scrollbar position downward to lock onto incoming entries.
+* **The Resource Readout Dashboard (`.stats-grid`):** A CSS Grid module displaying primary player assets (Joules, Wiring, and a variable tracking element whose title changes text dynamically from `COILS` to `AC GENS` depending on technological branching alignment).
+* **The Actions Panel (`.actions-panel`):** A linear vertical stack acting as the core control panel. Interactive elements, card grids, and speed selectors use the `.hidden` class utility properties to seamlessly toggle into and out of visibility depending on resource thresholds.
+* **The Lower Quick-Stats Bar (`.game-footer`):** A fixed footer panel positioned at the bottom margin edge tracking raw integer readouts, generation scales, active threat warnings (`TRUST ⚠`), and defense infrastructure assets.
+
+---
+
+## 2. THE MECHANICAL ENGINE & BALANCE ARCHITECTURE
+
+### A. The 1Hz Core Loop
+The game relies completely on a single master background heartbeat loop (`setInterval`) running exactly every 1000 milliseconds to handle calculations. This single tick coordinates three main automated functions:
+1.  **Passive Generation:** Automatically computes current generator counts and injects extra power directly into core reserves (`joules += generatedJoules`).
+2.  **Loom Timeline Tracking:** Advances processing clock metrics (`loomProgressMs += 1000`) if power supplies satisfy active consumption costs.
+3.  **Hostile Scheduler Tracking:** Decrements background encounter clocks and checks if countdown variables have cleared out.
+
+### B. Boundary Conditions & Logistics Constraints
+To prevent processing errors, the engine cross-checks and clamps variables using an explicit constraint block (`enforceBoundaries()`) before rendering the visual screen:
+* **Joule Containment Ceiling:** Raw power cannot naturally pass its active storage array cap (initially 100 Joules, expanding to 200 Joules via Path B technology). Surplus power is vented.
+* **Logistics Warehouse Cap:** Wire items cannot exceed active structural rack capabilities (initially 20 spools). When full, manual forging is blocked, automated loops halt tracking, and a bright flashing text alert (`#banner-logistics-blocked`) pops onto the dashboard screen.
+
+### C. Automated Pneumatic Loom Metrics
+Once built, the loom automates wire production by tracking progress intervals against a set power drain:
+* **LOW Tension:** Drains `2 Joules/sec`. Spools `1 Wire every 10 seconds`. Features a 0% mechanical snap risk.
+* **MED Tension:** Drains `5 Joules/sec`. Spools `1 Wire every 5 seconds`. Features a 0% mechanical snap risk.
+* **HIGH Tension:** Drains `15 Joules/sec`. Spools `1 Wire every 2 seconds`. Carries a continuous **10% random chance to snap** on every 2-second completion check.
+    * *The Snap Event:* If a failure occurs, the loom changes its visual text tracker to a red `BROKEN/HALT` and freezes all production progress indicators. It displays a `[ REPAIR LOOM ]` button, requiring a manual expenditure of 10 Joules to reset tracking clocks and re-thread the machinery.
+
+---
+
+## 3. GAMEPLAY WALKTHROUGHS & SYSTEM RECONCILIATION
+
+### A. Pathway A: Alternating Current (AC) Tech Branch
+*Design Strategy: High-yield automation expansion, heavy resource risks, and frequency delay defense.*
+
+```
+[ START: 0 Joules ] ──► Manual Crank ──► Forge Wire ──► Build Loom ──► Hit 50 Joules
+                                                                            │
+   ┌────────────────────────────────────────────────────────────────────────┘
+   ▼
+[ 30-Second Morse Decode Clock ] ──► Accept Omaha Deal [A] (Cost: 15 Wiring)
+   │
+   ├─────────────────────────────────────────┐
+   ▼                                         ▼
+[ Build AC Generators ]                   [ Build Faraday Cages ]
+(Cost: 20J + 5W ──► +5J/s)                 (Cost: 20W ──► Extends Safety Delay +15s)
+   │                                         │
+   └────────────────────┬────────────────────┘
+                        │
+                        ▼
+           [ One-Time Capacitor Overcharge ]
+           (Dumps raw Joules into massive Wire)
+                        │
+                        ▼
+         [ TARGET: 5 AC GENS + 40 STORED WIRES ] ──► ★ WIN CONDITION A ACHIEVED ★
+```
+
+* **Phase 1 (Ignition):** The player cranks the dynamo manually to reach 10 Joules, unlocks wiring forgery, and hoards 50 Joules to build the Automated Loom. Upon hitting 50 Joules, the spark-gap receiver engages, prompting a 30-second live cyan top countdown banner.
+* **Phase 2 (The Decision):** When the clock hits zero, the player accepts Omaha's terms, trading 15 wire spools for the AC schematic. The master dashboard tracking label instantly swaps its context from `COILS` to `AC GENS`.
+* **Phase 3 (The Threat):** The Edison Trust attacks aggressively on a fast **30-second baseline loop**. During an active 10-second lockout attack, generation drops to zero, and **5 stored wires are ripped from inventory**. The player hoards resources to construct **Faraday Cages** (`Cost: 20 Wiring`), which permanently pad an extra `+15 seconds` onto the attack frequency clock to delay strikes.
+* **Phase 4 (The Surge & Victory):** The player constructs **AC Generators** (`Cost: 20 Joules + 5 Wiring`), rocketing passive generation upward by `+5 Joules/sec` per unit. To prevent power waste against the 100-Joule cap, the player utilizes the one-time **`[ CAPACITOR OVERCHARGE ]`** blast to instantly melt all stored power directly into wire. The game is won once the player stabilizes **5 AC Generators and 40 stored Copper Wires**.
+
+### B. Pathway B: Direct Current (DC) Tech Branch
+*Design Strategy: Large storage capacity, steady passive tracking, and high resource protection shields.*
+
+```
+[ START: 0 Joules ] ──► Manual Crank ──► Forge Wire ──► Build Loom ──► Hit 50 Joules
+                                                                            │
+   ┌────────────────────────────────────────────────────────────────────────┘
+   ▼
+[ 30-Second Morse Decode Clock ] ──► Reject Omaha Deal [B] (Cost: 10 Wiring)
+   │
+   ├─────────────────────────────────────────┼─────────────────────────────────────────┐
+   ▼                                         ▼                                         ▼
+[ Assemble Tesla Coils ]                  [ Build Leyden Jars ]                     [ Build Junction Boxes ]
+(Cost: 10W ──► +1J/s)                      (Cost: 5W ──► Cap Doubles to 200J)        (Cost: 200J ──► Blunts Damage -50%)
+   │                                         │                                         │
+   └─────────────────────────────────────────┼─────────────────────────────────────────┘
+                                             │
+                                             ▼
+                             [ TARGET: 10 COILS + 30 STORED WIRES ] ──► ★ WIN CONDITION B ACHIEVED ★
+```
+
+* **Phase 1 (Ignition):** Identical manual power ramping and loom assembly as Path A until the Morse transmission clock successfully completes its countdown.
+* **Phase 2 (The Decision):** The player denies Omaha's deal, choosing to turtle behind local isolation fields. They spend 10 wire spools, and the header status row switches over to `OPERATIONAL POWERED`.
+* **Phase 3 (The Protection):** Because local DC lines emit lower signatures, the Edison Trust loop runs on a wider, slower **45-second baseline tracking interval**. Hostile raids only cause a **lighter baseline loss of 3 wire spools**. To neutralize this damage, the player saves 200 Joules to assemble a protected **Junction Box**. Each active Box divides incoming wire theft by half, reducing threat impacts to just 1 single wire spool.
+* **Phase 4 (The Battery Bank & Victory):** The player quickly spends 5 wires to build the **Leyden Jar** array, permanently doubling the storage capacity from `/ 100` to **`/ 200`** Joules to capture energy without waste. They scale out stable **Tesla Coils** (`Cost: 10 Wiring`) to accumulate steady `+1 Joule/sec` ticks. Victory is claimed once the dashboard logs **10 active Tesla Coils and 30 stored Copper Wires**.
+
+### C. Technical Reconciliation Ledger
+| Operational Metric | Base Baseline State | Path A: Alternating Current (AC) | Path B: Direct Current (DC) |
+| :--- | :--- | :--- | :--- |
+| **Grid Status Row** | `OFFLINE` | `OPERATIONAL POWERED` | `OPERATIONAL POWERED` |
+| **Joule Storage Limit**| 100 Joules Maximum | 100 Joules Maximum | **200 Joules Maximum** (Leyden Tech) |
+| **Primary Machine Asset**| Tesla Coils (+1J/s) | **AC Generators (+5J/s)** | Tesla Coils (+1J/s) |
+| **Dashboard Metric Node**| `COILS` | **`AC GENS`** | `COILS` |
+| **Threat Frequency Clock**| No Threats Triggered | Fast Attack Cycle (30s Base) | **Slower Attack Cycle (45s Base)** |
+| **Ambush Wire Penalties**| No Threats Triggered | Severe Resource Theft (-5 Wire) | **Moderate Resource Theft (-3 Wire)** |
+| **Unique Blueprint Unlocks**| Baseline Items | **Faraday Cages** (+15s Delay) | **Junction Boxes** (Damage Blunting) |
+| **Emergency Burst Button**| Hidden / Locked | **Capacitor Overcharge** (Active) | Hidden / Unavailable |
+| **Win Criteria Metrics** | Goal Hidden | **5 AC Generators + 40 Wires** | **10 Tesla Coils + 30 Wires** |
+
+---
+
+## 4. MILESTONE LOGS & GAMEPLAY DESIGN TRACKS
+
+### Milestone 1: Core Engine Porting & Mobile Validation (May 2026)
+* **Operational Summary:** Successfully ported the game structure away from complex React framework wrappers and simplified it into clean native HTML/CSS/JS files. Verified layout layout scaling inside Chromebook local server viewports and mobile phone tunnels.
+* **Observations on Initial Balance Math:**
+    * Manual clicking ratios feel tight; requiring 10 clicks to forge a wire means early automation choices feel highly impactful.
+    * High-tension loom adjustments require active screen attention due to the sudden 10% snap lottery. This introduces a great risk-vs-reward loop before automation takes over.
+* **Resolved Structural Syntax Errors:** Cleared up a series of open bracket errors inside the main user interface renderer and synchronized caching selector names (`elJoules`, `elWiring`) across files to protect script loading. Cleaned corrupt character symbols out of background logs to ensure clean unicode display on mobile web layers.
+
+### Milestone 2: Balance Pass & Tech Refinement (May 2026)
+* **Operational Summary:** Standardized the early progression timeline. Re-anchored the spark-gap receiver sequence to execute immediately upon crossing the 50 Joule landmark.
+* **Cleaned Redundancies:** Stripped out repetitive walkthrough rules from historic logs to make documentation completely streamlined and lightweight.
+
+### Future Conceptual Experiments (Status: Planned / Not Yet Implemented)
+The following mechanics are currently being evaluated as design experiments for upcoming iterations to gather insights for larger collaboration blueprints:
+1.  **Schematic Assembly (Item Combination):** Combining specific configurations of wires and energy fields within the panel to generate temporary blueprint upgrades.
+2.  **Component Optimization (Item Upgrades):** Spending extra Joules to permanently tune the efficiency of existing active Tesla Coils (e.g., tuning output from +1J/s to +2J/s).
+3.  **Acoustic Landscape (HTML5 Audio API):** Integrating raw, low-frequency synthetic synthesizer oscillators natively inside the JavaScript file. This would generate audio clicks every time the player presses the manual crank or a loom snaps under high tension.
+4.  **Breakthrough Modals (Unlock Splash Screens):** Inserting simple visual text banners that display full-screen lore snapshots when Path A or Path B is initially signed.
