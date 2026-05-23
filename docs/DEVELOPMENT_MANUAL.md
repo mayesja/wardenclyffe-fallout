@@ -130,9 +130,20 @@ Once built, the loom automates wire production by tracking progress intervals ag
 * **Operational Summary:** Standardized the early progression timeline. Re-anchored the spark-gap receiver sequence to execute immediately upon crossing the 50 Joule landmark.
 * **Cleaned Redundancies:** Stripped out repetitive walkthrough rules from historic logs to make documentation completely streamlined and lightweight.
 
-### Future Conceptual Experiments (Status: Planned / Not Yet Implemented)
+### Future User Interface Concepts (Status: Planned / Not Yet Implemented)
+The following UI concepts should be added or repaired to improve playing exerience:
+*  **Dim button text for unavailble options:** Make button label text dim when that button cannot be used.  For example FORGE COPPER WIRING should be dim when the JOULE count is too low.
+*  **Message & Warning alerts:** When a new message (blue notices) or warning (red notices) occur, and the player has scrolled down so that the messages panel is not visible then there will be a banner at the top of the screen to alert the player of the new notice.  Use the same color, and present something like "New notice available. CLick here to read."  Clicking on the notice immediately scrolls up to display the message panel.
+
+### Future Gameplay Experiments (Status: Planned / Not Yet Implemented)
 The following mechanics are currently being evaluated as design experiments for upcoming iterations to gather insights for larger collaboration blueprints:
-1.  **Schematic Assembly (Item Combination):** Combining specific configurations of wires and energy fields within the panel to generate temporary blueprint upgrades.
-2.  **Component Optimization (Item Upgrades):** Spending extra Joules to permanently tune the efficiency of existing active Tesla Coils (e.g., tuning output from +1J/s to +2J/s).
-3.  **Acoustic Landscape (HTML5 Audio API):** Integrating raw, low-frequency synthetic synthesizer oscillators natively inside the JavaScript file. This would generate audio clicks every time the player presses the manual crank or a loom snaps under high tension.
-4.  **Breakthrough Modals (Unlock Splash Screens):** Inserting simple visual text banners that display full-screen lore snapshots when Path A or Path B is initially signed.
+*  **Build timers:**  When higher level technologies are built there will be a countdown timer until they are "online" and ready to use or start to take effect.  For example, building a Tesla Coil has a 5 second timer after being built but before it starts generating power.
+   * Should building additional technologies be blocked until the countdown timer expires?
+   * Or should there be a construction queue?
+* **Schematic Assembly (Item Combination):** Combining specific configurations of components and energy within the panel to generate new technologies.
+* **Component Optimization (Item Upgrades):** Spending extra Joules (or other components) to permanently improve the output of existing technology.  (e.g., increasing TESLA COILS output from +1J/s to +2J/s by adding 5 WIRING).
+* **Acoustic Landscape (HTML5 Audio API):** Integrating raw, low-frequency synthetic synthesizer oscillators natively inside the JavaScript file.
+   * Generate audio clicks every time the player starts a TESLA COIL (sounds electro-mechanical). 
+   * Generate a high-to-low slide when a loom snaps under high tension (sounds like losing power).
+   * Generate a low-to-high slide when an attack occurs (sounds like a warning siren).
+* **Breakthrough Modals (Unlock Splash Screens):** Inserting simple visual text banners that display full-screen lore snapshots when Path A or Path B is initially signed.
