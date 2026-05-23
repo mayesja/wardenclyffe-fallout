@@ -42,15 +42,15 @@ This matrix establishes the theoretical scores based on structural gameplay/soci
 
 Games are bucketed into three operational tranches based on their final score. 
 
-### 🟢 Tranche Tier 1: Core Blueprints (Score 11–15)
+### 🟢 Tranche 1: Core Blueprints (Score 11–15)
 * **Definition**: Comprehensive systems mapping closely to the multi-layered MMO reality of Factory Survival.
 * **Objective**: Study holistic execution, monetization loops, and high-retention onboarding.
 
-### 🟡 Tranche Tier 2: Feature Specialists (Score 6–10)
+### 🟡 Tranche 2: Feature Specialists (Score 6–10)
 * **Definition**: Often completely solo or non-profit legacy games that nevertheless showcase world-class execution in one or two isolated axes.
 * **Objective**: Target and extract specific sub-systems (e.g., UI layout paradigms, script-gating, player-driven bartering economies).
 
-### 🔴 Tranche Tier 3: Edge Case Reference Points (Score 1–5)
+### 🔴 Tranche 3: Edge Case Reference Points (Score 1–5)
 * **Definition**: Games with minimal structural overlap but high execution in singular, pure mechanics (e.g., pure spatial awareness, stress/tension tracking, or historical gameplay anchors).
 * **Objective**: Harvest quick, fundamental lessons and identify critical structural anti-patterns.
 
@@ -58,12 +58,12 @@ Games are bucketed into three operational tranches based on their final score.
 
 ## 4. Execution Strategy: Bottom-Up Deconstruction
 
-We will execute this analysis using a **Bottom-Up** strategy, dissecting games from **Tranche Tier 3 up to Tranche Tier 1**. 
+We will execute this analysis using a **Bottom-Up** strategy, dissecting games from **Tranche 3 up to Tranche 1**. 
 
 ### Strategic Justification
-1.  **Isolating Pure Mechanics**: Lower-tier games offer hyper-focused, unpolluted loops (e.g., the cause-and-effect physics of *The Incredible Machine*). We can harvest these building blocks cleanly without getting bogged down by alliance mechanics or monetization data.
+1.  **Isolating Pure Mechanics**: Lower-tranche games offer hyper-focused, unpolluted loops (e.g., the cause-and-effect physics of *The Incredible Machine*). We can harvest these building blocks cleanly without getting bogged down by alliance mechanics or monetization data.
 2.  **Defining the Anti-Patterns Early**: Examining edge cases first allows us to catalog design dead-ends, interface bottlenecks, and loops that cause player friction before finalizing major infrastructure choices in Slack.
-3.  **Building a Universal Vocabulary**: By the time we evaluate Tier 1 giants like *Whiteout Survival*, we will have an arsenal of harvested micro-mechanics (e.g., *Uplink’s* interface tension, *Thunderdome’s* ad-hoc economic grouping) to instantly deploy as counter-measures against the genre’s traditional flaws.
+3.  **Building a Universal Vocabulary**: By the time we evaluate Tranche 1 giants like *Whiteout Survival*, we will have an arsenal of harvested micro-mechanics (e.g., *Uplink’s* interface tension, *Thunderdome’s* ad-hoc economic grouping) to instantly deploy as counter-measures against the genre’s traditional flaws.
 
 ---
 
