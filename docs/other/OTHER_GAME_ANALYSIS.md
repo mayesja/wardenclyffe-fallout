@@ -31,7 +31,7 @@ This matrix establishes the theoretical scores based on structural gameplay/soci
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **Mobile 4X / Solo-to-Alliance Pivot** *(WOS, Last Asylum)* | 3 | 3 | 3 | 3 | 1 | **13 / 15** |
 | **Infinite Incremental / Math** *(Trimps, Alien Invasion)* | 3 | 2 | 3 | 1 | 2 | **11 / 15** |
-| **Solo vs. System / Open Story** *(SimCity, Civ, XCOM, JA, Uplink)* | 1 | 0 | 3 | 0 | 3 | **7 / 15** |
+| **Solo vs. System / Open Story** *(SimCity, Civ, Alpha Centauri, XCOM, JA, Uplink)* | 1 | 0 | 3 | 0 | 3 | **7 / 15** |
 | **High-Density Ad-Hoc Social (MUD)** *(Thunderdome, Crossfire)* | 1 | 0 | 3 | 3 | 0 | **7 / 15** |
 | **Pure Solo / Fixed Arc** *(Paperclips, Incredible Machine)* | 1 | 0 | 3 | 0 | 3 | **7 / 15** |
 | **Skill-Based Session Arenas** *(Doom, Quake, XEvil)* | 2 | 0 | 2 | 1 | 0 | **5 / 15** |
@@ -73,6 +73,7 @@ The following 14 games are queued for numerical evaluation and assignment to the
 
 * Last Asylum
 * Civilization (III - V)
+* Alpha Centauri
 * SimCity 2000
 * Alien Invasion RPG Idle Game
 * Frost World
