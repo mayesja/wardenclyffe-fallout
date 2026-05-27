@@ -137,3 +137,121 @@ The following 14 games are queued for numerical evaluation and assignment to the
 1.  **Onboarding Pipeline**: Drop-in -> Manual Click Node -> Automated Belt Loop visual feedback in <3 minutes.
 2.  **Surface Map Corridor Mechanic**: Convoys treated as high-stakes spatial pathing loops rather than passive progress bars.
 3.  **Alliance Integration**: Transition alliance structures from passive military groups to active, interdependent production/logistics syndicates.
+
+---
+
+## 7. Tranche 2 Analysis: Feature Specialists (Score 6–10)
+
+### Target Archetype: Solo-vs-System / Open Story
+*   **Target Games**: Civilization (III - V), SimCity 2000, XCOM, Jagged Alliance, Uplink Hacker Elite, Sid Meier's Alpha Centauri
+
+### Raw Score Baseline Evaluation
+*   **Onboarding**: 1 / 3 (Low)
+*   **Monetization**: 0 / 3 (Dead Zone)
+*   **Session Design**: 3 / 3 (High)
+*   **Social Glue**: 0 / 3 (Dead Zone)
+*   **Automation UX**: 3 / 3 (High)
+*   **Total Archetype Score**: **7 / 15**
+
+---
+
+### Deep-Dive Structural Answers
+
+#### 1. Onboarding — First 5 Minutes
+*   **The Paradigm**: High cognitive friction, text-heavy menus, and overwhelming initial agency. The player is dropped into a sprawling world or complex command center with very little hand-holding, relying on intrinsic curiosity or pre-existing genre literacy to push past the initial interface wall.
+*   **What to ABSORB**:
+    *   *The Elite Command Center Aesthetic:* Establish an immediate, compelling visual hook using a high-fidelity tactical interface. Even before the player understands the underlying mechanics, looking at a stylized telemetry grid or command terminal instantly communicates an elite-operator positioning.
+    *   *The Automated Tech-Breakthrough Narrative:* Replicate the style of schematic delivery where unlocking an advanced material or logic layer triggers a clean, minimalist terminal schematic and a brief audio file snippet to heighten atmospheric immersion.
+*   **What to REJECT**:
+    *   *The Manual Text Wall / Overwhelming Choice:* Completely reject dense, text-heavy tutorial dumps or manual-reliant openings that create immediate cognitive fatigue. Avoid menu clutter; your design bays should strictly display component combinations your active factory lines are actually capable of producing.
+
+#### 2. Session Design — Sustainable Retention
+*   **The Paradigm**: Mastery of the asynchronous flow state. By decoupling progression from real-world clocks or energy mechanics, retention is driven entirely by intersecting systemic loops: a short-term tactical puzzle is directly tied to a long-term macro-infrastructure project.
+*   **What to ABSORB**:
+    *   *The Macro/Micro Pendulum:* Replicate the loop where a fast, 2-minute tactical surface hex engagement yields specific salvage blocks. These blocks are directly brought back to upgrade a deep, long-term conveyor network or production line in the underground base, which eventually unlocks a new tier of tactical military units.
+    *   *The Industrial Eco-Friction Loop:* Tie massive factory production volumes to environmental feedback. Over-producing or expanding your subterranean footprint triggers a direct, telegraphed tactical challenge on the Surface Map by increasing machine swarm aggressiveness.
+*   **What to REJECT**:
+    *   *The Predictable Scripting Cliff:* Reject insular single-player loops where a player can permanently "solve" the AI's script patterns. Every underlying automation system must eventually interface with a dynamic, unpredictable, player-driven global alliance ecosystem to maintain infinite retention.
+
+#### 3. Automation UX — Structural Macro-Management
+*   **The Paradigm**: High-level telemetry, abstract overview screens, and deterministic control panels. The player acts as a macro-manager setting templates, blueprints, and infrastructure layouts, while autonomous systems execute the granular operations.
+*   **What to ABSORB**:
+    *   *Deterministic Feedback Toggles:* Give players command-and-control interfaces to manage complex, automated sub-systems through abstract overview screens, nesting deep telemetry data cleanly on a single screen.
+    *   *Dynamic Production Matrixing:* Unit assembly costs must be entirely deterministic, calculated dynamically by summing up the material weights of the components selected in the design blueprint interface.
+*   **What to REJECT**:
+    *   *Granular Manual Micro-Management:* Reject any requirement for manual, unit-by-unit slot sorting, repetitive inputs, or manual blueprint menu cleanup. The UI should automatically sunset inferior components when a higher-tier drop directly supersedes them in your factory logic.
+
+---
+
+### Individual Game Deep Dives
+
+#### Game 1: SimCity 2000
+*   **What to ABSORB**:
+    *   *Cross-Sectional Overlay Mapping:* Utilize a clean visual toggle between the gritty, tactical Surface Map view and the clean, satisfying Underground Factory view.
+    *   *Infrastructure Proximity Networks:* Tie machine operations to physical, spatial connectivity (e.g., wiring into localized power grids or linking fluid pipelines), turning base optimization into a rewarding spatial puzzle.
+    *   *The Budget Telemetry Panel:* Provide a macro-level telemetry screen where adjusting overarching factory variables instantly propagates predictable downstream data through production lines.
+*   **What to REJECT**:
+    *   *Untelegraphed Disaster Destruction:* Avoid random, unmapped failure states or catastrophic disasters that erase hours of design with no warning. Every base raid or convoy ambush must be a 100% deterministic, telegraphed event.
+
+#### Game 2: Civilization (III - V)
+*   **What to ABSORB**:
+    *   *Tech Tree Milestone Unlock Loop:* Design tech trees where unlocking a fundamental automation component instantly expands both base infrastructure capabilities and surface combat divisions.
+    *   *Hex-Based Resource Yields:* Display clean, explicit data overlays directly on surface hex tiles to make extraction values and territory tracking instantly readable at a glance.
+    *   *The Unit Automation Toggle:* Allow players to manually clear high-stakes trade corridors, and then toggle supply convoys to an automated background routing script once the lane is secure.
+*   **What to REJECT**:
+    *   *The Synchronous Turn-Based Progression Wall:* Avoid artificial turn-based queues. The entire global map and underground factory layers must function on a continuous, asynchronous, real-time server clock.
+
+#### Game 3: XCOM
+*   **What to ABSORB**:
+    *   *The Geoscape Telemetry Hub:* Utilize a dark, high-contrast holographic radar screen for the Global Surface Operations View to monitor machine swarm vectors and alliance logistics lanes.
+    *   *The Direct Macro-to-Micro Upgrades Pipeline:* Ensure that rare, specialized salvage blocks or corrupted cores secured on the Surface Map act as the explicit catalysts required to unlock elite underground automation tech.
+    *   *Visual Layered Hierarchy:* Adopt a highly scannable "ant-farm" vertical cross-section for the subterranean base layout, letting players audit facility statuses instantly via color and silhouette.
+*   **What to REJECT**:
+    *   *Permanent Unit Loss Permadeath:* Reject permanent progress wipes on individual tactical assets. Units must be treated as modular, automated constructs—losing a unit costs hardware materials and factory queue time, never unrecoverable character progress.
+
+#### Game 4: Jagged Alliance
+*   **What to ABSORB**:
+    *   *The Sector Grid Control Mechanics:* Divide the surface world into an explicit alpha-numeric grid where controlling specific coordinates unlocks unique processing modifiers or localized resource extractions.
+    *   *Granular Component Wear-and-Tear:* Introduce subtle component wear metrics to manufacturing machinery and automated surface units, driving an ongoing economic demand for spare parts and lubricants.
+    *   *The Asynchronous Contract Interface:* Use an integrated in-universe communication terminal for accepting shipping contracts from rogue outposts or ordering raw inputs from corporate drop-ships.
+*   **What to REJECT**:
+    *   *Manual Slot Inventory Bottlenecks:* Reject slot-by-slot inventory management constraints. Material movement must be entirely automated via conveyor logic, container registries, and item sorters.
+
+#### Game 5: Uplink Hacker Elite
+*   **What to ABSORB**:
+    *   *Interface-Driven Suspense:* Use a prominent trace-tracker countdown timer when harvesting corrupted machine nodes on the surface, creating high-tension risk/reward decisions.
+    *   *The Modular Logic Upgrade Loop:* Allow players to upgrade software toolkits and logical libraries over time, expanding the processing space available for running complex Lua automation scripts.
+    *   *A Clean Monospace Logs Audit Trail:* Provide a searchable, monospace text feed detailing real-time micro-events (e.g., weapon fire, shield impacts) to serve as a combat debugging tool for technical players.
+*   **What to REJECT**:
+    *   *The Single-Mistake Sudden Death Progress Wipe:* Reject catastrophic, unmitigated save-file wipes. Failures on the surface must be capped at localized resource loss or temporary system reboots, never infrastructure deletion.
+
+#### Game 6: Sid Meier's Alpha Centauri
+*   **What to ABSORB**:
+    *   *The Four-Slot Blueprint Matrix:* Establish a modular vehicle construction interface based on explicit component slots: Chassis (movement/energy), Payload (weaponry, cargo vaults, or extraction beams), Armor Shell (mitigation), and Logic Core (script execution space).
+    *   *R&D Prototyping Tooling Costs:* The first unit deployed using a newly unlocked high-tier component costs a flat injection of rare "Salvage Blocks" to tool up the factory line, forming a clean resource sink.
+    *   *Dual-Purpose Utility Payloads:* Vehicles are repurposed entirely by swapping their payload cores—a single chassis can function as a combat vanguard, a mobile harvester, or a supply cargo truck depending on its slot configuration.
+    *   *Component Stripping for Economic Agility:* Allow players to intentionally strip armor or chassis components down to a minimalist blueprint to rapidly mass-produce cheap, fragile, high-damage glass cannons during crisis windows.
+    *   *Zero-Maintenance Logistics Upgrades:* Introduce specialized chassis or fuel modules that remove ongoing deployment energy drains, letting players completely optimize trade routes into passive, zero-maintenance resource channels.
+*   **What to REJECT**:
+    *   *The Emotional Unit Morale Matrix:* Completely reject psychological panic or morale sub-systems. Surface forces are cold, automated constructs running on deterministic script logic; failure must always be a calculable design metric, never random panic.
+
+---
+
+### Historical Case Study Appendix: Trash (2005)
+*Nota: This entry serves as an archival reference point for a niche multiplayer title utilizing a raw "Scrappunk" economy.*
+
+#### Raw Score Baseline Evaluation
+*   **Onboarding**: 1 / 3 (Low)
+*   **Monetization**: 0 / 3 (Dead Zone)
+*   **Session Design**: 2 / 3 (Medium)
+*   **Social Glue**: 2 / 3 (Medium)
+*   **Automation UX**: 1 / 3 (Low)
+*   **Total Score**: **6 / 15** (Tranche 2: Feature Specialist)
+
+#### Extracted Architectural Building Blocks
+*   **What to ABSORB**:
+    *   *The Shared Tech Pool:* Replicate the ability for alliance members to share high-tier factory outputs or components through a unified depot, allowing lower-tier members to construct specialized unit variants.
+    *   *FPS-Style Tech Drops:* When high-level units or convoys are destroyed on the Surface Map, they should drop a high-yield "Salvage Node" directly on that hex, creating an immediate tactical hotspot for nearby players to contest.
+    *   *Strategic Resource Hubs:* Lock advanced tech tiers behind the active spatial control of specialized, finite sector coordinates (e.g., an abandoned silicon refinery or polymer reservoir) on the surface map.
+*   **What to REJECT**:
+    *   *APM Micro Bottlenecks:* Reject twitch-reflex combat mechanics and high-APM micro-management requirements. Success must be dictated entirely by layout optimization, resource distribution, and automated script logic.
