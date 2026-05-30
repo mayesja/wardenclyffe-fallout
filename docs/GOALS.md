@@ -60,6 +60,6 @@ What I have discovered after a few iterations of adding features and debugging:
    5.   Use the prompt from the original thread to begin the development task
    6.   Once the task is complete, functionality is tested, get a wrap-up summary for DEVELOPMENT_MANUAL.md
    7.   Close out the sandbox, update the .md, and have the original thread walk me through github push
-
+4.
 
 ---
