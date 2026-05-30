@@ -50,7 +50,7 @@ What I have discovered after a few iterations of adding features and debugging:
 2.  **Gemini may not accurately track line numbers** Gemini will reference a line of code in the file, but the line number given does not usually match the line number in my editor.  Sometimes off by 5-10 lines.  Sometimes it's in a completely different section of the file.
 3.  **Gemini may not accurately remember comments** One of the tactics was to use comments to explicitly separate code sections.  This would make it easier to search for the correct location for editing and/or debugging.  But the suggestions do not always match the exact comment in the file.
 4.  **Gemini may hallucinate variable or function names**  WHen Gemini instructs me to look for a specific block of code, the variable names or function names give may not match what is in the code.  Despite repeatedly apologising for the error, Gemini does not refresh its memory, and continues directing me towards non-existant code.
-   * This may be the first signs that Gemini has lost the thread and needs to be refreshed.
+      * This may be the first signs that Gemini has lost the thread and needs to be refreshed.
 5.     
 
 ---
