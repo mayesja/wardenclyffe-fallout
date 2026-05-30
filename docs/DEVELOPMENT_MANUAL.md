@@ -152,3 +152,14 @@ The following mechanics are currently being evaluated as design experiments for 
    * Generate a high-to-low slide when a loom snaps under high tension (sounds like losing power).
    * Generate a low-to-high slide when an attack occurs (sounds like a warning siren).
 * **Breakthrough Modals (Unlock Splash Screens):** Inserting simple visual text banners that display full-screen lore snapshots when Path A or Path B is initially signed.
+  
+### Future Storyline Developments (Status: Planned / Not Yet Implemented)
+To create an engaging game to play there needs to be a well-told story.
+*  **Initial screen:**  There does not need to be any type of explanation at the very beginning.  There is a message window, a status display, and one button to press.  As the player presses the CRANK DYNAMO button the story can unfold one step at a time in the message window.
+*  **Simple story**  The player begins by pressing the CRANK DYNAMO button.  There isn't much context at first, but as technologies are unlocked the story moves forward.
+     1. When enough power is generated, the receiver kicks on and a message is received.  It takes a few moments to decode.
+     2. The player is given an option.  Path A is to accept AC, Path B is to reject and pursue DC.
+     3. Both lead to Edison Crew attacks.  And both have defensive technologies, which are different depending on the chosen path.
+     4. Each path has an end scenario once the requirements are fulfilled.
+* **Messages Panel**  Eventually shift messages displayed in the window from debugging-style to story-telling.  The Replit/React version has some that can be emulated.
+   * See if Gemini can recover them from source files and help implement them into the current three files.
