@@ -47,6 +47,7 @@ let morseChoice = null;     // Permanent branch choice tracker: "A" (AC System) 
 let teslaCoils = 0;         // Base automated energy collectors (+1 Joule/sec each)
 let acGenerators = 0;       // Branch A High-yield generators (+5 Joules/sec each)
 let faradayCages = 0;       // Branch A Defense units: reduces the frequency of enemy attacks
+let leydenJars = 0;         // Branch B Defense/Storage units: tracks owned Leyden Jar arrays
 let junctionBoxes = 0;      // Branch B Defense units: blunts the raw resource damage of attacks
 
 // Disaster & Victory State Trackers
@@ -140,9 +141,9 @@ function enforceBoundaries() {
     // ENFORCING DESIGN LIMITATION: Joules cannot exceed the capacity of your field array
     let maxJouleCap = 100; 
     
-    // If user later path choices unlock Leyden Jars, that cap doubles to 200
-    if (morseChoice === "B") {
-        maxJouleCap = 200; 
+    // SURGICAL UPDATE: Every built Leyden Jar dynamically adds +100 to the max capacity ceiling
+    if (morseChoice === "B" && leydenJars > 0) {
+        maxJouleCap = 100 + (leydenJars * 100); 
     }
     
     // Clamp Joules to the current maximum allowance
@@ -171,12 +172,15 @@ function renderUI() {
     footJoules.innerText = `J: ${Math.floor(joules)}`;
     footWiring.innerText = `W: ${wiring} / ${wireStorageCap}`;
 
-    // Always show the current energy storage ceiling layout so players track their waste thresholds
+    // Always show the current energy storage ceiling layout so players track their waste thresholds[cite: 10]
     elMaxJoules.classList.remove("hidden");
-    if (morseChoice === "B") {
-        elMaxJoules.innerText = "/ 200"; // Expanded via Leyden tech
+
+    // SURGICAL UPDATE: Dynamically calculate and render the total capacity based on built Leyden Jars
+    if (morseChoice === "B" && leydenJars > 0) {
+        let currentMax = 100 + (leydenJars * 100);
+        elMaxJoules.innerText = `/ ${currentMax}`; 
     } else {
-        elMaxJoules.innerText = "/ 100"; // Standard baseline starting array max
+        elMaxJoules.innerText = "/ 100"; // Standard baseline starting array max[cite: 10]
     }
 
     // Toggle Visibility of Action Buttons based on Progression thresholds
@@ -262,6 +266,8 @@ function renderUI() {
         btnBuildJunction.classList.remove("hidden");
     }
 
+
+
     // Handle Victory Banner triggers
     if (victoryAchieved) {
         markerVictory.classList.remove("hidden");
@@ -294,6 +300,40 @@ function renderUI() {
         elGridStatus.innerText = "OFFLINE";
         elGridStatus.className = "status-offline";
     }
+
+    // ==========================================
+    // SURGICAL UPDATE: DYNAMIC BUTTON DIMMING
+    // ==========================================
+    // Evaluates resource counts against costs and dynamically dims unaffordable actions.
+
+    // 1. Forge Copper Wiring Button (Cost: 10 Joules)
+    if (joules < 10) { btnForge.style.opacity = "0.35"; // Dim to 35% strength if short on energy
+    } else { btnForge.style.opacity = "1.0";  // Restore to full crisp intensity
+    }
+
+    // 2. Assemble Tesla Coil Button (Cost: 10 Wiring)
+    if (wiring < 10) { btnAssembleCoil.style.opacity = "0.35"; 
+    } else { btnAssembleCoil.style.opacity = "1.0"; }
+
+    // 3. Build Automated Loom Button (Cost: 50 Joules)
+    if (joules < 50) { btnBuildLoom.style.opacity = "0.35";
+    } else { btnBuildLoom.style.opacity = "1.0"; }
+
+    // 4. Build AC Generator Button (Cost: 20 Joules + 5 Wiring — Path A exclusive)
+    if (joules < 20 || wiring < 5) { btnBuildAcGen.style.opacity = "0.35";
+    } else { btnBuildAcGen.style.opacity = "1.0"; }
+
+    // 5. Build Faraday Cage Button (Cost: 20 Wiring — Path A exclusive)
+    if (wiring < 20) { btnBuildFaraday.style.opacity = "0.35";
+    } else { btnBuildFaraday.style.opacity = "1.0"; }
+
+    // 6. Build Leyden Jar Button (Cost: 5 Wiring — Path B exclusive)
+    if (wiring < 5) { btnBuildLeyden.style.opacity = "0.35";
+    } else { btnBuildLeyden.style.opacity = "1.0"; }
+
+    // 7. Build Junction Box Button (Cost: 200 Joules — Path B exclusive)
+    if (joules < 200) { btnBuildJunction.style.opacity = "0.35";
+    } else { btnBuildJunction.style.opacity = "1.0"; }
 
     // Handle Status Footers & Rates Data Output Rows
     let passiveSum = (morseChoice === "A") ? (acGenerators * 5) : (teslaCoils * 1);
@@ -457,11 +497,16 @@ btnChoiceDC.addEventListener("click", () => {
     if (wiring >= 10) {
         wiring -= 10;
         morseChoice = "B";
-        trustActivated = true; // Edison trust begins monitoring tracking points
-        nextAttackTime = 45;   // DC enjoys a slightly longer initial scouting window cushion
-        panelMorseEncounter.classList.add("hidden");
-        markerMorseDecoding.classList.add("hidden");
-        writeLog("Transmission Denied. Locked keys down. We will turtle behind local isolation fields and store power natively inside Leyden arrays.", "unlock");
+        
+        // SURGICAL UPDATE: Align game state with the button text. 
+        // Choosing DC automatically awards your first Leyden Jar!
+        leydenJars = 1; 
+        
+        trustActivated = true; // Edison trust begins monitoring tracking points[cite: 10]
+        nextAttackTime = 45;   // DC enjoys a slightly longer initial scouting window cushion[cite: 10]
+        panelMorseEncounter.classList.add("hidden"); //[cite: 10]
+        markerMorseDecoding.classList.add("hidden"); //[cite: 10]
+        writeLog("Transmission Denied. Locked keys down. We will turtle behind local isolation fields and store power natively inside Leyden arrays.", "unlock"); //[cite: 10]
     }
     renderUI();
 });
@@ -486,12 +531,14 @@ btnBuildAcGen.addEventListener("click", () => {
     renderUI();
 });
 
+// Build Leyden Jar Storage Upgrade
 btnBuildLeyden.addEventListener("click", () => {
     if (wiring >= 5) {
         wiring -= 5;
-        // Leyden Jars double the capacity, which is handled dynamically in enforceBoundaries()
-        writeLog("Insulated capacitor glass banks arranged. Energy core structural limits doubled.", "unlock");
-        btnBuildLeyden.classList.add("hidden"); // One-time structural upgrade asset
+        leydenJars++; // SURGICAL UPDATE: Increment our tracking state variable by 1
+        
+        writeLog("Insulated capacitor glass banks arranged. Energy core structural limits increased.", "unlock");
+        // btnBuildLeyden.classList.add("hidden"); // One-time structural upgrade asset
     }
     renderUI();
 });
