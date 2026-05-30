@@ -16,7 +16,7 @@ This document serves as the high-level roadmap and structural guide for the deve
 
 ## 2. DEVELOPER PROFILE & ENVIRONMENT CONSTRAINTS
 
-* **Coding Proficiency:** The creator is completely focused on gameplay design and has essentially zero development, programming, or terminal scripting experience. The creator relies on Gemini to write, structure, and maintain 100% of the project's source code.
+* **Coding Proficiency:** The creator is completely focused on gameplay design and has very minimal development, programming, or terminal scripting experience. The creator relies on Gemini to write, structure, and maintain 100% of the project's source code.
 * **Hardware Setup:** All development operations are run locally on a Chromebook.
 * **Tooling Framework:** * **Crosetini Linux Terminal:** Used exclusively for executing straightforward, copy-pasted operational commands (such as running local development servers).
     * **VS Code:** Used as the primary local text editing environment to save file assets.
@@ -44,8 +44,10 @@ To ensure code stability and prevent development fatigue, all future interaction
 
 ## 5. EXPERIENCES & LEARNINGS
 
-WHat I have discovered after a few iterations of adding features and debugging:
+What I have discovered after a few iterations of adding features and debugging:
 
 1.  **Gemini has a finite memory:** Gemini will lose the thread after a few hours, or maybe 30-40 prompts.  Is this limitation due to going down a rabbit hole and losing the bigger picture, or because Gemini's tank is full and has a first in/first out memory?
+2.  **Gemini may not accurately track line numbers** Gemini will reference a line of code in the file, but the line number given does not usually match the line number in my editor.  Sometimes off by 5-10 lines.  Sometimes it's in a completely different section of the file.
+3.  **Gemini may not accurately remember comments** One of the tactics was to use comments to explicitly separate code sections.  This would make it easier to search for the correct location for editing and/or debugging.  But the suggestions do not always match the exact comment in the file.
 
 ---
