@@ -16,7 +16,7 @@ This document serves as the high-level roadmap and structural guide for the deve
 
 ## 2. DEVELOPER PROFILE & ENVIRONMENT CONSTRAINTS
 
-* **Coding Proficiency:** The creator is completely focused on gameplay design and has essentially zero development, programming, or terminal scripting experience. The creator relies on Gemini to write, structure, and maintain 100% of the project's source code.
+* **Coding Proficiency:** The creator is completely focused on gameplay design and has very minimal development, programming, or terminal scripting experience. The creator relies on Gemini to write, structure, and maintain 100% of the project's source code.
 * **Hardware Setup:** All development operations are run locally on a Chromebook.
 * **Tooling Framework:** * **Crosetini Linux Terminal:** Used exclusively for executing straightforward, copy-pasted operational commands (such as running local development servers).
     * **VS Code:** Used as the primary local text editing environment to save file assets.
@@ -39,3 +39,18 @@ To ensure code stability and prevent development fatigue, all future interaction
 
 ## 4. GAMEPLAY DESIGN INSPIRATION
 *Wardenclyffe Field Station* is conceptually modeled after the design philosophy of classic incremental games like **Universal Paperclips**. The gameplay layout begins with a deceptively simple, manual task (cranking a dynamo for single Joules) and is engineered to slowly unfold, layer by layer, introducing automation machinery, shifting dashboard metrics, permanent technological branching decisions, and escalating threat counters that demand strategic resource management.
+
+---
+
+## 5. EXPERIENCES & LEARNINGS
+
+What I have discovered after a few iterations of adding features and debugging:
+
+1.  **Gemini has a finite memory:** Gemini will lose the thread after a few hours, or maybe 30-40 prompts.  Is this limitation due to going down a rabbit hole and losing the bigger picture, or because Gemini's tank is full and has a first in/first out memory?
+2.  **Gemini may not accurately track line numbers** Gemini will reference a line of code in the file, but the line number given does not usually match the line number in my editor.  Sometimes off by 5-10 lines.  Sometimes it's in a completely different section of the file.
+3.  **Gemini may not accurately remember comments** One of the tactics was to use comments to explicitly separate code sections.  This would make it easier to search for the correct location for editing and/or debugging.  But the suggestions do not always match the exact comment in the file.
+4.  **Gemini may hallucinate variable or function names**  When Gemini instructs me to look for a specific block of code, the variable names or function names give may not match what is in the code.  Despite repeatedly apologising for the error, Gemini does not refresh its memory, and continues directing me towards non-existant code.
+      * This may be the first signs that Gemini has lost the thread and needs to be refreshed.
+5.   **Gemini is great until it's not**  While functioning, Gemini gives very good code changes, and has improved with providing explicit comments.
+
+---

@@ -19,7 +19,7 @@ Because your phone and Chromebook live on separate local security profiles, we u
 1. Inside VS Code, press **`Ctrl + Shift + P`** (or `Cmd + Shift + P` on Mac layout) to open the Command Palette.
 2. Type **`Dev Tunnels: Show Active Tunnels`** and select it from the dropdown list.
 3. A panel named **Tunnels** will slide open at the bottom of your screen. 
-4. Ports --> Port forwarding 5500
+4. **Ports** --> Port forwarding 5500
 5. Look under the **Url** column. You will see a web address that looks like this:
    `https://0mzk9rbn-5500.use.devtunnels.ms/`
 
