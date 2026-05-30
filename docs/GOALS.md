@@ -53,13 +53,13 @@ What I have discovered after a few iterations of adding features and debugging:
       * This may be the first signs that Gemini has lost the thread and needs to be refreshed.
 2.   **Gemini is great until it's not**  While functioning, Gemini gives very good code changes, and has improved with providing explicit comments.
 3.   **Proposed workflow**  Suggested workaround to deal with memory loss:
-   1.   Upload .md and source code files and explain what the next development task will be
-   2.   Have Gemini generate a prompt to describe this new task
-   3.   Begin a second/separate sandbox Gemini thread
-   4.   Upload the .md and source code files
-   5.   Use the prompt from the original thread to begin the development task
-   6.   Once the task is complete, functionality is tested, get a wrap-up summary for DEVELOPMENT_MANUAL.md
-   7.   Close out the sandbox, update the .md, and have the original thread walk me through github push
+      1.   Upload .md and source code files and explain what the next development task will be
+      2.   Have Gemini generate a prompt to describe this new task
+      3.   Begin a second/separate sandbox Gemini thread
+      4.   Upload the .md and source code files
+      5.   Use the prompt from the original thread to begin the development task
+      6.   Once the task is complete, functionality is tested, get a wrap-up summary for DEVELOPMENT_MANUAL.md
+      7.   Close out the sandbox, update the .md, and have the original thread walk me through github push
 4.
 
 ---
