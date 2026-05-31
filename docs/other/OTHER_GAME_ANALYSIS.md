@@ -250,6 +250,7 @@ The following 14 games are queued for numerical evaluation and assignment to the
 ### Target Games
 * The Incredible Machine
 * Universal Paperclips
+* Frost World
 
 ### Raw Score Baseline Evaluation
 * **Onboarding**: 1 / 3 (Low)
@@ -266,25 +267,25 @@ The following 14 games are queued for numerical evaluation and assignment to the
 #### 1. Onboarding — First 5 Minutes
 * **The Paradigm**: Low-assistance, high-curiosity entries. The user is presented with a clear mechanical canvas or a minimalist interface with zero text-heavy tutorial dumps, relying on immediate feedback loop testing to establish the boundary rules.
 * **What to ABSORB**:
-    * *The Incomplete Layout Scaffold:* Start the player in an infrastructure sector where a local production loop is 80% complete but stalling. Forcing them to diagnose and place the missing 20% (e.g., a single drivetrain or connecting a utility line) teaches system mechanics faster than a text dump.
+    * *The Incomplete Layout Scaffold:* Start the player in an infrastructure sector of their **Subterranean Factory Layer** where a local production loop is 80% complete but stalling. Forcing them to diagnose and place the missing 20% (e.g., a single drivetrain or connecting a utility line) teaches system mechanics faster than a text dump.
     * *Dynamic Interface Unlocks:* Keep complex menus, trading terminals, and advanced structural layers entirely hidden from the UI layout until the user satisfies the exact material thresholds required to use them.
     * *Single-Variable Victory Constraints:* Early gameplay challenges should isolate a single clear goal (e.g., "Route Commodity X to Intake Y") to explicitly map out transport boundaries before forcing long-term factory maintenance.
 * **What to REJECT**:
-    * *The Manual Action-Spam Opener:* Completely reject requirements to manually click a single interface button repeatedly to kickstart the baseline economy. The user is a toolmaker; they should establish automated resource-routing loops from minute one.
+    * *The Manual Action-Spam Opener:* Completely reject requirements to manually click a single interface button repeatedly to kickstart the baseline economy. The user is a toolmaker; they must transition from manual action to an automated resource-routing loop within the strict 3-minute / 180-second onboarding target.
 
 #### 2. Session Design — Sustainable Retention
 * **The Paradigm**: The asynchronous flow state. Progression is driven entirely by intersecting systemic loops where solving a localized mechanical puzzle or completing a resource bottleneck threshold shifts the macro scale of the game completely.
 * **What to ABSORB**:
-    * *The Scale Paradigm Shift:* Abruptly shift the core gameplay loop at major milestones. Once a specific commodity layer is completely automated and trivialized, explode the scope of the world (e.g., moving from local conveyor layout optimization to surface convoy routing and global alliance market mechanics).
+    * *The Scale Paradigm Shift:* Abruptly shift the core gameplay loop at major milestones. Once a specific commodity layer is completely automated and trivialized, explode the scope of the world (e.g., moving from local conveyor layout optimization to **Global Surface Map** convoy routing and global alliance market mechanics).
     * *The Closed-Loop Milestone:* Structure base sectors or pipeline milestones so that once a layout is "solved," it runs flawlessly in the background with zero ongoing micro-management, letting the player safely shift 100% of their attention forward.
-    * *Resource-Sink Projects:* Introduce massive structural projects (e.g., "Subterranean Power Grid Upgrade") that act as numbers thresholds, forcing the player to systematically overhaul and expand their baseline logistics loops to achieve the next tier.
+    * *Resource-Sink Projects:* Introduce massive structural projects (e.g., "Subterranean Power Grid Upgrade") that act as numbers thresholds, forcing the player to systematically overhaul and expand their baseline **Logistics Blueprints** to achieve the next tier.
 * **What to REJECT**:
     * *The Hard Narrative End-Wall:* Reject hard completion terminations where an optimized base simply locks up or resets. Completed sectors must seamlessly convert into automated background anchor nodes that continually pump physical commodities or custom drone variants into the live, persistent alliance market.
 
 #### 3. Automation UX — Structural Macro-Management
 * **The Paradigm**: The deterministic hand-off. The user lays out structural logic, connections, and script parameters in a paused or overview state, and the simulation engine executes the commands with 100% mathematical predictability.
 * **What to ABSORB**:
-    * *The Paused "Simulation Mode" Testing:* Allow players to design complex Assemblies, route pipelines, and configure custom logic scripts in a completely paused, non-destructive editing state. They click a "Run Cycle" toggle to simulate the data output and telemetry triggers without risking real hardware assets.
+    * *The Paused "Simulation Mode" Testing:* Allow players to design complex **Logistics Blueprints**, route pipelines, and configure custom logic scripts in a completely paused, non-destructive editing state. They click a "Run Cycle" toggle to simulate the data output and telemetry triggers without risking real hardware assets.
     * *Kinetic Input/Output Socket Handoffs:* Components pass active mathematical vectors directly to adjacent sockets (e.g., a motor outputting torque directly into a drivetrain component, which converts it to directional hex locomotion vectors).
     * *Automated Algorithmic Bidding:* Implement overview controls that let automation lines monitor market terminals and execute buying or selling scripts the exact second a specific commodity passes a set credit value threshold.
 * **What to REJECT**:
@@ -298,7 +299,7 @@ The following 14 games are queued for numerical evaluation and assignment to the
 * **What to ABSORB**:
     * *Environmental Hazard Modifier Interlocking:* Environmental hazards should actively trigger or bypass component states (e.g., an acid rain hazard tile damages base hulls but provides a 20% processing bonus if the vehicle is socketed with a specialized Corrosive Cell component).
     * *Visual Telemetry Flags:* When a mechanism stalls or a pipeline grid breaks due to excess mass or lack of energy, populate a clear, high-contrast visual warning flag directly over the broken node for rapid structural auditing.
-    * *The Toolbox Inventory Paradigm:* Keep non-installed components stored cleanly in a side-panel design inventory to prevent spatial clutter on the main world map layout.
+    * *The Toolbox Inventory Paradigm:* Keep non-installed components stored cleanly in a side-panel design inventory to prevent spatial clutter on the main **Global Surface Map** layout.
 * **What to REJECT**:
     * *Single-Solution Bottlenecks:* Avoid rigid level design paths that force a single correct arrangement of parts. The calculation core must allow infinite layout variations based on how players balance mass, torque, and power math.
 
@@ -309,6 +310,14 @@ The following 14 games are queued for numerical evaluation and assignment to the
     * *The Real-Time Dashboard Ledger:* Utilize an active, scrolling monospace ledger tracking micro-events to provide immediate visual feedback on every macro variable change.
 * **What to REJECT**:
     * *Hidden Balance Crashes:* Completely reject hidden calculations or sudden balance spikes that wipe out infrastructure reserves with zero warning. Every point of system friction, power drain, or wear-and-tear must be explicitly exposed to the user.
+
+#### Game 9: Frost World
+* **What to ABSORB**:
+    * *The Local Base-Camp Stabilization Anchor:* Ground the player's early progression around a single central core infrastructure element (e.g., a primary furnace or refinery hub) whose status visually transforms the local sector and unlocks adjacent resource nodes.
+    * *Risk-Reward Short-Range Expeditions:* Deploy micro-expeditions onto the **Global Surface Map** to clear out immediate surrounding hex threats and salvage specific baseline refinement inputs.
+    * *Abstract Spatial Asset Tracking:* Provide clean, isometric view options for small screens that allow quick, manual-to-automated infrastructure sorting without requiring tedious pixel-perfect component placement.
+* **What to REJECT**:
+    * *Heavy-Handed Menu Gating:* Reject locking down the screen view to force exact button clicks. Keep tracking intuitive, ensuring that even under survival pressure, the player maintains complete freedom over where they arrange their **Logistics Blueprints**.
 
 ---
 
