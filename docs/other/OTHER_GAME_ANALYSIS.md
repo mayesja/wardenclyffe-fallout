@@ -374,6 +374,173 @@ The following 14 games are queued for numerical evaluation and assignment to the
     *   *The Hidden Mechanics Death Penalty:* Reject hidden calculation traps or silent balance crashes that destroy infrastructure assets without clear telemetry feedback. If a system is overloading or a grid line is failing, the interface flags must pulse violently before catastrophic failure.
 
 ---
+
+## 10. Tranche 1 Analysis: Infinite Incremental / Math
+
+### Target Games
+* Trimps
+* Alien Invasion RPG Idle Game
+
+### Raw Score Baseline Evaluation
+* **Onboarding**: 3 / 3 (High)
+* **Monetization**: 2 / 3 (Medium)
+* **Session Design**: 3 / 3 (High)
+* **Social Glue**: 1 / 3 (Low)
+* **Automation UX**: 2 / 3 (Medium)
+* **Total Archetype Score**: **11 / 15**
+
+---
+
+### Deep-Dive Structural Answers
+
+#### 1. Onboarding — First 5 Minutes
+* **The Paradigm**: The clean runway. Minimize cognitive overload by stripping the UI layout down to a single actionable input, gradually revealing advanced telemetry layers, inventory grids, and production tabs only as the mathematical loops require them.
+* **What to ABSORB**:
+    * *The Unfolding UI Scaffold:* Hide complex menus and sub-grid elements from the primary interface until the player satisfies the explicit material thresholds required to use them.
+    * *Immediate Kinetic Feedback Loops:* Trigger clear visual and mechanical gratification on the first placement or action, mapping out transport boundaries before forcing long-term facility management.
+* **What to REJECT**:
+    * *The Manual Action-Spam Marathon:* Completely reject requirements to manually tap a single button repeatedly to kickstart the baseline economy. Automated resource routing loops must be established within the first minute of execution.
+
+#### 2. Monetization Hooks — Sustainable Revenue
+* **The Paradigm**: Optimization velocity. Revenue generation centers on selling permanent quality-of-life improvements, throughput velocity multipliers, and systemic convenience features that respect the player's time, rather than disposable resources or hard paywalls.
+* **What to ABSORB**:
+    * *Permanent Efficiency Multipliers:* Structure monetization around permanent modifications to asset profiles (e.g., permanent +10% storage capacity or +5% conveyor belt velocity multipliers).
+    * *Automated Convenience Fleets:* Focus monetization on automated quality-of-life tools, such as cargo drone networks that streamline manual loops.
+* **What to REJECT**:
+    * *Hard Progression Paywalls:* Completely reject artificial energy gates or timer lockouts that halt factory production entirely to force a transaction. Monetization must target optimization velocity, never operational stagnation.
+
+#### 3. Session Design — Sustainable Retention
+* **The Paradigm**: The multiscale pendulum. Maintain engagement by seamlessly interlocking long-term macro-projects with high-frequency, brief micro-optimization tasks, preventing progression fatigue through clean, shifting scale paradigms.
+* **What to ABSORB**:
+    * *The Macro/Micro Project Pendulum:* Pair deep, long-running processing cycles with short, 30-second tactical optimization loops to keep the user consistently engaged.
+    * *The Cargo Capacity Bottleneck Loop:* Govern session loops via physical storage constraints, forcing careful calculation of cargo vault allocations against processing capacity.
+    * *The Perk Re-Allocation Reset:* Allow players to cleanly reset and re-allocate their permanent progression currency, giving them the flexibility to shift their entire factory identity to smash specific bottlenecks.
+* **What to REJECT**:
+    * *Infinite Unmitigated Numbers Inflation:* Reject ballooning numerical balances into unreadable scales without introducing fundamental changes to the core gameplay layers. Every scale shift must unlock a distinct mechanical tier.
+
+#### 4. Social Glue — Alliance Ad-Hoc Dynamics
+* **The Paradigm**: Shared optimization laboratories. Because the core math is highly deterministic, the community acts as a collaborative laboratory where players exchange exact layout formulas, blueprint templates, and script settings.
+* **What to ABSORB**:
+    * *The Shared Megastructure Sink:* Implement massive collaborative milestones where alliance syndicates collectively pool specialized components to trigger global tech-era breakthroughs.
+    * *Deterministic Blueprint Sharing:* Allow players to instantly export entire factory layouts or logic script strings into alliance chat channels for peer review and optimization.
+* **What to REJECT**:
+    * *Purely Isolated, Solo Play loops:* Reject the hyper-insulated, lonely sandbox reality of traditional idle games. Individual factory efficiency gains must actively drive, feed, or impact the volatile global alliance economy.
+
+#### 5. Automation UX — Structural Macro-Management
+* **The Paradigm**: Linear priority queues. Complex automation architectures are made accessible on mobile screens through abstract order-of-operations matrices, clear job allocation toggles, and highly readable telemetry ledgers.
+* **What to ABSORB**:
+    * *The Dynamic Resource Allocation Toggle:* Provide macro control matrices where adjusting overarching factory ratios automatically propagates numbers across production lines to maintain a balance state.
+    * *The Delivery Carrier Drone Automation:* Allow players to configure specialized cargo units that autonomously service field locations, clearing out extraction inventories passively.
+    * *The Real-Time Dashboard Ledger:* Maintain active, net-delta math indicators (e.g., $+14.2/\text{sec}$ or $-2.1/\text{sec}$) directly on the primary UI rows for immediate troubleshooting.
+* **What to REJECT**:
+    * *Opaque Mathematical Dependencies:* Reject hidden calculations or silent bottlenecks that break automated lines without clear UI feedback. Every consumption deficit, energy drain, and throughput block must be explicitly exposed.
+
+---
+
+### Individual Game Deep Dives
+
+#### Game 11: Trimps
+*   **Description**: A dense, text-and-grid-based incremental game focused on population management, incremental resource collection ratios, and deep tactical progress resets to secure permanent systemic perks.
+*   **What to ABSORB**:
+    *   *The UI Reveal Scaffold:* Reveal layout panels step-by-step to prevent initial cognitive fatigue.
+    *   *The Infinite Prestige Currency Model:* Reward deep exploration into hazardous territory with a core upgrade resource.
+    *   *Flexible Attribute Resets:* Allow full, lossless re-allocation of progression points to let players experiment with alternative industrial builds.
+    *   *The Linear Ratio Matrix:* Let players manage massive numbers via simple proportional values rather than tedious individual assignments.
+*   **What to REJECT**:
+    *   *Layout-Wiping Resets:* Avoid progress resets that tear down carefully constructed spatial conveyor paths or layout arrays.
+
+#### Game 12: Alien Invasion RPG Idle Game
+*   **Description**: A mobile-native isometric arcade-idle game built around a mobile harvesting loop, inventory capacity bottlenecks, and dedicated cargo delivery drone upgrades.
+*   **What to ABSORB**:
+    *   *The Kinetic Catching Radius:* Use simple proximity mechanics for field extraction to make manual collection immediately intuitive.
+    *   *The Drone Hauler System:* Deploy autonomous logistics bots to fetch resources from field units, keeping the player focused on high-level navigation.
+    *   *The Collective Contribution Meter:* Track shared alliance milestones via unified contribution grids to drive community alignment.
+    *   *Cargo Limit Retention Loops:* Base surface session lengths on explicit cargo limits to create natural tactical return cycles.
+*   **What to REJECT**:
+    *   *Fake Multiplayer Illusion Matrix:* Completely reject simulated leaderboards or fake multiplayer tracking panels. All economic data, trade terminals, and social features must be entirely server-verified and live.
+
+---
+
+## 11. Tranche 1 Analysis: Mobile 4X / Solo-to-Alliance Pivot
+
+### Target Games
+* Whiteout Survival (WOS)
+* Last Asylum
+
+### Raw Score Baseline Evaluation
+* **Onboarding**: 3 / 3 (High)
+* **Monetization**: 3 / 3 (High)
+* **Session Design**: 3 / 3 (High)
+* **Social Glue**: 3 / 3 (High)
+* **Automation UX**: 1 / 3 (Low)
+* **Total Archetype Score**: **13 / 15**
+
+---
+
+### Deep-Dive Structural Answers
+
+#### 1. Onboarding — First 5 Minutes
+* **The Paradigm**: The cinematic safe-harbor. Immerse the player in an active, localized structural crisis where simple interactions immediately stabilize an asset, establishing emotional investment and clear core objectives before introducing advanced mechanics.
+* **What to ABSORB**:
+    * *The Perimeter Defense Sandbox:* Open the initial gameplay window inside a confined spatial grid where the player must immediately position defenses or route power lines to resolve an active threat vector.
+    * *The Core Structural Focus:* Anchor the player's early progression around a single central infrastructure piece (e.g., a Thermal Core or Primary Power Hub) whose status visually transforms the local sector.
+* **What to REJECT**:
+    * *Forced On-Rail Screen Locks:* Completely reject heavy-handed pointer tutorials that lock down the entire UI and force exact input paths. Onboarding must respect user agency and favor intuitive, tactile experimentation.
+
+#### 2. Monetization Hooks — Sustainable Revenue
+* **The Paradigm**: The competitive accelerator. Revenue generation leans heavily into selling structural velocity, secondary design queues, and community-focused social value bundles that provide shared benefits to an entire alliance ecosystem.
+* **What to ABSORB**:
+    * *The Multi-Queue Operational License:* Structure premium tiers around purchasing additional simultaneous design slots, extra assembly blueprints, or permanent autonomous construction drones.
+    * *Alliance-Wide Gift Packaging:* Couple premium purchases with automated, small-scale resource drops delivered straight into alliance team feeds, converting individual spend into localized social credit.
+* **What to REJECT**:
+    * *Whale-Griefing Progress Wipes:* Completely reject pay-to-win mechanisms that allow high-spending players to bypass spatial travel limits and instantly overwrite or delete a low-level user's lifetime infrastructure progress.
+
+#### 3. Session Design — Sustainable Retention
+* **The Paradigm**: The calendar rhythm. Establish consistent engagement profiles by binding server-wide actions to predictable multi-day event calendars, layered alongside domestic resource-staging pipelines that demand regular efficiency check-ins.
+* **What to ABSORB**:
+    * *The Material Staging Pipeline:* Require multi-tier refinement loops that process raw inputs over hours, creating rewarding, predictable check-in milestones for technical tracking.
+    * *The Domestic Resource-Balance Loop:* Integrate local maintenance demands (e.g., power network draws vs. structural temperature constraints) to keep player retention active between massive surface map operations.
+* **What to REJECT**:
+    * *Synthetic Energy/Stamina Gates:* Avoid artificial daily energy bars that limit map actions. Structural engagement loops must be governed by physical cargo capacities, network bandwidth, or logistical travel times.
+
+#### 4. Social Glue — Alliance Ad-Hoc Dynamics
+* **The Paradigm**: Systemic tribalism. Drive long-term alliance cohesion by making territory expansion, regional resource dominance, and structural megastructure defense mathematically impossible without absolute group coordination and physical pipeline linkage.
+* **What to ABSORB**:
+    * *Communal Assembly Speed-Ups:* Provide rapid, single-tap assistance links within the alliance panel to allow teammates to shave minor margins off each other's active infrastructure build queues.
+    * *Shared Combat Outpost Hubs:* Allow alliance syndicates to construct massive combined defensive structures where multiple members can route and park their automated vehicle divisions to build a unified defensive line.
+* **What to REJECT**:
+    * *Forced Geographic Base Teleportation:* Reject forcing players to magically uproot and relocate their entire factory base layout across the world map. Alliance territory expansion should expand organically via physical pipeline links and infrastructure grids.
+
+#### 5. Automation UX — Structural Macro-Management
+* **The Paradigm**: Centralized summary grids. Streamline extensive map systems on mobile devices by consolidating active external convoys, harvester coordinates, and outpost statuses into high-level, interactive management desk panels.
+* **What to ABSORB**:
+    * *The Automated Transit Grid Overview:* Maintain a high-contrast tactical panel mapping all active field convoys, complete with real-time arrival metrics, payload manifests, and destination nodes.
+    * *The "Auto-Assign" Labor Matrix:* Implement high-level toggles that automatically balance labor forces or processing priorities based on optimal net efficiency calculations.
+* **What to REJECT**:
+    * *The Mindless Auto-Complete Skip:* Reject instantly processing or skipping logistics steps via menu buttons. Convoys and assembly actions must execute deterministically across spatial tiles to maintain the value of layout engineering.
+
+---
+
+### Individual Game Deep Dives
+
+#### Game 13: Whiteout Survival (WOS)
+*   **Description**: A mobile city-builder and 4X strategy title set in a glacial apocalypse, tracking colony warmth maintenance, survivor labor assignments, and alliance fortress warfare.
+*   **What to ABSORB**:
+    *   *The Central Metaphor Anchor:* Focus early base priorities on stabilizing a single vital engine to ground early choices.
+    *   *Communal Chat Value Drops:* Reward team interactions by attaching micro-material drops to alliance milestone notifications.
+    *   *Local Wellness Auditing:* Force ongoing optimization by tying factory throughput health to survivor operational stability.
+*   **What to REJECT**:
+    *   *Offline Hard Progress Devastation:* Never allow an offline player's core production layout to be dismantled by rival players while they are logged off.
+
+#### Game 14: Last Asylum
+*   **Description**: A gritty, tactical post-apocalyptic base-building game focused on perimeter defense grids, vehicle assembly line configurations, and cooperative alliance territory capture.
+*   **What to ABSORB**:
+    *   *Early Defensive Layout Integration:* Teach spatial planning immediately by dropping users into an active grid-placement engagement.
+    *   *The Multi-Queue Expansion Model:* Monetize design capacity through permanent drone and blueprint slot unlocks.
+    *   *The Consolidated Fleet Terminal:* Provide an interface that arrays all active surface expeditions cleanly on a single screen layer.
+*   **What to REJECT**:
+    *   *Artificial Materials Decay:* Avoid degrading processed stockpiles over time; items must sit securely in automated registries until routed by the user.
+---
 ---
 
 ### Historical Case Study Appendix: Trash (2005)
