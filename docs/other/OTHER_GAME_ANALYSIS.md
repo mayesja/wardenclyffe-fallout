@@ -238,8 +238,6 @@ The following 14 games are queued for numerical evaluation and assignment to the
 
 ---
 
----
-
 ## 8. Tranche 2 Analysis: Pure Solo / Fixed Arc
 
 ### Target Games
@@ -305,6 +303,70 @@ The following 14 games are queued for numerical evaluation and assignment to the
 * **What to REJECT**:
     * *Hidden Balance Crashes:* Completely reject hidden calculations or sudden balance spikes that wipe out infrastructure reserves with zero warning. Every point of system friction, power drain, or wear-and-tear must be explicitly exposed to the user.
 
+---
+
+## 9. Tranche 2 Analysis: High-Density Ad-Hoc Social (MUD)
+
+### Target Games
+* Thunderdome 2: Rise of the Freejacks (NukeFire)
+* Crossfire
+
+### Raw Score Baseline Evaluation
+* **Onboarding**: 1 / 3 (Low)
+* **Monetization**: 0 / 3 (Dead Zone)
+* **Session Design**: 3 / 3 (High)
+* **Social Glue**: 3 / 3 (High)
+* **Automation UX**: 0 / 3 (Dead Zone)
+* **Total Archetype Score**: **7 / 15**
+
+---
+
+### Deep-Dive Structural Answers
+
+#### 1. Onboarding — First 5 Minutes
+* **The Paradigm**: Low-assistance, brutal immersion. The player is dropped into an uninstanced, highly volatile spatial environment with zero text tutorials, relying entirely on immediate proximity text channels, player-run mentorships, or extreme trial-and-error to find traction.
+* **What to ABSORB**:
+    * *The Value of Community Orientation:* Lean into letting existing veteran player syndicates actively recruit, house, and guide incoming rookies directly within the live grid, rather than forcing players through an artificial, isolated single-player sandbox tutorial.
+* **What to REJECT**:
+    * *The Absolute Command Syntax Wall:* Completely reject archaic text-based commands or text-reliant interaction barriers. The game layout must rely on intuitive tile grid selection, slick drag-and-drop logistics pipe connections, and clean, modern contextual button prompts.
+
+#### 2. Session Design — Sustainable Retention
+* **The Paradigm**: High-density spatial urgency. Players maintain extreme session lengths because the persistent world state is dynamic, localized resource hotspots continuously shift, and physical asset positions require active logistical maintenance.
+* **What to ABSORB**:
+    * *Spatial Resource Hotspots:* Structure the outer world map so resource richness is bound to volatile spatial coordinates, forcing players to actively project presence outward to secure high-value loops.
+* **What to REJECT**:
+    * *The Absolute Progress Delete:* Completely reject offline progress wipes where a sleeping player's entire lifetime infrastructure can be deleted. While surface payloads, harvesters, and trading nodes can be looted, the player's core underground facility remains secure.
+
+#### 3. Social Glue — Alliance Ad-Hoc Dynamics
+* **The Paradigm**: Radical, non-systemic interdependence. Trust is the highest leverage currency in the game. Because survival is mathematically impossible for a solo player, alliances form completely organically based on proximity, labor division, and reputation.
+* **What to ABSORB**:
+    * *The Proximity Trade Matrix:* Restrict material transfers to physical geography. Eliminate immediate global menu trading; commodities must be physically hauled via cargo chassis or piped across sectors, creating high-stakes transportation corridors.
+* **What to REJECT**:
+    * *Rigid Hard-Coded Class or Faction Gates:* Reject forcing players into unchangeable character archetypes or fixed starting factions. All alliance syndicates must be fluid, player-managed entities capable of merging, fracturing, or betraying based on material reality.
+
+---
+
+### Individual Game Deep Dives
+
+#### Game 9: Thunderdome 2: Rise of the Freejacks (NukeFire)
+*   **Description**: A text-driven, ultra-hardcore post-apocalyptic MUD centered on brutal resource scarcity, direct spatial tactical combat, and completely player-driven territorial economies where localized factions control vital asset nodes.
+*   **What to ABSORB**:
+    *   *The Proximity-Based Welcome Chat:* Automatically route a newcomer’s UI communication window to the nearest active alliance beacon or outpost grid coordinate upon drop-in to stimulate instant human interaction.
+    *   *The Scarcity Spike Pulse:* Introduce periodic, heavily telegraphed regional depletion events (e.g., "Sulphur Pocket Collapse in Sector 4"). This disrupts comfortable automation routes and triggers sudden logistical scrambles.
+    *   *Organic Reputation Records:* Provide a searchable server-side text ledger tracking player trading histories and surface combat actions, allowing accurate operator reputations to build naturally.
+*   **What to REJECT**:
+    *   *The Un-Telegraphed Off-line Wipe:* Completely reject systems where an offline player's core production loop can be entirely disassembled or erased by rivals while they are logged off. 
+
+#### Game 10: Crossfire
+*   **Description**: An open-source, tile-based graphical cooperative multiplayer roguelike/MUD featuring an immense, persistent world grid where players navigate intricate mechanical systems and heavily specialized skill development.
+*   **What to ABSORB**:
+    *   *The "Safe-Room" Prototyping Cell:* Isolate the initial startup loop inside a small, 100% secure subterranean tile. The player must successfully wire a manual harvest socket to an automated transport line to unlock access to the wider Surface Map.
+    *   *Deep Structural Specialization:* Design advanced components to demand highly explicit, non-standard manufacturing environments (e.g., Logic Cores requiring a pristine clean-room layout footprint), keeping spatial base optimization engaging.
+    *   *Shared Infrastructure Nodes:* Allow multiple players or allied syndicates to plug directly into massive, neutral world structures (e.g., an ancient geothermal tap station), splitting the energy output based on how many pipe linkages they actively maintain.
+*   **What to REJECT**:
+    *   *The Hidden Mechanics Death Penalty:* Reject hidden calculation traps or silent balance crashes that destroy infrastructure assets without clear telemetry feedback. If a system is overloading or a grid line is failing, the interface flags must pulse violently before catastrophic failure.
+
+---
 ---
 
 ### Historical Case Study Appendix: Trash (2005)
