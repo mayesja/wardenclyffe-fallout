@@ -570,3 +570,38 @@ The following 16 games are queued for numerical evaluation and assignment to the
     *   *Strategic Resource Hubs:* Lock advanced tech tiers behind the active spatial control of specialized, finite sector coordinates (e.g., an abandoned silicon refinery or polymer reservoir) on the Global Surface Map.
 *   **What to REJECT**:
     *   *APM Micro Bottlenecks:* Reject twitch-reflex combat mechanics and high-APM micro-management requirements. Success must be dictated entirely by layout optimization, resource distribution, and automated script logic.
+
+---
+
+## Analysis Results Classification Roadmap
+
+This operational roadmap categorizes the 21 core takeaways harvested from external titles. Features are sorted strictly along **Ease of Implementation** (technical architecture, algorithmic complexity, and UI friction) and **Priority** (what is fundamentally required to establish the core loop vs. what can be layered on to enhance depth later) to establish a clear development pipeline.
+
+---
+
+### The 2x2 Operational Matrix
+
+| | **Add Sooner (High Priority)** | **Add Later (Strategic Polish)** |
+| :--- | :--- | :--- |
+| **Easy to Implement** | 🟢 **Quadrant I: Low-Hanging Fruit**<br>• #1: 180s Action-to-Automation Target<br>• #4: Toolbox Inventory Side-Panel<br>• #5: High-Contrast Telemetry Flags<br>• #6: Lossless Material Transformations<br>• #10: Lossless Progression Resets | 🔵 **Quadrant II: Value Polish**<br>• #2: The Unfolding UI Scaffold<br>• #9: Deterministic Blueprint String Sharing<br>• #15: Dynamic Payload Swapping<br>• #21: Communal Chat Value Drops |
+| **Difficult to Implement** | 🟡 **Quadrant III: Core Infrastructure**<br>• #3: The Visual Ant-Farm Cross-Section<br>• #11: Logistical Corridor Control<br>• #12: The Macro/Micro Project Pendulum<br>• #14: The 4-Slot Modular Blueprint Matrix<br>• #16: FPS-Style Combat Tech Drops<br>• #17: Role-Based Production Specialization | 🔴 **Quadrant IV: Scale Horizon**<br>• #7: Computing Resource Budgets<br>• #8: Paused "Simulation Mode" Testing<br>• #13: The Industrial Eco-Friction Swarm<br>• #18: The Proximity Trade Matrix<br>• #19: Shared World Infrastructure Nodes<br>• #20: The Shared Megastructure Sink |
+
+---
+
+### Quadrant Breakdown & Execution Logic
+
+#### 🟢 Quadrant I: Low-Hanging Fruit (Easy / Add Sooner)
+Immediate, high-impact mechanical and UX wins that require minimal backend architecture but fundamentally establish the player's initial relationship with the automation loop.
+* **Execution Strategy**: Hardcode clean, unpolluted 1:1 commodity conversion math, isolate non-installed components in a slide-out inventory panel to prevent canvas clutter, utilize simple world-space UI bounding boxes for loop stall alerts, and allow zero-penalty build/perk resets. This ensures the game hits its critical 3-minute manual-to-automated transition without technical roadblocks.
+
+#### 🟡 Quadrant III: Core Infrastructure (Difficult / Add Sooner)
+The foundational bedrock of Factory Survival. While technically complex, these features must be engineered early because they directly connect the subterranean factory layer to the surface global map and alliance social structures.
+* **Execution Strategy**: Build out the vertical, multi-layered visual "ant-farm" base perspective rendering and the 4-slot vehicle assembly grid. Code the moving convoy path vectors and establish the core macro project pendulum where surface salvage is the mandatory catalyst to upgrade the safe underground base. Implement coordinate-based tech drops on surface unit destruction and define alliance data tags for player-to-player component ordering.
+
+#### 🔵 Quadrant II: Value Polish (Easy / Add Later)
+Systems that streamline social engagement, add strategic flexibility, or smooth out the user onboarding experience, but are not strictly required to test if the core inner/middle/outer loops function.
+* **Execution Strategy**: Progressively hide advanced UI panels and tabs until structural milestones are met, allow players to serialize and copy/paste factory layouts via raw text strings, permit field vehicles to instantly hot-swap payload utility modules, and attach simple automated reward tables to alliance milestone chat notifications.
+
+#### 🔴 Quadrant IV: Scale Horizon (Difficult / Add Later)
+Advanced simulation, late-game scaling, and deep social-cohesion features. These systems require a stabilized engine, precise mathematical balance sheets, and server-side verification to execute securely.
+* **Execution Strategy**: Implement server-checked computing budget limits (Operations & Memory) on background scripts, engineer a non-destructive paused factory simulation testing mode, code the global dynamic threat engine that monitors factory output to trigger surface machine swarms, enforce physical geography limitations on resource transit lines, manage multi-player pipeline connections to shared neutral map nodes, and maintain large-scale collaborative alliance contribution banks.
