@@ -22,6 +22,13 @@ $$\text{Total Score} = \text{Onboarding} + \text{Monetization} + \text{Session D
 *Note: All questions are weighted equally at this stage. Weights may be adjusted dynamically via multipliers later in development to highlight specific surfacing priorities.*
 
 ---
+### These are the questions to ask of each game:
+1. **Onboarding** — how do comparable games get new players hooked in the first 5 minutes?
+2. **Monetization hooks** — what actually gets people to open their wallets, and when?
+3. **Session design** — how do they bring players back without being obnoxious about it?
+4. **Social glue** — what makes alliances sticky vs. feeling like an obligation?
+5. **Automation UX** — how do games with complex systems make them accessible on mobile?
+---
 
 ## 2. Master Evaluation Grid (System Baseline Reference)
 
