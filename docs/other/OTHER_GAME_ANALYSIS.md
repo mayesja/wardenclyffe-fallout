@@ -575,7 +575,59 @@ The following 16 games are queued for numerical evaluation and assignment to the
 
 ## Analysis Results Classification Roadmap
 
-This operational roadmap categorizes the 21 core takeaways harvested from external titles. Features are sorted strictly along **Ease of Implementation** (technical architecture, algorithmic complexity, and UI friction) and **Priority** (what is fundamentally required to establish the core loop vs. what can be layered on to enhance depth later) to establish a clear development pipeline.
+This operational roadmap categorizes 21 core takeaways harvested from external titles. Features are sorted strictly along **Ease of Implementation** (technical architecture, algorithmic complexity, and UI friction) and **Priority** (what is fundamentally required to establish the core loop vs. what can be layered on to enhance depth later) to establish a clear development pipeline.
+
+## Consolidated "Absorb" List
+
+### Onboarding & UI Experience
+* **#1: The 180s Action-to-Automation Target**: Players drop directly into a confined subterranean grid and transition from manual clicking to their first functional conveyor loop within 3 minutes.
+  * *Source*: *Doom/Quake*, *Trimps*, *Last Asylum*
+* **#2: The Unfolding UI Scaffold**: Advanced telemetry, trading, and logistics tabs are hidden initially, gradually unlocking only as player production satisfies explicit material milestones.
+  * *Source*: *Trimps*, *Universal Paperclips*
+* **#3: The Visual Ant-Farm Cross-Section**: A highly scannable, vertical cross-sectional UI view for the subterranean factory layer, using distinct silhouettes to audit facility health instantly.
+  * *Source*: *SimCity 2000*, *XCOM*
+* **#4: Toolbox Inventory Side-Panel**: Non-installed components, structures, and items are stored in a slide-out inventory panel to prevent grid layout clutter.
+  * *Source*: *The Incredible Machine*
+* **#5: High-Contrast Telemetry Flags**: High-visibility alert banners populate directly in world space over machine nodes whenever a production loop stalls or resource lines starve.
+  * *Source*: *The Incredible Machine*, *Alien Invasion*
+
+### Factory Design & Logic Systems
+* **#6: Lossless Material Transformations**: Absolute, unpolluted commodity conversion ratios (e.g., Input X always yields exactly Output Y) to ensure flawless balance-sheet math.
+  * *Source*: *Universal Paperclips*
+* **#7: Computing Resource Budgets**: An abstract processing currency (Operations & Memory) that limits how many automation scripts or background logic functions can run concurrently.
+  * *Source*: *Universal Paperclips*, *Uplink*
+* **#8: Paused "Simulation Mode" Testing**: A non-destructive, paused editing state allowing players to route layout blueprints and test logic scripts via simulated data cycles before spending assets.
+  * *Source*: *The Incredible Machine*
+* **#9: Deterministic Blueprint String Sharing**: Entire factory floor layouts, routing designs, and logic scripts can be instantly serialized into text strings for quick sharing in alliance chat.
+  * *Source*: *Trimps*
+* **#10: Lossless Progression Resets**: Total, penalty-free re-allocation of player talent perks, research choices, or permanent currencies to allow rapid pivoting against factory bottlenecks.
+  * *Source*: *Trimps*
+
+### Surface Navigation & Vehicle Assembly
+* **#11: Logistical Corridor Control**: Supply convoys are treated as active pathing loops on explicit global coordinates; protecting trade lines from ambush is a major strategic gameplay loop.
+  * *Source*: *Doom/Quake*, *Civilization*, *Jagged Alliance*
+* **#12: The Macro/Micro Project Pendulum**: Quick surface expeditions harvest specialized salvage blocks, which act as the mandatory catalysts to upgrade the safe, subterranean factory.
+  * *Source*: *Civilization*, *XCOM*, *Frost World*
+* **#13: The Industrial Eco-Friction Swarm**: Massive industrial output in the underground layer dynamically spikes surface map tension, increasing local machine swarm aggression and pathing vectors.
+  * *Source*: *XCOM*
+* **#14: The 4-Slot Modular Blueprint Matrix**: Vehicles are assembled via four explicit component slots: Chassis (movement), Payload (utility/weapon), Armor Shell (mitigation), and Logic Core (script space).
+  * *Source*: Sid Meier's *Alpha Centauri*
+* **#15: Dynamic Payload Swapping**: Vehicles can be completely repurposed simply by swapping their payload core, converting a harvester into a combat escort or a cargo truck.
+  * *Source*: Sid Meier's *Alpha Centauri*
+* **#16: FPS-Style Combat Tech Drops**: Destroyed surface units and convoys drop high-yield, temporary Salvage Nodes directly onto map coordinates, creating instant flashpoints for local players to contest.
+  * *Source*: *Trash (2005)*
+
+### Alliance Networks & Social Glue
+* **#17: Role-Based Production Specialization**: Alliances act as production syndicates where Player A refines fuel, Player B builds chassis, and Player C scripts targeting logic.
+  * *Source*: *Doom/Quake*, *Crossfire*
+* **#18: The Proximity Trade Matrix**: Material trading is bound to physical geography; resources must be physically hauled via cargo vehicle or piped across sectors to alliance nodes.
+  * *Source*: *Thunderdome 2*
+* **#19: Shared World Infrastructure Nodes**: Multiple allied factories can physically plug pipelines directly into massive neutral structures on the map, splitting the resource yields.
+  * *Source*: *Crossfire*
+* **#20: The Shared Megastructure Sink**: Alliance communities work together on massive, unified contribution grids, pooling high-tier components to trigger global tech-era breakthroughs.
+  * *Source*: *Alien Invasion*, *Whiteout Survival*
+* **#21: Communal Chat Value Drops**: Automated micro-material gift packages are attached directly to alliance milestone notifications inside the alliance team chat feed.
+  * *Source*: *Whiteout Survival*
 
 ---
 
