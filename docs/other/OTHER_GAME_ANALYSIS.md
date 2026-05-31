@@ -76,7 +76,7 @@ We will execute this analysis using a **Bottom-Up** strategy, dissecting games f
 
 ## 5. Active Game Inventory To Be Processed
 
-The following 14 games are queued for numerical evaluation and assignment to their respective analytical tranches:
+The following 16 games are queued for numerical evaluation and assignment to their respective analytical tranches:
 
 * Last Asylum
 * Civilization (III - V)
@@ -118,15 +118,15 @@ The following 14 games are queued for numerical evaluation and assignment to the
 #### 1. Onboarding — First 5 Minutes
 * **The Paradigm**: Drop the player straight into immediate action with zero narrative delays or menu congestion. The hook relies on instantaneous agency and resolving immediate environmental threats.
 * **What to ABSORB**: 
-    * *The Subterranean Pocket:* Start players in an isolated, dark subterranean tile. Do not blast them with UI panels, global maps, or alliance functions.
-    * *Action-to-Automation Dopamine:* Transition from manual clicking to the first functional conveyor belt within 180 seconds. The initial hook must be the physical visual feedback of a machine completely eliminating manual labor.
+    * *The Subterranean Factory Layer:* Start players in a Subterranean Factory Layer. Do not blast them with UI panels, global maps, or alliance functions.
+    * *Action-to-Automation Dopamine:* Transition from manual clicking to the first functional conveyor belt within a 3-minute / 180-second onboarding target. The initial hook must be the physical visual feedback of a machine completely eliminating manual labor.
 * **What to REJECT**: 
     * *The Reflex Wall:* Traditional arena games filter players by physical twitch dexterity. *Factory Survival* must reject any onboarding that penalizes execution speed, focusing instead on purely logical spatial placement.
 
 #### 2. Session Design — Sustainable Retention
 * **The Paradigm**: Elimination of mandatory daily streaks or artificial energy gates. Retention relies entirely on pushing players into a "flow state"—calibrating spatial awareness against clear, predictable mechanics.
 * **What to ABSORB**:
-    * *Logistical Pathing Control:* High-level *Quake* gameplay is governed by map-timing (routing pathing perfectly to capture spawning mega-health/armor tokens). Translate this directly into **Surface Map Logistics**. Managing supply convoys should be a high-stakes spatial puzzle where holding the transport corridor *is* the defensive game.
+    * *Logistical Pathing Control:* High-level *Quake* gameplay is governed by map-timing (routing pathing perfectly to capture spawning mega-health/armor tokens). Translate this directly into **Global Surface Map Logistics**. Managing supply convoys should be a high-stakes spatial puzzle where holding the transport corridor *is* the defensive game.
     * *High-Tension Micro-Sessions:* Surface expeditionary marches or outpost checks should visually feel like tight, fast-paced tactical skirmishes with transparent, high-stakes feedback loops.
 * **What to REJECT**:
     * *Total Session Progress Wipes:* In *XEvil*, failure wipes out the entire session run. In a long-term mobile MMO, losing hard progress kills retention. Defeat on the Surface should cost the *cargo payload/material output*, never the core underground infrastructure.
@@ -134,16 +134,16 @@ The following 14 games are queued for numerical evaluation and assignment to the
 #### 3. Social Glue — Alliance Ad-Hoc Dynamics
 * **The Paradigm**: Long-term community retention built entirely through organic, specialized team roles and shared tactical communication rather than forced calendar coordination.
 * **What to ABSORB**:
-    * *Role-Based Resource Specialization:* Arena shooter team modes (e.g., Capture the Flag) divide players into natural tactical roles based on their chosen positioning and loadout. Because *Factory Survival* uses distinct underground factory specialization, alliance surface warfare must match this. Alliances succeed when members act as specialized infrastructure nodes (e.g., Player A manufactures heavy drone chassis, Player B runs a dedicated plasma fuel pipeline, Player C writes/supplies tactical Lua targeting logic scripts).
+    * *Role-Based Resource Specialization:* Arena shooter team modes (e.g., Capture the Flag) divide players into natural tactical roles based on their chosen positioning and loadout. Because *Factory Survival* uses distinct Subterranean Factory Layer specialization, alliance surface warfare must match this. Alliances succeed when members act as specialized infrastructure nodes (e.g., Player A manufactures heavy drone chassis, Player B runs a dedicated plasma fuel pipeline, Player C writes/supplies tactical Lua targeting logic scripts).
     * *Deterministic Replay Sharing:* Arena shooters grew communities by sharing small demo files. Because our C# simulation core is deterministic, the game can easily export ultra-lightweight replay files of successful base defenses or convoy ambushes straight into alliance chat pipelines for bragging rights and optimization critique.
 * **What to REJECT**:
-    * *Zero-Sum Toxic Elitism:* Pure hostile skill-gating creates toxic communities that starve out incoming players. Surface map mechanics must provide critical economic, supply, or defense coordination roles so casual or non-PvP-focused players remain highly valuable assets to top-tier alliances.
+    * *Zero-Sum Toxic Elitism:* Pure hostile skill-gating creates toxic communities that starve out incoming players. Global Surface Map mechanics must provide critical economic, supply, or defense coordination roles so casual or non-PvP-focused players remain highly valuable assets to top-tier alliances.
 
 ---
 
 ### Summary of Extracted Structural Building Blocks
 1.  **Onboarding Pipeline**: Drop-in -> Manual Click Node -> Automated Belt Loop visual feedback in <3 minutes.
-2.  **Surface Map Corridor Mechanic**: Convoys treated as high-stakes spatial pathing loops rather than passive progress bars.
+2.  **Global Surface Map Corridor Mechanic**: Convoys treated as high-stakes spatial pathing loops rather than passive progress bars.
 3.  **Alliance Integration**: Transition alliance structures from passive military groups to active, interdependent production/logistics syndicates.
 
 ---
@@ -177,7 +177,7 @@ The following 14 games are queued for numerical evaluation and assignment to the
 *   **The Paradigm**: Mastery of the asynchronous flow state. By decoupling progression from real-world clocks or energy mechanics, retention is driven entirely by intersecting systemic loops: a short-term tactical puzzle is directly tied to a long-term macro-infrastructure project.
 *   **What to ABSORB**:
     *   *The Macro/Micro Pendulum:* Replicate the loop where a fast, 2-minute tactical surface hex engagement yields specific salvage blocks. These blocks are directly brought back to upgrade a deep, long-term conveyor network or production line in the underground base, which eventually unlocks a new tier of tactical military units.
-    *   *The Industrial Eco-Friction Loop:* Tie massive factory production volumes to environmental feedback. Over-producing or expanding your subterranean footprint triggers a direct, telegraphed tactical challenge on the Surface Map by increasing machine swarm aggressiveness.
+    *   *The Industrial Eco-Friction Loop:* Tie massive factory production volumes to environmental feedback. Over-producing or expanding your subterranean footprint triggers a direct, telegraphed tactical challenge on the Global Surface Map by increasing machine swarm aggressiveness.
 *   **What to REJECT**:
     *   *The Predictable Scripting Cliff:* Reject insular single-player loops where a player can permanently "solve" the AI's script patterns. Every underlying automation system must eventually interface with a dynamic, unpredictable, player-driven global alliance ecosystem to maintain infinite retention.
 
@@ -195,9 +195,9 @@ The following 14 games are queued for numerical evaluation and assignment to the
 
 #### Game 1: SimCity 2000
 *   **What to ABSORB**:
-    *   *Cross-Sectional Overlay Mapping:* Utilize a clean visual toggle between the gritty, tactical Surface Map view and the clean, satisfying Underground Factory view.
+    *   *Cross-Sectional Overlay Mapping:* Utilize a clean visual toggle between the gritty, tactical Global Surface Map view and the clean, satisfying Subterranean Factory Layer view.
     *   *Infrastructure Proximity Networks:* Tie machine operations to physical, spatial connectivity (e.g., wiring into localized power grids or linking fluid pipelines), turning base optimization into a rewarding spatial puzzle.
-    *   *The Budget Telemetry Panel:* Provide a macro-level telemetry screen where adjusting overarching factory variables instantly propagates predictable downstream data through production lines.
+    *   *The Budget Telemetry Panel:* Provide a macro-level telemetry screen where adjusting overarching factory variables instantly propagates predictable downstream data through Logistics Blueprints.
 *   **What to REJECT**:
     *   *Untelegraphed Disaster Destruction:* Avoid random, unmapped failure states or catastrophic disasters that erase hours of design with no warning. Every base raid or convoy ambush must be a 100% deterministic, telegraphed event.
 
@@ -207,13 +207,13 @@ The following 14 games are queued for numerical evaluation and assignment to the
     *   *Hex-Based Resource Yields:* Display clean, explicit data overlays directly on surface hex tiles to make extraction values and territory tracking instantly readable at a glance.
     *   *The Unit Automation Toggle:* Allow players to manually clear high-stakes trade corridors, and then toggle supply convoys to an automated background routing script once the lane is secure.
 *   **What to REJECT**:
-    *   *The Synchronous Turn-Based Progression Wall:* Avoid artificial turn-based queues. The entire global map and underground factory layers must function on a continuous, asynchronous, real-time server clock.
+    *   *The Synchronous Turn-Based Progression Wall:* Avoid artificial turn-based queues. The entire global map and Subterranean Factory Layer layers must function on a continuous, asynchronous, real-time server clock.
 
 #### Game 3: XCOM
 *   **What to ABSORB**:
     *   *The Geoscape Telemetry Hub:* Utilize a dark, high-contrast holographic radar screen for the Global Surface Operations View to monitor machine swarm vectors and alliance logistics lanes.
-    *   *The Direct Macro-to-Micro Upgrades Pipeline:* Ensure that rare, specialized salvage blocks or corrupted cores secured on the Surface Map act as the explicit catalysts required to unlock elite underground automation tech.
-    *   *Visual Layered Hierarchy:* Adopt a highly scannable "ant-farm" vertical cross-section for the subterranean base layout, letting players audit facility statuses instantly via color and silhouette.
+    *   *The Direct Macro-to-Micro Upgrades Pipeline:* Ensure that rare, specialized salvage blocks or corrupted cores secured on the Global Surface Map act as the explicit catalysts required to unlock elite underground automation tech.
+    *   *Visual Layered Hierarchy:* Adopt a highly scannable "ant-farm" vertical cross-section for the Subterranean Factory Layer layout, letting players audit facility statuses instantly via color and silhouette.
 *   **What to REJECT**:
     *   *Permanent Unit Loss Permadeath:* Reject permanent progress wipes on individual tactical assets. Units must be treated as modular, automated constructs—losing a unit costs hardware materials and factory queue time, never unrecoverable character progress.
 
@@ -349,7 +349,7 @@ The following 14 games are queued for numerical evaluation and assignment to the
 #### 2. Session Design — Sustainable Retention
 * **The Paradigm**: High-density spatial urgency. Players maintain extreme session lengths because the persistent world state is dynamic, localized resource hotspots continuously shift, and physical asset positions require active logistical maintenance.
 * **What to ABSORB**:
-    * *Spatial Resource Hotspots:* Structure the outer world map so resource richness is bound to volatile spatial coordinates, forcing players to actively project presence outward to secure high-value loops.
+    * *Spatial Resource Hotspots:* Structure the Global Surface Map so resource richness is bound to volatile spatial coordinates, forcing players to actively project presence outward to secure high-value loops.
 * **What to REJECT**:
     * *The Absolute Progress Delete:* Completely reject offline progress wipes where a sleeping player's entire lifetime infrastructure can be deleted. While surface payloads, harvesters, and trading nodes can be looted, the player's core underground facility remains secure.
 
@@ -364,7 +364,7 @@ The following 14 games are queued for numerical evaluation and assignment to the
 
 ### Individual Game Deep Dives
 
-#### Game 9: Thunderdome 2: Rise of the Freejacks (NukeFire)
+#### Game 10: Thunderdome 2: Rise of the Freejacks (NukeFire)
 *   **Description**: A text-driven, ultra-hardcore post-apocalyptic MUD centered on brutal resource scarcity, direct spatial tactical combat, and completely player-driven territorial economies where localized factions control vital asset nodes.
 *   **What to ABSORB**:
     *   *The Proximity-Based Welcome Chat:* Automatically route a newcomer’s UI communication window to the nearest active alliance beacon or outpost grid coordinate upon drop-in to stimulate instant human interaction.
@@ -373,10 +373,10 @@ The following 14 games are queued for numerical evaluation and assignment to the
 *   **What to REJECT**:
     *   *The Un-Telegraphed Off-line Wipe:* Completely reject systems where an offline player's core production loop can be entirely disassembled or erased by rivals while they are logged off. 
 
-#### Game 10: Crossfire
+#### Game 11: Crossfire
 *   **Description**: An open-source, tile-based graphical cooperative multiplayer roguelike/MUD featuring an immense, persistent world grid where players navigate intricate mechanical systems and heavily specialized skill development.
 *   **What to ABSORB**:
-    *   *The "Safe-Room" Prototyping Cell:* Isolate the initial startup loop inside a small, 100% secure subterranean tile. The player must successfully wire a manual harvest socket to an automated transport line to unlock access to the wider Surface Map.
+    *   *The "Safe-Room" Prototyping Cell:* Isolate the initial startup loop inside a small, 100% secure subterranean tile. The player must successfully wire a manual harvest socket to an automated transport line to unlock access to the wider Global Surface Map.
     *   *Deep Structural Specialization:* Design advanced components to demand highly explicit, non-standard manufacturing environments (e.g., Logic Cores requiring a pristine clean-room layout footprint), keeping spatial base optimization engaging.
     *   *Shared Infrastructure Nodes:* Allow multiple players or allied syndicates to plug directly into massive, neutral world structures (e.g., an ancient geothermal tap station), splitting the energy output based on how many pipe linkages they actively maintain.
 *   **What to REJECT**:
@@ -438,7 +438,7 @@ The following 14 games are queued for numerical evaluation and assignment to the
 #### 5. Automation UX — Structural Macro-Management
 * **The Paradigm**: Linear priority queues. Complex automation architectures are made accessible on mobile screens through abstract order-of-operations matrices, clear job allocation toggles, and highly readable telemetry ledgers.
 * **What to ABSORB**:
-    * *The Dynamic Resource Allocation Toggle:* Provide macro control matrices where adjusting overarching factory ratios automatically propagates numbers across production lines to maintain a balance state.
+    * *The Dynamic Resource Allocation Toggle:* Provide macro control matrices where adjusting overarching factory ratios automatically propagates numbers across Logistics Blueprints to maintain a balance state.
     * *The Delivery Carrier Drone Automation:* Allow players to configure specialized cargo units that autonomously service field locations, clearing out extraction inventories passively.
     * *The Real-Time Dashboard Ledger:* Maintain active, net-delta math indicators (e.g., $+14.2/\text{sec}$ or $-2.1/\text{sec}$) directly on the primary UI rows for immediate troubleshooting.
 * **What to REJECT**:
@@ -448,7 +448,7 @@ The following 14 games are queued for numerical evaluation and assignment to the
 
 ### Individual Game Deep Dives
 
-#### Game 11: Trimps
+#### Game 12: Trimps
 *   **Description**: A dense, text-and-grid-based incremental game focused on population management, incremental resource collection ratios, and deep tactical progress resets to secure permanent systemic perks.
 *   **What to ABSORB**:
     *   *The UI Reveal Scaffold:* Reveal layout panels step-by-step to prevent initial cognitive fatigue.
@@ -458,7 +458,7 @@ The following 14 games are queued for numerical evaluation and assignment to the
 *   **What to REJECT**:
     *   *Layout-Wiping Resets:* Avoid progress resets that tear down carefully constructed spatial conveyor paths or layout arrays.
 
-#### Game 12: Alien Invasion RPG Idle Game
+#### Game 13: Alien Invasion RPG Idle Game
 *   **Description**: A mobile-native isometric arcade-idle game built around a mobile harvesting loop, inventory capacity bottlenecks, and dedicated cargo delivery drone upgrades.
 *   **What to ABSORB**:
     *   *The Kinetic Catching Radius:* Use simple proximity mechanics for field extraction to make manual collection immediately intuitive.
@@ -508,7 +508,7 @@ The following 14 games are queued for numerical evaluation and assignment to the
 * **The Paradigm**: The calendar rhythm. Establish consistent engagement profiles by binding server-wide actions to predictable multi-day event calendars, layered alongside domestic resource-staging pipelines that demand regular efficiency check-ins.
 * **What to ABSORB**:
     * *The Material Staging Pipeline:* Require multi-tier refinement loops that process raw inputs over hours, creating rewarding, predictable check-in milestones for technical tracking.
-    * *The Domestic Resource-Balance Loop:* Integrate local maintenance demands (e.g., power network draws vs. structural temperature constraints) to keep player retention active between massive surface map operations.
+    * *The Domestic Resource-Balance Loop:* Integrate local maintenance demands (e.g., power network draws vs. structural temperature constraints) to keep player retention active between massive Global Surface Map operations.
 * **What to REJECT**:
     * *Synthetic Energy/Stamina Gates:* Avoid artificial daily energy bars that limit map actions. Structural engagement loops must be governed by physical cargo capacities, network bandwidth, or logistical travel times.
 
@@ -518,7 +518,7 @@ The following 14 games are queued for numerical evaluation and assignment to the
     * *Communal Assembly Speed-Ups:* Provide rapid, single-tap assistance links within the alliance panel to allow teammates to shave minor margins off each other's active infrastructure build queues.
     * *Shared Combat Outpost Hubs:* Allow alliance syndicates to construct massive combined defensive structures where multiple members can route and park their automated vehicle divisions to build a unified defensive line.
 * **What to REJECT**:
-    * *Forced Geographic Base Teleportation:* Reject forcing players to magically uproot and relocate their entire factory base layout across the world map. Alliance territory expansion should expand organically via physical pipeline links and infrastructure grids.
+    * *Forced Geographic Base Teleportation:* Reject forcing players to magically uproot and relocate their entire factory base layout across the Global Surface Map. Alliance territory expansion should expand organically via physical pipeline links and infrastructure grids.
 
 #### 5. Automation UX — Structural Macro-Management
 * **The Paradigm**: Centralized summary grids. Streamline extensive map systems on mobile devices by consolidating active external convoys, harvester coordinates, and outpost statuses into high-level, interactive management desk panels.
@@ -532,7 +532,7 @@ The following 14 games are queued for numerical evaluation and assignment to the
 
 ### Individual Game Deep Dives
 
-#### Game 13: Whiteout Survival (WOS)
+#### Game 14: Whiteout Survival (WOS)
 *   **Description**: A mobile city-builder and 4X strategy title set in a glacial apocalypse, tracking colony warmth maintenance, survivor labor assignments, and alliance fortress warfare.
 *   **What to ABSORB**:
     *   *The Central Metaphor Anchor:* Focus early base priorities on stabilizing a single vital engine to ground early choices.
@@ -541,7 +541,7 @@ The following 14 games are queued for numerical evaluation and assignment to the
 *   **What to REJECT**:
     *   *Offline Hard Progress Devastation:* Never allow an offline player's core production layout to be dismantled by rival players while they are logged off.
 
-#### Game 14: Last Asylum
+#### Game 15: Last Asylum
 *   **Description**: A gritty, tactical post-apocalyptic base-building game focused on perimeter defense grids, vehicle assembly line configurations, and cooperative alliance territory capture.
 *   **What to ABSORB**:
     *   *Early Defensive Layout Integration:* Teach spatial planning immediately by dropping users into an active grid-placement engagement.
@@ -553,7 +553,7 @@ The following 14 games are queued for numerical evaluation and assignment to the
 ---
 
 ### Historical Case Study Appendix: Trash (2005)
-*Nota: This entry serves as an archival reference point for a niche multiplayer title utilizing a raw "Scrappunk" economy.*
+*Nota: This entry serves as an archival reference point for a niche multiplayer title utilizing a raw "Scrappunk" economy.  JM never actually played this game.*
 
 #### Raw Score Baseline Evaluation
 *   **Onboarding**: 1 / 3 (Low)
@@ -566,7 +566,7 @@ The following 14 games are queued for numerical evaluation and assignment to the
 #### Extracted Architectural Building Blocks
 *   **What to ABSORB**:
     *   *The Shared Tech Pool:* Replicate the ability for alliance members to share high-tier factory outputs or components through a unified depot, allowing lower-tier members to construct specialized unit variants.
-    *   *FPS-Style Tech Drops:* When high-level units or convoys are destroyed on the Surface Map, they should drop a high-yield "Salvage Node" directly on that hex, creating an immediate tactical hotspot for nearby players to contest.
-    *   *Strategic Resource Hubs:* Lock advanced tech tiers behind the active spatial control of specialized, finite sector coordinates (e.g., an abandoned silicon refinery or polymer reservoir) on the surface map.
+    *   *FPS-Style Tech Drops:* When high-level units or convoys are destroyed on the Global Surface Map, they should drop a high-yield "Salvage Node" directly on that hex, creating an immediate tactical hotspot for nearby players to contest.
+    *   *Strategic Resource Hubs:* Lock advanced tech tiers behind the active spatial control of specialized, finite sector coordinates (e.g., an abandoned silicon refinery or polymer reservoir) on the Global Surface Map.
 *   **What to REJECT**:
     *   *APM Micro Bottlenecks:* Reject twitch-reflex combat mechanics and high-APM micro-management requirements. Success must be dictated entirely by layout optimization, resource distribution, and automated script logic.
