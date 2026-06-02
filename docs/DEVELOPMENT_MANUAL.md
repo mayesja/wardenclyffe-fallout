@@ -138,7 +138,7 @@ Once built, the loom automates wire production by tracking progress intervals ag
 The following UI concepts should be added or repaired to improve playing exerience:
 *  **Dim button text for unavailble options:** Make button label text dim when that button cannot be used.  For example FORGE COPPER WIRING should be dim when the JOULE count is too low.
    *  Added in Milestone 3
-*  **Message & Warning alerts:** When a new message (blue notices) or warning (red notices) occur, and the player has scrolled down so that the messages panel is not visible then there will be a banner at the top of the screen to alert the player of the new notice.  Use the same color, and present something like "New notice available. CLick here to read."  Clicking on the notice immediately scrolls up to display the message panel.
+*  **Message & Warning alerts:** When a new message (blue notices) or warning (red notices) occur, and the player has scrolled down so that the messages panel is not visible then there will be a banner at the top of the screen to alert the player of the new notice.  Use the same color, and present something like "New notice available. Click here to read."  Clicking on the notice immediately scrolls up to display the message panel.
 
 ### Future Gameplay Experiments (Status: Planned / Not Yet Implemented)
 The following mechanics are currently being evaluated as design experiments for upcoming iterations to gather insights for larger collaboration blueprints:
