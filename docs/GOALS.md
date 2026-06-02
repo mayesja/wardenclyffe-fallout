@@ -47,10 +47,11 @@ To ensure code stability and prevent development fatigue, all future interaction
 What I have discovered after a few iterations of adding features and debugging:
 
 1.  **Gemini has a finite memory:** Gemini will lose the thread after a few hours, or maybe 30-40 prompts.  Is this limitation due to going down a rabbit hole and losing the bigger picture, or because Gemini's tank is full and has a first in/first out memory?
+      * Below may be the first signs that Gemini has lost the thread and needs to be refreshed.
+
       1.  **Gemini may not accurately track line numbers** Gemini will reference a line of code in the file, but the line number given does not usually match the line number in my editor.  Sometimes off by 5-10 lines.  Sometimes it's in a completely different section of the file.
       2.  **Gemini may not accurately remember comments** One of the tactics was to use comments to explicitly separate code sections.  This would make it easier to search for the correct location for editing and/or debugging.  But the suggestions do not always match the exact comment in the file.
       3.  **Gemini may hallucinate variable or function names**  When Gemini instructs me to look for a specific block of code, the variable names or function names give may not match what is in the code.  Despite repeatedly apologising for the error, Gemini does not refresh its memory, and continues directing me towards non-existant code.
-      * This may be the first signs that Gemini has lost the thread and needs to be refreshed.
 2.   **Gemini is great until it's not**  While functioning, Gemini gives very good code changes, and has improved with providing explicit comments.
 3.   **Proposed workflow**  Suggested workaround to deal with memory loss:
       1.   Upload .md and source code files and explain what the next development task will be
@@ -60,6 +61,7 @@ What I have discovered after a few iterations of adding features and debugging:
       5.   Use the prompt from the original thread to begin the development task
       6.   Once the task is complete, functionality is tested, get a wrap-up summary for DEVELOPMENT_MANUAL.md
       7.   Close out the sandbox, update the .md, and have the original thread walk me through github push
-4.
+4.   **Can Gemini recognize when it has lost the thread?**  Once Gemini starts making mistakes it apologiezes, but then presses on regardless.  Is there a way to have Gemini itself recognize that it is lost, alert me, and find a way to safely bail out before creating further errors and confusion (and frustration)?
+5.   **Insights into Goal #3, but hurdles for Goal #4**  We are learning the limits of Gemini's capabilities, which is stated in Goal #3.  However, this has slowed down Goal #4 -- making an enjoyable game to play.
 
 ---
