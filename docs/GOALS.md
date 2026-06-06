@@ -4,6 +4,29 @@ This document serves as the high-level roadmap and structural guide for the deve
 
 ---
 
+## PROJECT ORIGINS & MULTI-AGENT DEVELOPMENT ARCHITECTURE
+
+### The Replit Genesis & Pivot
+*Wardenclyffe Field Station* originated as a rapid, three-way prototyping collaboration between the creator, Gemini, and the Replit Agent. 
+* **The Wasteland Version:** The initial prototype was generated inside a React framework wrapper on Replit, featuring a generic post-apocalyptic survival theme.
+* **The Wardenclyffe Pivot:** The creator initiated a complete narrative and mechanical shift, steering the project into its current historical alternate-reality setting—focusing on Nikola Tesla’s experimental technology, the atmospheric Wardenclyffe field station, and the aggressive corporate espionage of the Edison Trust.
+* **The Framework Migration:** Following the initial sprint, the codebase was extracted from React and migrated into a lean, native three-file system (HTML/CSS/JS) to maximize execution speed, maintain zero external dependencies, and optimize performance for local editing and browser deployment on a Chromebook setup.
+
+### The Three-Tier AI Studio Framework
+To eliminate AI context drift, prevent code-generation hallucinations, and maintain absolute project momentum during long development timelines, the project utilizes an isolated, multi-threaded workspace structure. Gemini is systematically divided into three distinct operational "classes":
+
+1. **Class 1: The Master Architect (Main Thread)**
+   * *Role:* Technical Product Manager and Version Control Director.
+   * *Function:* Permanently stores the master documentation (`GOALS.md` and `DEVELOPMENT_MANUAL.md`), manages game balance ledgers, and drafts explicit technical implementation instructions for the development sandbox. This thread tracks overall project continuity and never handles raw, multi-file code writing.
+2. **Class 2: The Programmer (Ad Hoc Sandbox Threads)**
+   * *Role:* Pure, Stateless Code Generation Engine.
+   * *Function:* Temporary, short-lived threads spun up exclusively to write single, surgical code features or fix bugs using the current live state of `index.html`, `style.css`, and `script.js`. Once a feature is successfully implemented and pushed to GitHub, these threads are completely destroyed to wipe out cached memory drift.
+3. **Class 3: The Creative Writer (Narrative & Mechanics Designer)**
+   * *Role:* World-Builder, Dialogue Writer, and Systems Innovator.
+   * *Function:* Independent threads dedicated entirely to lore expansion, writing flavor text for the automated station messages panel, and inventing experimental gameplay mechanics. These concepts are benchmarked here in the prototype lab before being considered for separate, larger game projects.
+
+---
+
 ## 1. CORE PROJECT GOALS
 
 * **Goal 1: Design & Planning Experience** To provide the creator with practical experience thinking through core gameplay design, progression systems, balancing structures, and narrative-driven loops.
