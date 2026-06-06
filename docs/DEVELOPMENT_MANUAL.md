@@ -134,13 +134,13 @@ Once built, the loom automates wire production by tracking progress intervals ag
 * **Operational Summary:** Path B (the DC technology) creates the initial Leyden Jar and increases max Joules to 200.  Subsequent Leyden Jars increase max Joules by 100J for each addtional jar.
 * **User Interface Improvements** Buttons for technology that has been unlocked, but do not have the required resources are dimmed.  When the resources are available, the button displays normally and is active.  There is a fading effect visual.
 
+---
+
 ### Future User Interface Concepts (Status: Planned / Not Yet Implemented)
 The following UI concepts should be added or repaired to improve playing exerience:
 *  **Dim button text for unavailble options:** Make button label text dim when that button cannot be used.  For example FORGE COPPER WIRING should be dim when the JOULE count is too low.
    *  Added in Milestone 3
 *  **Message & Warning alerts:** When a new message (blue notices) or warning (red notices) occur, and the player has scrolled down so that the messages panel is not visible then there will be a banner at the top of the screen to alert the player of the new notice.  Use the same color, and present something like "New notice available. Click here to read."  Clicking on the notice immediately scrolls up to display the message panel.
-
----
 
 ### Future Gameplay Experiments (Status: Planned / Not Yet Implemented)
 The following mechanics are currently being evaluated as design experiments for upcoming iterations to gather insights for larger collaboration blueprints:
