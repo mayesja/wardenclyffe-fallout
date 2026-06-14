@@ -63,6 +63,8 @@ To ensure code stability and prevent development fatigue, all future interaction
 ## 4. GAMEPLAY DESIGN INSPIRATION
 *Wardenclyffe Field Station* is conceptually modeled after the design philosophy of classic incremental games like **Universal Paperclips**. The gameplay layout begins with a deceptively simple, manual task (cranking a dynamo for single Joules) and is engineered to slowly unfold, layer by layer, introducing automation machinery, shifting dashboard metrics, permanent technological branching decisions, and escalating threat counters that demand strategic resource management.
 
+* **The New York State Expansion:** Moving beyond a single-site loop, the game utilizes a forward-only geographical progression (Wardenclyffe ──► Poughkeepsie ──► Ithaca ──► Niagara Falls). Progression is driven by regional lifecycles, resource-based branching choices, and a specialized "Expedition Crate" asset migration system that shifts gameplay paradigms as the player scales upward.
+  
 ---
 
 ## 5. EXPERIENCES & LEARNINGS
