@@ -134,6 +134,11 @@ Once built, the loom automates wire production by tracking progress intervals ag
 * **Operational Summary:** Path B (the DC technology) creates the initial Leyden Jar and increases max Joules to 200.  Subsequent Leyden Jars increase max Joules by 100J for each addtional jar.
 * **User Interface Improvements** Buttons for technology that has been unlocked, but do not have the required resources are dimmed.  When the resources are available, the button displays normally and is active.  There is a fading effect visual.
 
+### Milestone 4: The New York State Expansion Blueprint (June 2026)
+* **Operational Summary:** Officially decoupled the core engine from a single-site design and mapped out a multi-stage regional progression framework across four New York locations. 
+* **Design Breakthroughs:** Established a definitive 8-step regional gameplay loop (Arrive, Build, Decrypt, Branch, Survive, Monolith, Stabilize, Migrate) and structured a 3-fork ideological narrative tree yielding 8 distinct endpoints.
+* **Architectural Impact:** The 1Hz core loop will be modified in future sprints to act as a regional state machine, dynamically swapping resource labels (e.g., Hydro-Buoys vs. Vault Banks) based on player tech-branching decisions.
+  
 ---
 
 ### Future User Interface Concepts (Status: Planned / Not Yet Implemented)
