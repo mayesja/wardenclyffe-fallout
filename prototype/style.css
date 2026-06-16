@@ -44,6 +44,13 @@ body {
     z-index: 100;
     box-shadow: 0 4px 15px rgba(255, 59, 0, 0.4);
     animation: alarm-pulse 1.5s infinite;
+    cursor: pointer; /* Changes the mouse pointer to a hand to indicate the banner can be clicked */
+}
+
+/* New specific class variant for terminal layout scroll notification alerts */
+#alert-banner.scroll-alert {
+    background-color: var(--electric-cyan); /* Theme-appropriate cyan for system alerts */
+    box-shadow: 0 4px 15px var(--electric-glow); /* Blue glow footprint */
 }
 
 /* --- 4. MAIN CONTAINER LAYOUT --- */

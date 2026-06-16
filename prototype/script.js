@@ -53,6 +53,9 @@ let junctionBoxes = 0;      // Branch B Defense units: blunts the raw resource d
 // Disaster & Victory State Trackers
 let trustActivated = false; // Flag that permanently summons the Edison Trust strike loop
 let underAttack = false;    // Temporary lockout: turns true for 10 seconds during a raid
+
+// Scroll Alert Notification Tracker
+let terminalScrolledOut = false; // Tracks if the player has scrolled down past the log container visibility window
 let attackCountdown = 0;    // Remaining duration of the current generator blackout lock
 let nextAttackTime = 0;     // Randomized variable counting down to the next ambush event
 let capacitorOvercharged = false; // Tracks if the one-time emergency power dump was spent
@@ -135,6 +138,20 @@ function writeLog(text, type = "system") {
     
     // Forces the logging box container viewport to automatically scroll down to stick to latest text
     elTerminalLog.scrollTop = elTerminalLog.scrollHeight;
+
+    // --- VIEWPORT SCROLL BOUNDARY CHECK ---
+    // Calculate the precise layout position of the terminal container relative to the screen viewport
+    const logBoundingRect = elTerminalLog.getBoundingClientRect();
+    
+    // Check if the current log event type is high priority (system alerts, warnings, milestones)
+    // This explicitly filters out routine manual clicks like "action" to stop spamming the banner
+    const isHighPriorityLog = type === "system" || type === "warning" || type === "disaster" || type === "milestone";
+    
+    // Only display the floating notification banner if the message is high priority, the terminal is out of bounds,
+    // and we aren't already overriding the banner with an active critical crisis screen event
+    if (isHighPriorityLog && logBoundingRect.bottom < 0 && !underAttack && !(morseTriggered && !morseDecoded)) {
+        terminalScrolledOut = true; // Flag the layout state as scrolled past bounds
+    }
 }
 
 function enforceBoundaries() {
@@ -280,10 +297,18 @@ function renderUI() {
         elAlertText.innerText = `⚠ SECURITY ALERT — EDISON SABOTAGE ACTIVE (${attackCountdown}s) ⚠`;
     } else if (morseTriggered && !morseDecoded) {
         elAlertBanner.classList.remove("hidden");
+        elAlertBanner.classList.remove("scroll-alert"); // Strip scroll designator to avoid override conflicts
         elAlertBanner.style.backgroundColor = "var(--electric-cyan)";
         elAlertText.innerText = `▸ DECODING SIGNAL FROM STATION OMAHA (${morseCountdown}s) ◂`;
+    } else if (terminalScrolledOut) {
+        // Render scroll notification banner state if terminal log updates are out of visual bounds
+        elAlertBanner.classList.remove("hidden");
+        elAlertBanner.classList.add("scroll-alert"); // Applies theme cyan highlight overrides
+        elAlertBanner.style.backgroundColor = ""; // Reset inline color blocks to respect css classes
+        elAlertText.innerText = "▸ NEW LOG ENTRY AVAILABLE — CLICK TO VIEW TERMINAL ◂";
     } else {
         elAlertBanner.classList.add("hidden");
+        elAlertBanner.classList.remove("scroll-alert"); // Clean flag structure classes
     }
 
     // Manage Grid Connection Visual Status Indicators
@@ -461,14 +486,16 @@ btnOvercharge.addEventListener("click", () => {
     if (wiring >= 5 && !capacitorOvercharged) {
         capacitorOvercharged = true;
         
-        // Math loop formula calculating yield from current power dump volume
-        let generatedYield = Math.floor(joules / 10);
-        let availableSpace = wireStorageCap - wiring;
+        // --- BYPASS WAREHOUSE STORAGE CEILING CAPACITY ---
+        // Calculate raw wire yield directly from your current total Joule supply pool
+        let generatedYield = Math.floor(joules / 10) * 2; 
         
-        // Clamp output so overflowing wire limits doesn't cause tracking bugs
-        if (generatedYield > availableSpace) generatedYield = availableSpace;
+        // DYNAMICALLY EXTEND MAXIMUM STORAGE STORAGE CEILING
+        // By adding the yield directly to our maximum cap limits variable, the global boundary tracking loop 
+        // inside enforceBoundaries() will no longer overwrite or clamp our expanded overcharge metrics.
+        wireStorageCap += generatedYield;
         
-        wiring += generatedYield;
+        wiring += generatedYield; // Append the generated yield completely to inventory raw totals
         joules = 0; // Sacrifices all current electrical charge fields completely
 
         btnOvercharge.classList.add("hidden");
@@ -681,6 +708,33 @@ setInterval(() => {
     renderUI();
 }, SYSTEM_TICK_RATE_MS);
 
+
+// --- GLOBAL WINDOW SCROLL & BANNER INTERACTION LISTENERS ---
+
+// Monitors screen scrolling adjustments to check if the terminal log box comes back into look boundaries
+window.addEventListener("scroll", () => {
+    if (terminalScrolledOut) {
+        const logBoundingRect = elTerminalLog.getBoundingClientRect();
+        // If the element's top position becomes visible inside the browser view frame again
+        if (logBoundingRect.bottom >= 0) {
+            terminalScrolledOut = false; // Reset the scroll tracking flag state
+            renderUI(); // Forces immediate layout visibility refresh update pass
+        }
+    }
+});
+
+// Click action targeting the floating top alert layout element banner
+elAlertBanner.addEventListener("click", () => {
+    // Check if the current banner context display state is currently representing the layout alert
+    if (terminalScrolledOut) {
+        terminalScrolledOut = false; // Immediately clear state metrics flags
+        
+        // Command browser frame layer window to execute an automated smooth scroll trace straight back up to look target
+        elTerminalLog.scrollIntoView({ behavior: "smooth", block: "center" });
+        
+        renderUI(); // Refreshes element visibilities instantly
+    }
+});
 
 // ==========================================
 // 8. INITIAL BOOTSTRAP INITIALIZATION
