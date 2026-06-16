@@ -88,5 +88,5 @@ What I have discovered after a few iterations of adding features and debugging:
       7.   Close out the sandbox, update the .md, and have the original thread walk me through github push
 4.   **Can Gemini recognize when it has lost the thread?**  Once Gemini starts making mistakes it apologiezes, but then presses on regardless.  Is there a way to have Gemini itself recognize that it is lost, alert me, and find a way to safely bail out before creating further errors and confusion (and frustration)?
 5.   **Insights into Goal #3, but hurdles for Goal #4**  We are learning the limits of Gemini's capabilities, which is stated in Goal #3.  However, this has slowed down Goal #4 -- making an enjoyable game to play.
-
+6. **The Intervention Pivot (June 2026):** Verified that when a Class 2 Sandbox thread deviates or attempts to pass development logic choices back to the creator, the most effective remediation is a hard execution halt. Forcing a manual file re-upload and pointing explicitly to mismatched function names breaks the hallucination loop and restores surgical code writing capabilities.
 ---
