@@ -20,6 +20,11 @@ The mobile interface divides the 512px application frame vertically into five di
 * **The Actions Panel (`.actions-panel`):** A linear vertical stack acting as the core control panel. Interactive elements, card grids, and speed selectors use the `.hidden` class utility properties to seamlessly toggle into and out of visibility depending on resource thresholds.
 * **The Lower Quick-Stats Bar (`.game-footer`):** A fixed footer panel positioned at the bottom margin edge tracking raw integer readouts, generation scales, active threat warnings (`TRUST ⚠`), and defense infrastructure assets.
 
+### C. Viewport Scroll Alert Banner Logic
+* **Trigger Mechanics:** Evaluated inside the core `writeLog()` pipeline. If an incoming entry carries a high-priority structural class (`log-system`, `log-unlock`, `log-warning`) and the `#terminal-log` container is detected outside the active visual viewport boundaries, the `.scroll-alert-banner` is toggled into active visibility.
+* **Exclusion Constraints:** Routine manual interaction events (e.g., direct kinetic cranking or manual wire forging) are strictly blacklisted from the trigger check to prevent banner notification spam during early game grinding.
+* **Dismissal Loop:** Bound to a click event listener on the banner element. Clicking initiates a smooth scroll interpolation forcing the player's viewport back to the top terminal layout, instantly clearing the banner's active visibility state.
+* 
 ---
 
 ## 2. THE MECHANICAL ENGINE & BALANCE ARCHITECTURE
@@ -134,11 +139,25 @@ Once built, the loom automates wire production by tracking progress intervals ag
 * **Operational Summary:** Path B (the DC technology) creates the initial Leyden Jar and increases max Joules to 200.  Subsequent Leyden Jars increase max Joules by 100J for each addtional jar.
 * **User Interface Improvements** Buttons for technology that has been unlocked, but do not have the required resources are dimmed.  When the resources are available, the button displays normally and is active.  There is a fading effect visual.
 
+### Milestone 4: The New York State Expansion Blueprint (June 2026)
+* **Operational Summary:** Officially decoupled the core engine from a single-site design and mapped out a multi-stage regional progression framework across four New York locations. 
+* **Design Breakthroughs:** Established a definitive 8-step regional gameplay loop (Arrive, Build, Decrypt, Branch, Survive, Monolith, Stabilize, Migrate) and structured a 3-fork ideological narrative tree yielding 8 distinct endpoints.
+* **Architectural Impact:** The 1Hz core loop will be modified in future sprints to act as a regional state machine, dynamically swapping resource labels (e.g., Hydro-Buoys vs. Vault Banks) based on player tech-branching decisions.
+
+### Milestone 5: UI Viewport Tracking & Capacitor Logic Tuning (June 2026)
+* **Operational Summary:** Successfully designed and deployed a live viewport-tracking notification banner for mobile/Chromebook screen optimization. Restructured the Path A execution sequence to allow safe inventory capacity overshoots during high-energy discharges.
+* **Resolved Structural Syntax Errors:** 
+  * Fixed an issue where the global `enforceBoundaries()` loop prematurely clipped inventory gains back down to the baseline warehouse cap. Updated `btnOvercharge` to dynamically expand `wireStorageCap` at the moment of discharge.
+  * Corrected an AI reference drift loop during the sandbox session by enforcing a strict script re-upload check, validating variable alignment before finalizing code injection blocks.
+    
+---
+
 ### Future User Interface Concepts (Status: Planned / Not Yet Implemented)
 The following UI concepts should be added or repaired to improve playing exerience:
 *  **Dim button text for unavailble options:** Make button label text dim when that button cannot be used.  For example FORGE COPPER WIRING should be dim when the JOULE count is too low.
    *  Added in Milestone 3
-*  **Message & Warning alerts:** When a new message (blue notices) or warning (red notices) occur, and the player has scrolled down so that the messages panel is not visible then there will be a banner at the top of the screen to alert the player of the new notice.  Use the same color, and present something like "New notice available. CLick here to read."  Clicking on the notice immediately scrolls up to display the message panel.
+*  **Message & Warning alerts:** When a new message (blue notices) or warning (red notices) occur, and the player has scrolled down so that the messages panel is not visible then there will be a banner at the top of the screen to alert the player of the new notice.  Use the same color, and present something like "New notice available. Click here to read."  Clicking on the notice immediately scrolls up to display the message panel.
+   *  Added in Milestone 5
 
 ### Future Gameplay Experiments (Status: Planned / Not Yet Implemented)
 The following mechanics are currently being evaluated as design experiments for upcoming iterations to gather insights for larger collaboration blueprints:
@@ -152,3 +171,17 @@ The following mechanics are currently being evaluated as design experiments for 
    * Generate a high-to-low slide when a loom snaps under high tension (sounds like losing power).
    * Generate a low-to-high slide when an attack occurs (sounds like a warning siren).
 * **Breakthrough Modals (Unlock Splash Screens):** Inserting simple visual text banners that display full-screen lore snapshots when Path A or Path B is initially signed.
+  
+### Future Storyline Developments (Status: Planned / Not Yet Implemented)
+To create an engaging game to play there needs to be a well-told story.
+*  **Initial screen:**  There does not need to be any type of explanation at the very beginning.  There is a message window, a status display, and one button to press.  As the player presses the CRANK DYNAMO button the story can unfold one step at a time in the message window.
+*  **Simple story**  The player begins by pressing the CRANK DYNAMO button.  There isn't much context at first, but as technologies are unlocked the story moves forward.
+     1. When enough power is generated, the receiver kicks on and a message is received.  It takes a few moments to decode.
+     2. The player is given an option.  Path A is to accept AC, Path B is to reject and pursue DC.
+     3. Both lead to Edison Crew attacks.  And both have defensive technologies, which are different depending on the chosen path.
+     4. Each path has an end scenario once the requirements are fulfilled.
+* **Messages Panel**  Eventually shift messages displayed in the window from debugging-style to story-telling.  The Replit/React version has some that can be emulated.
+   * See if Gemini can recover them from source files and help implement them into the current three files.
+
+
+---
