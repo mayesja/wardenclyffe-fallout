@@ -171,8 +171,8 @@ The following mechanics are currently being evaluated as design experiments for 
    * Or should there be a construction queue?
 * **Schematic Assembly (Item Combination):** Combining specific configurations of components and energy within the panel to generate new technologies.
 * **Component Optimization (Item Upgrades):** Spending extra Joules (or other components) to permanently improve the output of existing technology.  (e.g., increasing TESLA COILS output from +1J/s to +2J/s by adding 5 WIRING).
-* **Wiring Rack lockout** Allow Path A to build Wiring Storage Rack (construction requires 150J, but Path A is limited to 100J). -- Building AC Generators also raises max Joules  Lower the cost to build storage rack  
-* **Capacitor Discharge lockout** Prevent situation where CAPACITOR DISCHARGE is used prematurely and prevents accomplishing the 1st goal (40 Wiring with a 20 Wiring storage limit). -- Raise the limit  Allow re-use  Lower the goal requirement
+* **Wiring Rack lockout** Allow Path A to build Wiring Storage Rack (construction requires 150J, but Path A is limited to 100J). -- Building AC Generators also raises max Joules / Lower the cost to build storage rack  
+* **Capacitor Discharge lockout** Prevent situation where CAPACITOR DISCHARGE is used prematurely and prevents accomplishing the 1st goal (40 Wiring with a 20 Wiring storage limit). -- Raise the limit / Allow re-use / Lower the goal requirement
 
   
 ### Future Storyline Developments (Status: Planned / Not Yet Implemented)
@@ -187,7 +187,7 @@ To create an engaging game to play there needs to be a well-told story.
    * See if Gemini can recover them from source files and help implement them into the current three files.
 * **Goal Target Messages**  Story messages to cue the player about the requirements to achieve a goal.  IE How many defenses to build.  How much J/sec or max storage to build to complete the stage.
 * **Story Progression**  Described in the NARRATIVE doc, but briefly:
-     1. Wardclyffe -- Initial technology, first message & story path choice, first attacks & defenses, accomplish first goal, prepare to move
+     1. Wardenclyffe -- Initial technology, first message & story path choice, first attacks & defenses, accomplish first goal, prepare to move
      2. Poughkeepsie -- Hydro generation technology explored, second message & story path choice, attacks and defenses, second goal, prepare to move
      3. Ithaca -- Storage & distribution technology explored, third message & story path choice, attacks & defenses, third goal, prepare to move
      4. Niagra Falls -- Endgame technology, accomplish final goal based on story path choices (eight possible endings)
