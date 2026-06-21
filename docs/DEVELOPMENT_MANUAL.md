@@ -187,10 +187,10 @@ To create an engaging game to play there needs to be a well-told story.
    * See if Gemini can recover them from source files and help implement them into the current three files.
 * **Goal Target Messages**  Story messages to cue the player about the requirements to achieve a goal.  IE How many defenses to build.  How much J/sec or max storage to build to complete the stage.
 * **Story Progression**  Described in the NARRATIVE doc, but briefly:
-      1.  Wardclyffe -- Initial technology, first message & story path choice, first attacks & defenses, accomplish first goal, prepare to move
-      2.  Poughkeepsie -- Hydro generation technology explored, second message & story path choice, attacks and defenses, second goal, prepare to move
-      3.  Ithaca -- Storage & distribution technology explored, third message & story path choice, attacks & defenses, third goal, prepare to move
-      4.  Niagra Falls -- Endgame technology, accomplish final goal based on story path choices (eight possible endings)
+      1. Wardclyffe -- Initial technology, first message & story path choice, first attacks & defenses, accomplish first goal, prepare to move
+      2. Poughkeepsie -- Hydro generation technology explored, second message & story path choice, attacks and defenses, second goal, prepare to move
+      3. Ithaca -- Storage & distribution technology explored, third message & story path choice, attacks & defenses, third goal, prepare to move
+      4. Niagra Falls -- Endgame technology, accomplish final goal based on story path choices (eight possible endings)
   
 
 
