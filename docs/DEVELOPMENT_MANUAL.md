@@ -158,30 +158,40 @@ The following UI concepts should be added or repaired to improve playing exerien
    *  Added in Milestone 3
 *  **Message & Warning alerts:** When a new message (blue notices) or warning (red notices) occur, and the player has scrolled down so that the messages panel is not visible then there will be a banner at the top of the screen to alert the player of the new notice.  Use the same color, and present something like "New notice available. Click here to read."  Clicking on the notice immediately scrolls up to display the message panel.
    *  Added in Milestone 5
-
-### Future Gameplay Experiments (Status: Planned / Not Yet Implemented)
-The following mechanics are currently being evaluated as design experiments for upcoming iterations to gather insights for larger collaboration blueprints:
-*  **Build timers:**  When higher level technologies are built there will be a countdown timer until they are "online" and ready to use or start to take effect.  For example, building a Tesla Coil has a 5 second timer after being built but before it starts generating power.
-   * Should building additional technologies be blocked until the countdown timer expires?
-   * Or should there be a construction queue?
-* **Schematic Assembly (Item Combination):** Combining specific configurations of components and energy within the panel to generate new technologies.
-* **Component Optimization (Item Upgrades):** Spending extra Joules (or other components) to permanently improve the output of existing technology.  (e.g., increasing TESLA COILS output from +1J/s to +2J/s by adding 5 WIRING).
 * **Acoustic Landscape (HTML5 Audio API):** Integrating raw, low-frequency synthetic synthesizer oscillators natively inside the JavaScript file.
    * Generate audio clicks every time the player starts a TESLA COIL (sounds electro-mechanical). 
    * Generate a high-to-low slide when a loom snaps under high tension (sounds like losing power).
    * Generate a low-to-high slide when an attack occurs (sounds like a warning siren).
 * **Breakthrough Modals (Unlock Splash Screens):** Inserting simple visual text banners that display full-screen lore snapshots when Path A or Path B is initially signed.
+
+### Future Gameplay Experiments (Status: Planned / Not Yet Implemented)
+The following mechanics are currently being evaluated as design experiments for upcoming iterations to gather insights for larger collaboration blueprints:
+*  **Build timers:**  When higher level technologies are built there will be a countdown timer until they are "online" and ready to use or start to take effect.  For example, building a Tesla Coil has a 5 second timer after being built but before it starts generating power.
+   * Should building additional technologies be blocked until the countdown timer expires (dim the build buttons)?
+   * Or should there be a construction queue?
+* **Schematic Assembly (Item Combination):** Combining specific configurations of components and energy within the panel to generate new technologies.
+* **Component Optimization (Item Upgrades):** Spending extra Joules (or other components) to permanently improve the output of existing technology.  (e.g., increasing TESLA COILS output from +1J/s to +2J/s by adding 5 WIRING).
+* **Wiring Rack lockout** Allow Path A to build Wiring Storage Rack (construction requires 150J, but Path A is limited to 100J). -- Building AC Generators also raises max Joules  Lower the cost to build storage rack  
+* **Capacitor Discharge lockout** Prevent situation where CAPACITOR DISCHARGE is used prematurely and prevents accomplishing the 1st goal (40 Wiring with a 20 Wiring storage limit). -- Raise the limit  Allow re-use  Lower the goal requirement
+
   
 ### Future Storyline Developments (Status: Planned / Not Yet Implemented)
 To create an engaging game to play there needs to be a well-told story.
 *  **Initial screen:**  There does not need to be any type of explanation at the very beginning.  There is a message window, a status display, and one button to press.  As the player presses the CRANK DYNAMO button the story can unfold one step at a time in the message window.
 *  **Simple story**  The player begins by pressing the CRANK DYNAMO button.  There isn't much context at first, but as technologies are unlocked the story moves forward.
-     1. When enough power is generated, the receiver kicks on and a message is received.  It takes a few moments to decode.
+     1. When enough power generators are built, the receiver kicks on and a message is received (small modification).  It takes a few moments to decode.
      2. The player is given an option.  Path A is to accept AC, Path B is to reject and pursue DC.
      3. Both lead to Edison Crew attacks.  And both have defensive technologies, which are different depending on the chosen path.
      4. Each path has an end scenario once the requirements are fulfilled.
 * **Messages Panel**  Eventually shift messages displayed in the window from debugging-style to story-telling.  The Replit/React version has some that can be emulated.
    * See if Gemini can recover them from source files and help implement them into the current three files.
+* **Goal Target Messages**  Story messages to cue the player about the requirements to achieve a goal.  IE How many defenses to build.  How much J/sec or max storage to build to complete the stage.
+* **Story Progression**  Described in the NARRATIVE doc, but briefly:
+      1.  Wardclyffe -- Initial technology, first message & story path choice, first attacks & defenses, accomplish first goal, prepare to move
+      2.  Poughkeepsie -- Hydro generation technology explored, second message & story path choice, attacks and defenses, second goal, prepare to move
+      3.  Ithaca -- Storage & distribution technology explored, third message & story path choice, attacks & defenses, third goal, prepare to move
+      4.  Niagra Falls -- Endgame technology, accomplish final goal based on story path choices (eight possible endings)
+  
 
 
 ---
