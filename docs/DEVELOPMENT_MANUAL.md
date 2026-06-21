@@ -192,6 +192,7 @@ To create an engaging game to play there needs to be a well-told story.
      3. Ithaca -- Storage & distribution technology explored, third message & story path choice, attacks & defenses, third goal, prepare to move
      4. Niagra Falls -- Endgame technology, accomplish final goal based on story path choices (eight possible endings)
   
+  
 
 
 ---
