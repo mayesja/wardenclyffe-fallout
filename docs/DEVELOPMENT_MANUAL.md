@@ -149,7 +149,13 @@ Once built, the loom automates wire production by tracking progress intervals ag
 * **Resolved Structural Syntax Errors:** 
   * Fixed an issue where the global `enforceBoundaries()` loop prematurely clipped inventory gains back down to the baseline warehouse cap. Updated `btnOvercharge` to dynamically expand `wireStorageCap` at the moment of discharge.
   * Corrected an AI reference drift loop during the sandbox session by enforcing a strict script re-upload check, validating variable alignment before finalizing code injection blocks.
-    
+
+### Milestone 6: Poughkeepsie Tech Alignment & Kinetic Overflow Fix (June 2026)
+* **Poughkeepsie Narrative Integration:** Officially updated the early-stage Morse reception logs, transitioning text references from "Station Omaha" to "Poughkeepsie Station" to seamlessly bridge the Stage 0 tutorial with the upcoming regional New York State expansion framework.
+* **Encoding Stabilization:** Standardized all narrative script event logs to utilize native 16-bit JavaScript Unicode escape sequences (`\uD83D\uDCE1` for Radio Towers, `\u26A1` for High Voltage, `\u26A0\uFE0F` for Warning Signs) rather than raw graphical emojis, preventing paste corruption inside VS Code and rendering smoothly on mobile browser viewports.
+* **AC Path Economic Balance:** Resolved the Stage 0 structural soft-lock by lowering the purchase threshold for the first `Build Wire Spool Rack` from 150 Joules down to 80 Joules and 10 Wiring. Concurrently, patched the Alternating Current (AC) tech branch selection to instantly scale the base Joule storage ceiling to 150 Joules upon choice confirmation, ensuring players can comfortably accumulate resources under the cap.
+* **Kinetic Crank Gatekeeper Bugfix:** Corrected an issue where the manual dynamo click handler blindly reported energy production at max capacity. Built a conditional gate inside the handler function to check the current resource ceiling before logging text; clicking at or above maximum capacity now actively blocks the standard output and triggers a distinct warning: `\u26A0\uFE0F Joule containment ceiling reached. Excess energy vented.`
+  
 ---
 
 ### Future User Interface Concepts (Status: Planned / Not Yet Implemented)
