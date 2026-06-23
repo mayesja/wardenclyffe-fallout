@@ -155,12 +155,19 @@ function writeLog(text, type = "system") {
 }
 
 function enforceBoundaries() {
-    // ENFORCING DESIGN LIMITATION: Joules cannot exceed the capacity of your field array
+    // ENFORCING DESIGN LIMITATION: Default starting baseline energy limit is set to 100
     let maxJouleCap = 100; 
+    
+    // REQUIREMENT 2: DYNAMIC STORAGE SCALE (PATH A AC CAPACITY BOOST)
+    // If the player chooses Path A (AC Tech), their storage capacity ceiling automatically 
+    // scales up to 150 Joules, enabling them to hoard enough energy to afford upgrades comfortably.
+    if (morseChoice === "A") {
+        maxJouleCap = 150;
+    }
     
     // SURGICAL UPDATE: Every built Leyden Jar dynamically adds +100 to the max capacity ceiling
     if (morseChoice === "B" && leydenJars > 0) {
-        maxJouleCap = 100 + (leydenJars * 100); 
+        maxJouleCap = 100 + (leydenJars * 100); //
     }
     
     // Clamp Joules to the current maximum allowance
@@ -189,15 +196,18 @@ function renderUI() {
     footJoules.innerText = `J: ${Math.floor(joules)}`;
     footWiring.innerText = `W: ${wiring} / ${wireStorageCap}`;
 
-    // Always show the current energy storage ceiling layout so players track their waste thresholds[cite: 10]
+// Always show the current energy storage ceiling layout so players track their waste thresholds
     elMaxJoules.classList.remove("hidden");
 
-    // SURGICAL UPDATE: Dynamically calculate and render the total capacity based on built Leyden Jars
-    if (morseChoice === "B" && leydenJars > 0) {
+    // DYNAMIC DESIGNATION RENDERER ASSET OVERRIDE
+    if (morseChoice === "A") {
+        // Explicitly paint 150 as the upper limit marker on the game dashboard footer bar for AC tech branches
+        elMaxJoules.innerText = "/ 150";
+    } else if (morseChoice === "B" && leydenJars > 0) {
         let currentMax = 100 + (leydenJars * 100);
         elMaxJoules.innerText = `/ ${currentMax}`; 
     } else {
-        elMaxJoules.innerText = "/ 100"; // Standard baseline starting array max[cite: 10]
+        elMaxJoules.innerText = "/ 100"; // Standard baseline starting array max
     }
 
     // Toggle Visibility of Action Buttons based on Progression thresholds
@@ -299,7 +309,8 @@ function renderUI() {
         elAlertBanner.classList.remove("hidden");
         elAlertBanner.classList.remove("scroll-alert"); // Strip scroll designator to avoid override conflicts
         elAlertBanner.style.backgroundColor = "var(--electric-cyan)";
-        elAlertText.innerText = `▸ DECODING SIGNAL FROM STATION OMAHA (${morseCountdown}s) ◂`;
+        // NARRATIVE FIX: Updated dynamic top layer alerting readout string to target Poughkeepsie Station
+        elAlertText.innerText = `▸ DECODING SIGNAL FROM POUGHKEEPSIE STATION (${morseCountdown}s) ◂`;
     } else if (terminalScrolledOut) {
         // Render scroll notification banner state if terminal log updates are out of visual bounds
         elAlertBanner.classList.remove("hidden");
@@ -392,17 +403,35 @@ function renderUI() {
 // 6. PLAYER BUTTON INTERACTION HANDLERS
 // ==========================================
 
-// Manual Crank Logic
+// Manual Kinetic Dynamo Crank Handler with Capacity Constraints
 btnCrank.addEventListener("click", () => {
-    joules += 1;
-    writeLog("Dynamo armature manually cranked. Produced +1 Joule.", "action");
+    // 1. Calculate the current dynamic Joule ceiling based on technology choice and upgrades
+    let maxJouleCap = 100; // Baseline starting capacity ceiling
 
-    // Progression Unlock Trigger Condition: Passing 50 Joules fires up Morse receiver
-    if (joules >= 50 && !morseTriggered) {
-        morseTriggered = true;
-        writeLog("The spark-gap Morse receiver springs to life! It is automatically recording an incoming long-distance frequencies pattern...", "unlock");
-        markerMorseDecoding.classList.remove("hidden");
+    if (morseChoice === "A") {
+        maxJouleCap = 150; // Branch A (AC Tech) capacity extension
+    } else if (morseChoice === "B" && leydenJars > 0) {
+        maxJouleCap = 100 + (leydenJars * 100); // Branch B (DC Tech) dynamic scale per jar
     }
+
+    // 2. Evaluate current energy reserves against the calculated ceiling
+    if (joules < maxJouleCap) {
+        // Reserves are below maximum cap: increment energy and write standard production log
+        joules += 1;
+        writeLog("\u26A1 Dynamo armature manually cranked. Produced 1 Joule.", "action");
+
+        // Progression Unlock Trigger Condition: Passing 50 Joules fires up Morse receiver
+        if (joules >= 50 && !morseTriggered) {
+            morseTriggered = true;
+            writeLog("The spark-gap Morse receiver springs to life! It is automatically recording an incoming long-distance frequencies pattern...", "unlock");
+            markerMorseDecoding.classList.remove("hidden");
+        }
+    } else {
+        // Reserves have reached or exceeded the cap: do not increment, write venting warning log
+        writeLog("\u26A0\uFE0F Joule containment ceiling reached. Excess energy dispersed.", "warning");
+    }
+
+    // 3. Force the user interface renderer to process data changes visually
     renderUI();
 });
 
@@ -470,13 +499,16 @@ btnTensionHigh.addEventListener("click", () => setLoomTension("high"));
 
 // Expand Spool Rack Inventory Storage Capacity Limit
 btnExpandWarehouse.addEventListener("click", () => {
-    if (joules >= 150 && wiring >= 15) {
-        joules -= 150;
-        wiring -= 15;
+    // REQUIREMENT 1: ECONOMY TUNING PASS
+    // Adjusting economic barrier limits down from 150J/15W to 80 Joules and 10 Wiring for smoother progression flow.
+    if (joules >= 80 && wiring >= 10) {
+        joules -= 80;   // Dedicts adjusted energy balance cost units
+        wiring -= 10;   // Deducts adjusted wire components cost inventory
         wireStorageCap += 20; // Step stack capability enlargement
-        writeLog(`Warehouse storage facility blueprint scaled out. New inventory ceiling: ${wireStorageCap} spools.`, "unlock");
+        writeLog(`Warehouse storage facility blueprint scaled out. New inventory ceiling: ${wireStorageCap} spools.`, "unlock"); //
     } else {
-        writeLog("Insufficient materials to construct storage racks expansion infrastructure. Requirements: 150J, 15 Wire.", "warning");
+        // UI warning readout strings updated to accurately represent the newly lower balanced structural costs
+        writeLog("Insufficient materials to construct storage racks expansion infrastructure. Requirements: 80J, 10 Wire.", "warning");
     }
     renderUI();
 });
@@ -484,24 +516,26 @@ btnExpandWarehouse.addEventListener("click", () => {
 // Emergency Capacitor Dump Button
 btnOvercharge.addEventListener("click", () => {
     if (wiring >= 5 && !capacitorOvercharged) {
-        capacitorOvercharged = true;
+        capacitorOvercharged = true; //
         
         // --- BYPASS WAREHOUSE STORAGE CEILING CAPACITY ---
         // Calculate raw wire yield directly from your current total Joule supply pool
-        let generatedYield = Math.floor(joules / 10) * 2; 
+        let generatedYield = Math.floor(joules / 10) * 2; //
         
         // DYNAMICALLY EXTEND MAXIMUM STORAGE STORAGE CEILING
-        // By adding the yield directly to our maximum cap limits variable, the global boundary tracking loop 
+        // By adding the yield directly to our maximum cap limits variable, the global boundary tracking loop
         // inside enforceBoundaries() will no longer overwrite or clamp our expanded overcharge metrics.
-        wireStorageCap += generatedYield;
+        wireStorageCap += generatedYield; //
         
         wiring += generatedYield; // Append the generated yield completely to inventory raw totals
         joules = 0; // Sacrifices all current electrical charge fields completely
 
-        btnOvercharge.classList.add("hidden");
-        panelOverchargeDepleted.classList.remove("hidden");
+        btnOvercharge.classList.add("hidden"); //
+        panelOverchargeDepleted.classList.remove("hidden"); //
 
-        writeLog(`💥 CRITICAL DIRECT OVERCHARGE SPENT! Dissipated entire storage core to weld out +${generatedYield} Wiring instantly.`, "warning");
+        // REQUIREMENT 4: STABLE GRAPHICS ESCAPE CODES
+        // Replaced raw explosion emoji text with specific safe JavaScript character sequences to insulate engine compile pipelines.
+        writeLog(`\u26A0\uFE0F CRITICAL DIRECT OVERCHARGE SPENT! Dissipated entire storage core to weld out +${generatedYield} Wiring instantly.`, "warning");
     }
     renderUI();
 });
@@ -515,7 +549,16 @@ btnChoiceAC.addEventListener("click", () => {
         nextAttackTime = 30;   // Arm first sabotage drop event timer window
         panelMorseEncounter.classList.add("hidden");
         markerMorseDecoding.classList.add("hidden");
-        writeLog("Agreement Signed. Station Omaha shares Alternating Current blueprints. Warning: The Edison Trust has declared our project an illegal patent infringement!", "warning");
+        
+        // --- REQUIREMENT 2: DYNAMIC STORAGE SCALE ---
+        // Dynamically shift the baseline max Joule capacity to 150 so players can hoard enough power for upgrades
+        maxJouleCap = 150;
+
+        // --- REQUIREMENT 1: ECONOMY TUNING PASSTHROUGH TEXT UPDATE ---
+        // Find the visual subtext label on the expand warehouse button and change it to display the new cheaper cost metrics
+        document.getElementById("btn-expand-warehouse").querySelector(".btn-subtext").innerText = "Cost: 80J, 10 Wiring — Expands max wire storage cap by +20";
+
+        writeLog("Agreement Signed. Poughkeepsie Station shares Alternating Current blueprints. \u26A0\uFE0F Warning: The Edison Trust has declared our project an illegal patent infringement!", "warning");
     }
     renderUI();
 });
@@ -654,15 +697,18 @@ setInterval(() => {
         }
     }
 
-    // --------------------------------------
+// --------------------------------------
     // Part D: Morse Decoder Timeline Progression Countdown
     // --------------------------------------
     if (morseTriggered && !morseDecoded) {
-        morseCountdown--;
+        morseCountdown--; //
         if (morseCountdown <= 0) {
-            morseDecoded = true;
-            markerMorseDecoding.classList.add("hidden");
-            writeLog("📡 SIGNAL FULLY DECODED. Open transmission lines from Station Omaha are requiring immediate field response commands.", "unlock");
+            morseDecoded = true; //
+            markerMorseDecoding.classList.add("hidden"); //
+            
+            // REQUIREMENT 3 & 4: NARRATIVE RE-INDEXING WITH ESCAPED UNICODE CHARACTER SYMBOLS
+            // 'Station Omaha' swapped out for 'Poughkeepsie Station', and raw tower icon updated to '\uD83D\uDCE1'
+            writeLog("\uD83D\uDCE1 SIGNAL FULLY DECODED. Open transmission lines from Poughkeepsie Station are requiring immediate field response commands.", "unlock");
         }
     }
 
