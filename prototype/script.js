@@ -64,6 +64,12 @@ let victoryAchieved = false; // Set to true when win condition criteria are succ
 // Internal Log ID Indexer
 let logIncrementId = 0;
 
+// Global construction cooldown timer (tracks remaining seconds)
+let buildCooldownRemaining = 0;
+
+// Global tracking variable to know what structure is currently in the queue
+let structureInQueue = null;
+
 // ==========================================
 // 3. CACHING ELEMENT ID SELECTORS
 // ==========================================
@@ -355,17 +361,23 @@ function renderUI() {
     if (joules < 50) { btnBuildLoom.style.opacity = "0.35";
     } else { btnBuildLoom.style.opacity = "1.0"; }
 
-    // 4. Build AC Generator Button (Cost: 20 Joules + 5 Wiring — Path A exclusive)
-    if (joules < 20 || wiring < 5) { btnBuildAcGen.style.opacity = "0.35";
-    } else { btnBuildAcGen.style.opacity = "1.0"; }
+// 4. Build AC Generator Button (Cost: 20 Joules + 5 Wiring — Path A exclusive)
+    if (joules < 20 || wiring < 5 || buildCooldownRemaining > 0) { 
+        btnBuildAcGen.style.opacity = "0.35";
+    } else { 
+        btnBuildAcGen.style.opacity = "1.0"; 
+    }
 
     // 5. Build Faraday Cage Button (Cost: 20 Wiring — Path A exclusive)
     if (wiring < 20) { btnBuildFaraday.style.opacity = "0.35";
     } else { btnBuildFaraday.style.opacity = "1.0"; }
 
-    // 6. Build Leyden Jar Button (Cost: 5 Wiring — Path B exclusive)
-    if (wiring < 5) { btnBuildLeyden.style.opacity = "0.35";
-    } else { btnBuildLeyden.style.opacity = "1.0"; }
+// 6. Build Leyden Jar Button (Cost: 5 Wiring — Path B exclusive)
+    if (wiring < 5 || buildCooldownRemaining > 0) { 
+        btnBuildLeyden.style.opacity = "0.35";
+    } else { 
+        btnBuildLeyden.style.opacity = "1.0"; 
+    }
 
     // 7. Build Junction Box Button (Cost: 200 Joules — Path B exclusive)
     if (joules < 200) { btnBuildJunction.style.opacity = "0.35";
@@ -591,24 +603,59 @@ btnAssembleCoil.addEventListener("click", () => {
     renderUI();
 });
 
+// Build AC Generator Upgrade
 btnBuildAcGen.addEventListener("click", () => {
+    // Structural Build Cooldown Gate
+    if (buildCooldownRemaining > 0) {
+        writeLog("Construction lines busy. Awaiting core configuration assembly stabilization.", "warning");
+        return;
+    }
+
     if (joules >= 20 && wiring >= 5) {
+        buildCooldownRemaining = 5; // Trigger global 5-second lockout
         joules -= 20;
         wiring -= 5;
-        acGenerators++;
-        writeLog(`Heavy heavy rotation turbine configured. AC Generator system #${acGenerators} integrated. (+5J/s)`, "unlock");
+
+        // Package structural configuration data and rewards directly into the queue tracking state
+        structureInQueue = {
+            id: "AC_GEN",
+            onComplete: () => {
+                acGenerators++;
+                writeLog(`Heavy heavy rotation turbine configured. AC Generator system #${acGenerators} integrated. (+5J/s)`, "unlock");
+            }
+        };
+
+        writeLog("Initiating assembly sequence for Heavy AC Generator core...", "action");
+    } else {
+        writeLog("Incomplete sub-components inventory. Cannot construct AC generation configuration matrix.", "warning");
     }
     renderUI();
 });
 
 // Build Leyden Jar Storage Upgrade
 btnBuildLeyden.addEventListener("click", () => {
+    // Structural Build Cooldown Gate
+    if (buildCooldownRemaining > 0) {
+        writeLog("Construction lines busy. Awaiting core configuration assembly stabilization.", "warning");
+        return;
+    }
+
     if (wiring >= 5) {
+        buildCooldownRemaining = 5; // Trigger global 5-second lockout
         wiring -= 5;
-        leydenJars++; // SURGICAL UPDATE: Increment our tracking state variable by 1
-        
-        writeLog("Insulated capacitor glass banks arranged. Energy core structural limits increased.", "unlock");
-        // btnBuildLeyden.classList.add("hidden"); // One-time structural upgrade asset
+
+        // Package structural configuration data and rewards directly into the queue tracking state
+        structureInQueue = {
+            id: "LEYDEN_JAR",
+            onComplete: () => {
+                leydenJars++;
+                writeLog("Insulated capacitor glass banks arranged. Energy core structural limits increased.", "unlock");
+            }
+        };
+
+        writeLog("Assembling insulated glass substrate layer matrices for Leyden array...", "action");
+    } else {
+        writeLog("Insufficient materials. Requires 5 Wiring to insulate upgrade jar cells.", "warning");
     }
     renderUI();
 });
@@ -743,7 +790,34 @@ setInterval(() => {
     }
 
     // --------------------------------------
-    // Part F: Win Condition Evaluation Evaluation
+    // Part F: Global Build Queue Cooldown Decrement & Completion
+    // --------------------------------------
+    if (buildCooldownRemaining > 0) {
+        buildCooldownRemaining--;
+        
+        // Dynamic text injection if a countdown is currently running
+        if (buildCooldownRemaining > 0) {
+            if (morseChoice === "A") {
+                btnBuildAcGen.querySelector(".btn-text").innerText = `[ Assembling... ${buildCooldownRemaining}s ]`;
+            } else if (morseChoice === "B") {
+                btnBuildLeyden.querySelector(".btn-text").innerText = `[ Assembling... ${buildCooldownRemaining}s ]`;
+            }
+        } else {
+            // Restore structural labels to original base configuration once timer expires
+            if (btnBuildAcGen) btnBuildAcGen.querySelector(".btn-text").innerText = "[ BUILD AC GENERATOR ]";
+            if (btnBuildLeyden) btnBuildLeyden.querySelector(".btn-text").innerText = "[ BUILD LEYDEN JAR ]";
+
+// --- FUTURE-PROOF BUILD QUEUE COMPLETION HANDLER ---
+            // Run the custom state-modification logic payload attached directly to the queued structural item
+            if (structureInQueue && typeof structureInQueue.onComplete === "function") {
+                structureInQueue.onComplete();
+            }
+            structureInQueue = null; // Clear queue tracking reference completely for future build tasks
+        }
+    }
+
+    // --------------------------------------
+    // Part G: Win Condition Evaluation Evaluation
     // --------------------------------------
     if (morseChoice === "A" && acGenerators >= 5 && wiring >= 40) {
         victoryAchieved = true;
