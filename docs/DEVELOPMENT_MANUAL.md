@@ -47,78 +47,60 @@ Once built, the loom automates wire production by tracking progress intervals ag
 * **HIGH Tension:** Drains `15 Joules/sec`. Spools `1 Wire every 2 seconds`. Carries a continuous **10% random chance to snap** on every 2-second completion check.
     * *The Snap Event:* If a failure occurs, the loom changes its visual text tracker to a red `BROKEN/HALT` and freezes all production progress indicators. It displays a `[ REPAIR LOOM ]` button, requiring a manual expenditure of 10 Joules to reset tracking clocks and re-thread the machinery.
 
+### D. Stage 0 Mechanical Lifecycle
+The primary gameplay loop transitions through four distinct execution states based on resource accumulation, ideological selection, and threat mitigation:---
+
+[STATE 0: STATIC CHILL]
+│  (Manual Crank Dynamo ──► Generates Joules)
+▼
+[STATE 1: THE SPARK-GAP RECEIVER]
+│  (Accumulate 10 Wiring ──► Build Tesla Coil ──► Passive Joule Gen)
+│  (Reach 50 Joules ──► Trigger Morse Code Decryption Timer)
+▼
+[STATE 2: THE IDEOLOGICAL FORK]
+├──► [PATHWAY A: ACCEPT POUGHKEEPSIE TERMS] (AC Grid Setup)
+└──► [PATHWAY B: REJECT THE TERMS]          (DC Grid Isolation)
+▼
+[STATE 3: DEFENSIVE ENGAGEMENT]
+│  (Automated Edison Trust Sabotage Events Trigger)
+│  (Player builds Path-Specific defenses to maintain Grid Stability)
+▼
+[STATE 4: REGIONAL STABILIZATION]
+│  (Fulfill Stage Win Requirements)
+└──► [ACTIVATE EXPEDITION CRATE] ──► Migration Sequence to Stage 1
+
 ---
 
-## 3. GAMEPLAY WALKTHROUGHS & SYSTEM RECONCILIATION
+## 3. GAMEPLAY WALKTHROUGHS & REGIONAL LOOPS
 
-### A. Pathway A: Alternating Current (AC) Tech Branch
-*Design Strategy: High-yield automation expansion, heavy resource risks, and frequency delay defense.*
+### Stage 0: Wardenclyffe (The Reboot)
+* **Theme:** Kinetic friction, dead silence, and awakening ancient technology.
+* **Initial State:** The viewport renders a completely blank terminal window, a Status HUD showing `LOCAL GRID STATUS: OFFLINE`, and a single active button: `[ CRANK DYNAMO ]`. 
 
-```
-[ START: 0 Joules ] ──► Manual Crank ──► Forge Wire ──► Build Loom ──► Hit 50 Joules
-                                                                            │
-   ┌────────────────────────────────────────────────────────────────────────┘
-   ▼
-[ 30-Second Morse Decode Clock ] ──► Accept Omaha Deal [A] (Cost: 15 Wiring)
-   │
-   ├─────────────────────────────────────────┐
-   ▼                                         ▼
-[ Build AC Generators ]                   [ Build Faraday Cages ]
-(Cost: 20J + 5W ──► +5J/s)                 (Cost: 20W ──► Extends Safety Delay +15s)
-   │                                         │
-   └────────────────────┬────────────────────┘
-                        │
-                        ▼
-           [ One-Time Capacitor Overcharge ]
-           (Dumps raw Joules into massive Wire)
-                        │
-                        ▼
-         [ TARGET: 5 AC GENS + 40 STORED WIRES ] ──► ★ WIN CONDITION A ACHIEVED ★
-```
+#### Phase 1: The First Spark
+The player manually cranks the dynamo. Every tap increments `joules`. If clicked at or above the starting `100J` containment ceiling, a conditional gate blocks production text and logs: `\u26A0\uFE0F Joule containment ceiling reached. Excess energy vented.` At 20 Joules, `[ FORGE COPPER WIRING ]` unlocks. The player pieces together raw wire spools. At 10 Wiring, `[ ASSEMBLE TESLA COIL ]` unlocks, establishing the station's first passive 1Hz automated generation tick (+1 J/sec).
 
-* **Phase 1 (Ignition):** The player cranks the dynamo manually to reach 10 Joules, unlocks wiring forgery, and hoards 50 Joules to build the Automated Loom. Upon hitting 50 Joules, the spark-gap receiver engages, prompting a 30-second live cyan top countdown banner.
-* **Phase 2 (The Decision):** When the clock hits zero, the player accepts Omaha's terms, trading 15 wire spools for the AC schematic. The master dashboard tracking label instantly swaps its context from `COILS` to `AC GENS`.
-* **Phase 3 (The Threat):** The Edison Trust attacks aggressively on a fast **30-second baseline loop**. During an active 10-second lockout attack, generation drops to zero, and **5 stored wires are ripped from inventory**. The player hoards resources to construct **Faraday Cages** (`Cost: 20 Wiring`), which permanently pad an extra `+15 seconds` onto the attack frequency clock to delay strikes.
-* **Phase 4 (The Surge & Victory):** The player constructs **AC Generators** (`Cost: 20 Joules + 5 Wiring`), rocketing passive generation upward by `+5 Joules/sec` per unit. To prevent power waste against the 100-Joule cap, the player utilizes the one-time **`[ CAPACITOR OVERCHARGE ]`** blast to instantly melt all stored power directly into wire. The game is won once the player stabilizes **5 AC Generators and 40 stored Copper Wires**.
+#### Phase 2: The Decryption Banner
+The exact moment the station reaches **50 Joules**, the receiver triggers an intercept event. The top viewport panel overrides with a scrolling cyan alert: `\uD83D\uDCE1 ►NEW SIGNAL INCOMING`. A 30-second countdown initializes. The player is forced to monitor the feed while maintaining manual resource harvesting loops. When the timer hits zero, a high-priority blueprint choice card is presented.
 
-### B. Pathway B: Direct Current (DC) Tech Branch
-*Design Strategy: Large storage capacity, steady passive tracking, and high resource protection shields.*
+#### Phase 3: The Ideological Divergence
+* **PATHWAY A: Alternating Current (Accept Poughkeepsie's Terms)**
+    * *Narrative:* The player signs a transmission pact with the distant Poughkeepsie Station Relay.
+    * *Immediate Effect:* The baseline Joule storage capacity ceiling instantly scales from 100J up to **150J**, clearing the physical limits to handle high-voltage distribution.
+    * *Unlocks:* Access to the automated **Pneumatic Loom** (converts Joules to Wire) and the **Wire Spool Rack** upgrade (costs 80 Joules / 10 Wiring; expands wire storage cap by +20).
+    * *The Threat:* Active **Edison Trust Sabotage Attacks** fire via the 1Hz loop, attempting to steal wire or force short circuits.
+    * *Win Condition:* Stabilize **5 AC Generators** and accumulate **40 stored Copper Wires**.
 
-```
-[ START: 0 Joules ] ──► Manual Crank ──► Forge Wire ──► Build Loom ──► Hit 50 Joules
-                                                                            │
-   ┌────────────────────────────────────────────────────────────────────────┘
-   ▼
-[ 30-Second Morse Decode Clock ] ──► Reject Omaha Deal [B] (Cost: 10 Wiring)
-   │
-   ├─────────────────────────────────────────┼─────────────────────────────────────────┐
-   ▼                                         ▼                                         ▼
-[ Assemble Tesla Coils ]                  [ Build Leyden Jars ]                     [ Build Junction Boxes ]
-(Cost: 10W ──► +1J/s)                      (Cost: 5W ──► Cap Doubles to 200J)        (Cost: 200J ──► Blunts Damage -50%)
-   │                                         │                                         │
-   └─────────────────────────────────────────┼─────────────────────────────────────────┘
-                                             │
-                                             ▼
-                             [ TARGET: 10 COILS + 30 STORED WIRES ] ──► ★ WIN CONDITION B ACHIEVED ★
-```
+* **PATHWAY B: Direct Current (Reject the Terms)**
+    * *Narrative:* The player rejects external corporate and relay alliances, locking down the station into a highly insulated, self-reliant loop.
+    * *Immediate Effect:* Unlocks immediate local storage expansions via the **Leyden Jar Battery** bank, scaling the Joule capacity dynamically without relying on external network relays.
+    * *Unlocks:* Access to the heavy-gauge **Manual Drawing Bench** and specialized **Insulated Ground Shields** to entirely nullify incoming espionage vectors.
+    * *The Threat:* Intense **Grid Overload snaps**, causing structural wire degradation if passive automated generation loops run unmonitored.
+    * *Win Condition:* Establish **4 DC Dynamo Shunts** and hold **35 Insulated Wires** inside stabilized local cells.
 
-* **Phase 1 (Ignition):** Identical manual power ramping and loom assembly as Path A until the Morse transmission clock successfully completes its countdown.
-* **Phase 2 (The Decision):** The player denies Omaha's deal, choosing to turtle behind local isolation fields. They spend 10 wire spools, and the header status row switches over to `OPERATIONAL POWERED`.
-* **Phase 3 (The Protection):** Because local DC lines emit lower signatures, the Edison Trust loop runs on a wider, slower **45-second baseline tracking interval**. Hostile raids only cause a **lighter baseline loss of 3 wire spools**. To neutralize this damage, the player saves 200 Joules to assemble a protected **Junction Box**. Each active Box divides incoming wire theft by half, reducing threat impacts to just 1 single wire spool.
-* **Phase 4 (The Battery Bank & Victory):** The player quickly spends 5 wires to build the **Leyden Jar** array, permanently doubling the storage capacity from `/ 100` to **`/ 200`** Joules to capture energy without waste. They scale out stable **Tesla Coils** (`Cost: 10 Wiring`) to accumulate steady `+1 Joule/sec` ticks. Victory is claimed once the dashboard logs **10 active Tesla Coils and 30 stored Copper Wires**.
+#### Phase 4: Regional Migration
+Upon fulfilling the chosen pathway requirements, the main interaction panel switches to a single flashing interface link: `[ INITIALIZE EXPEDITION CRATE ]`. Clicking this button triggers the Migration Sequence: current local infrastructure variables are scuttled, specialized inventory data is packed into a transportable matrix state, and the viewport updates to load **Stage 1: Poughkeepsie (The Kinetic Generation)**.
 
-### C. Technical Reconciliation Ledger
-| Operational Metric | Base Baseline State | Path A: Alternating Current (AC) | Path B: Direct Current (DC) |
-| :--- | :--- | :--- | :--- |
-| **Grid Status Row** | `OFFLINE` | `OPERATIONAL POWERED` | `OPERATIONAL POWERED` |
-| **Joule Storage Limit**| 100 Joules Maximum | 100 Joules Maximum | **200 Joules Maximum** (Leyden Tech) |
-| **Primary Machine Asset**| Tesla Coils (+1J/s) | **AC Generators (+5J/s)** | Tesla Coils (+1J/s) |
-| **Dashboard Metric Node**| `COILS` | **`AC GENS`** | `COILS` |
-| **Threat Frequency Clock**| No Threats Triggered | Fast Attack Cycle (30s Base) | **Slower Attack Cycle (45s Base)** |
-| **Ambush Wire Penalties**| No Threats Triggered | Severe Resource Theft (-5 Wire) | **Moderate Resource Theft (-3 Wire)** |
-| **Unique Blueprint Unlocks**| Baseline Items | **Faraday Cages** (+15s Delay) | **Junction Boxes** (Damage Blunting) |
-| **Emergency Burst Button**| Hidden / Locked | **Capacitor Overcharge** (Active) | Hidden / Unavailable |
-| **Win Criteria Metrics** | Goal Hidden | **5 AC Generators + 40 Wires** | **10 Tesla Coils + 30 Wires** |
 
 ---
 
