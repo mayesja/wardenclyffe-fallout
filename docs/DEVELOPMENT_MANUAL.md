@@ -161,11 +161,12 @@ The following UI concepts should be added or repaired to improve playing exerien
 The following mechanics are currently being evaluated as design experiments for upcoming iterations to gather insights for larger collaboration blueprints:
 *  **Build timers:**  When higher level technologies are built there will be a countdown timer until they are "online" and ready to use or start to take effect.  For example, building a Tesla Coil has a 5 second timer after being built but before it starts generating power.
    * Should building additional technologies be blocked until the countdown timer expires (dim the build buttons)?
-   * Or should there be a construction queue?
+   * Began implementation in Milestone 7
 * **Schematic Assembly (Item Combination):** Combining specific configurations of components and energy within the panel to generate new technologies.
 * **Component Optimization (Item Upgrades):** Spending extra Joules (or other components) to permanently improve the output of existing technology.  (e.g., increasing TESLA COILS output from +1J/s to +2J/s by adding 5 WIRING).
 * **Wiring Rack lockout** Allow Path A to build Wiring Storage Rack (construction requires 150J, but Path A is limited to 100J). -- Building AC Generators also raises max Joules / Lower the cost to build storage rack  
 * **Capacitor Discharge lockout** Prevent situation where CAPACITOR DISCHARGE is used prematurely and prevents accomplishing the 1st goal (40 Wiring with a 20 Wiring storage limit). -- Raise the limit / Allow re-use / Lower the goal requirement
+* **Pneumatic Loom Joule Usage** If the Pneumatic Loom is built before any power generation, it becomes a race between the Loom and clicking CRANK DYNAMO.  Loom probably needs an OFF SWITCH.
 
   
 ### Future Storyline Developments (Status: Planned / Not Yet Implemented)
