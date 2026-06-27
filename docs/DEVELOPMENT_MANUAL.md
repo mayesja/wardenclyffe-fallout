@@ -50,22 +50,22 @@ Once built, the loom automates wire production by tracking progress intervals ag
 ### D. Stage 0 Mechanical Lifecycle
 The primary gameplay loop transitions through four distinct execution states based on resource accumulation, ideological selection, and threat mitigation:---
 
-[STATE 0: STATIC CHILL]
+STATE 0: STATIC CHILL
 │  (Manual Crank Dynamo ──► Generates Joules)
 ▼
-[STATE 1: THE SPARK-GAP RECEIVER]
+STATE 1: THE SPARK-GAP RECEIVER
 │  (Accumulate 10 Wiring ──► Build Tesla Coil ──► Passive Joule Gen)
 │  (Reach 50 Joules ──► Trigger Morse Code Decryption Timer)
 ▼
-[STATE 2: THE IDEOLOGICAL FORK]
+STATE 2: THE IDEOLOGICAL FORK
 ├──► [PATHWAY A: ACCEPT POUGHKEEPSIE TERMS] (AC Grid Setup)
 └──► [PATHWAY B: REJECT THE TERMS]          (DC Grid Isolation)
 ▼
-[STATE 3: DEFENSIVE ENGAGEMENT]
+STATE 3: DEFENSIVE ENGAGEMENT
 │  (Automated Edison Trust Sabotage Events Trigger)
 │  (Player builds Path-Specific defenses to maintain Grid Stability)
 ▼
-[STATE 4: REGIONAL STABILIZATION]
+STATE 4: REGIONAL STABILIZATION
 │  (Fulfill Stage Win Requirements)
 └──► [ACTIVATE EXPEDITION CRATE] ──► Migration Sequence to Stage 1
 
