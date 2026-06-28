@@ -86,3 +86,54 @@ To prevent clicking repetition from becoming stale within the compact `160px` sm
 Depending on the Fork 1 choice, the final migration message dynamically pairs with the player's technological paradigm:
 *   **Path AC Transmitted Morse:** `"[LOG] Poughkeepsie Node: 'Wardenclyffe, your alternating ripple is blinding on our dials! The Trust is bringing up heavy tracking wagons from NYC to pin your signature. We've opened a high-voltage conduit along the Hudson. Pack the coils and migrate upstream!'"`[cite: 7]
 *   **Path DC Transmitted Morse:** `"[LOG] Poughkeepsie Node: 'Wardenclyffe, we detected your massive static drop. Excellent masking. But local scouts are doing manual grid audits block-by-block. They will find your bunker. We have an insulated sub-vault ready in the river bluffs. Move now.'"`[cite: 7]
+
+---
+---
+# OLDER VERSION
+
+## 3. THE MULTI-BRANCHING NARRATIVE TREE
+
+The game features three major choice forks, resulting in an exponential narrative tree of 8 distinct endpoints[cite: 1].
+
+### Fork 1: The Wardenclyffe Decision (AC vs. DC Baseline)
+*   **The AC Choice:** Focuses on long-range atmospheric resonance, high-voltage induction, step-up transformers, and high-risk/high-yield automation[cite: 1].
+*   **The DC Choice:** Focuses on constant-current density, heavy localized battery containment (Leyden Jars), thick insulated wiring, and defensive fortifying[cite: 1].
+
+### Fork 2: The Poughkeepsie Decision (Distribution Philosophy)
+*   **Timeline AC Splits:** 
+    *   *Choice AC-1 (Centralized Induction Tower):* Maximizes raw power yield (`+5J/s` AC Generators) but creates a massive electromagnetic signature, resulting in fast, aggressive Trust raids[cite: 1].
+    *   *Choice AC-2 (Distributed River Mesh):* Splinter current into low-profile, synchronized hydro-buoys chained across the Hudson to lower corporate exposure[cite: 1].
+*   **Timeline DC Splits:**
+    *   *Choice DC-1 (Subterranean Vault Bank):* Anchors the grid into bedrock cliffs, maximizing storage caps and armor plating against resource theft[cite: 1].
+    *   *Choice DC-2 (Municipal Grid Parasite):* Quietly bleeds current into local town streetlamp infrastructure, tying passive generation to stealthy grid corruption[cite: 1].
+
+### Fork 3: The Ithaca Decision (The Niagara Transition)
+*   **From AC-1 (Centralized) ──►** *Atmospheric Ionization:* Beam Niagara's current into the ionosphere for global wireless power vs. Weaponizing the frequency to fry the Trust's infrastructure[cite: 1].
+*   **From AC-2 (Distributed) ──►** *Phased Harmonic Web:* Establish an open-source, civilian-run energy mesh vs. Consolidating into a fortified, private corporate network[cite: 1].
+*   **From DC-1 (Vault) ──►** *Subterranean Dynamos:* Seal the Falls behind an impenetrable underground bunker vs. Building deep macro-conduits to power independent industrial sectors[cite: 1].
+*   **From DC-2 (Parasite) ──►** *Grid-Level Subversion:* Execute a total, synchronized blackout of the Eastern Edison Grid vs. Initiating a silent corporate proxy takeover of the Trust itself[cite: 1].
+
+---
+
+## 4. SYSTEM LOG SYNTAX SAMPLES
+
+### Stage 1: Poughkeepsie Arrival (Paradigm Shift)
+[SYSTEM] Destination reached: Poughkeepsie Field Station Relay.
+[SYSTEM] Initializing Mobile Expedition Crate assets... Unpacking core blueprints.
+[LOG] Wardenclyffe is a ghost in the distance. We have set up operations inside a dilapidated millhouse jutting directly out over the rushing waters of the Hudson River.
+[LOG] The manual dynamo hand-crank has been scuttled. We have dropped our heavy intake turbine directly into the river's throat. Kinetic generation loop is now active. Let the water do the work.
+
+
+### Stage 1: Threat Phase (AC Pathway Example)
+[ALERT] Signal interception confirmed. Edison Trust tracking carriages have deployed mobile dampening coils along the Poughkeepsie perimeter.
+[SYSTEM] Lockout loop triggered. Passive AC generation reduced to 0 Joules/sec.
+[ALERT] Corporate Espionage Event: Trust raiders have severed 5 primary copper wire spools from the automated pneumatic loom.
+
+
+### Stage 1: Zone Stabilization & Migration Unlocked
+[SYSTEM] Master AC Generator Array: 5/5 Operational. Synchronization at 100%.
+[SYSTEM] Firing primary step-up transformers... Emitting localized electromagnetic pulse.
+[LOG] The air turns thick with scorched ozone. A blinding blue arc leaps from the roof comb straight into the clouds over the Hudson River.
+[SYSTEM] External threat signature neutralized. Trust tracking wagons reporting total hardware blowout. Automated attacks halted. Grid status: SECURED.
+[LOG] The gorges of Ithaca are calling. It's time to teach them how to distribute this lightning.
+
