@@ -144,6 +144,7 @@ Upon fulfilling the chosen pathway requirements, the main interaction panel swit
 * **Object-Oriented Callback Architecture:** Future-proofed the 1Hz master engine loop for upcoming multi-stage progression (Stages 1–4) by eliminating rigid, hardcoded string-matching tags. Transitioned the `structureInQueue` state to accept an object-oriented payload containing an executable anonymous completion function (`onComplete`). Advanced structures across all future regions can now pass custom localized completion rewards without requiring structural modifications to the core engine loop.
 
 ---
+## 5.  TODO's
 
 ### Future User Interface Concepts (Status: Planned / Not Yet Implemented)
 The following UI concepts should be added or repaired to improve playing exerience:
@@ -155,19 +156,24 @@ The following UI concepts should be added or repaired to improve playing exerien
    * Generate audio clicks every time the player starts a TESLA COIL (sounds electro-mechanical). 
    * Generate a high-to-low slide when a loom snaps under high tension (sounds like losing power).
    * Generate a low-to-high slide when an attack occurs (sounds like a warning siren).
-* **Breakthrough Modals (Unlock Splash Screens):** Inserting simple visual text banners that display full-screen lore snapshots when Path A or Path B is initially signed.
+* **Breakthrough Modals (Unlock Splash Screens):** Inserting simple visual text banners that display full-screen lore snapshots when Path A or Path B is initially signed.  Or when a major technology is unlocked, or used, for the first time.
 
 ### Future Gameplay Experiments (Status: Planned / Not Yet Implemented)
 The following mechanics are currently being evaluated as design experiments for upcoming iterations to gather insights for larger collaboration blueprints:
 *  **Build timers:**  When higher level technologies are built there will be a countdown timer until they are "online" and ready to use or start to take effect.  For example, building a Tesla Coil has a 5 second timer after being built but before it starts generating power.
    * Should building additional technologies be blocked until the countdown timer expires (dim the build buttons)?
    * Began implementation in Milestone 7
-* **Schematic Assembly (Item Combination):** Combining specific configurations of components and energy within the panel to generate new technologies.
-* **Component Optimization (Item Upgrades):** Spending extra Joules (or other components) to permanently improve the output of existing technology.  (e.g., increasing TESLA COILS output from +1J/s to +2J/s by adding 5 WIRING).
+* **Schematic Assembly (Item Combination -- horizontal growth):** Combining specific configurations of components and energy within the panel to generate new technologies.
+* **Component Optimization (Item Upgrades -- vertical growth):** Spending extra Joules (or other components) to permanently improve the output of existing technology.  (e.g., increasing TESLA COILS output from +1J/s to +2J/s by adding 5 WIRING).
+* **Vertical Optimization Loop:** Instead of infinitely stacking individual structure button panels (which breaks mobile vertical layout parameters), advanced nodes will utilize a localized Tier Level-Up system (e.g., Level 1 AC Gen + 20 Wires ──► Level 2 AC Gen). 
+* **Pacing Dial Options to Test:**
+    1.  *Fixed Cooldown (Dial A):* Standardized flat 5-second lockout for predictable pacing. Ideal for Stage 0 Tutorial synchronization.
+    2.  *Instant Gratification (Dial B):* Eliminates cooldown limits entirely upon upgrade click; rewards strategic inventory hoarding and resource dumps.
+    3.  *Escalating High-Stakes Cooldown (Dial C):* Adds +5 seconds per successive upgrade level but scales output exponentially. Introduces defensive vulnerabilities, forcing players to check for active corporate raid vectors before taking their grid offline for upgrades.
 * **Wiring Rack lockout** Allow Path A to build Wiring Storage Rack (construction requires 150J, but Path A is limited to 100J). -- Building AC Generators also raises max Joules / Lower the cost to build storage rack  
 * **Capacitor Discharge lockout** Prevent situation where CAPACITOR DISCHARGE is used prematurely and prevents accomplishing the 1st goal (40 Wiring with a 20 Wiring storage limit). -- Raise the limit / Allow re-use / Lower the goal requirement
 * **Pneumatic Loom Joule Usage** If the Pneumatic Loom is built before any power generation, it becomes a race between the Loom and clicking CRANK DYNAMO.  Loom probably needs an OFF SWITCH.
-
+### Upgrades & Construct Tuning Paradigms (June 2026 Design Session)
   
 ### Future Storyline Developments (Status: Planned / Not Yet Implemented)
 To create an engaging game to play there needs to be a well-told story.
