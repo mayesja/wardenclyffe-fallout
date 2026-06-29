@@ -163,8 +163,8 @@ The following mechanics are currently being evaluated as design experiments for 
 *  **Build timers:**  When higher level technologies are built there will be a countdown timer until they are "online" and ready to use or start to take effect.  For example, building a Tesla Coil has a 5 second timer after being built but before it starts generating power.
    * Should building additional technologies be blocked until the countdown timer expires (dim the build buttons)?
    * Began implementation in Milestone 7
-* **Schematic Assembly (Item Combination -- horizontal growth):** Combining specific configurations of components and energy within the panel to generate new technologies.
-* **Component Optimization (Item Upgrades -- vertical growth):** Spending extra Joules (or other components) to permanently improve the output of existing technology.  (Ex. 1 -- increasing TESLA COILS output from +1J/s to +2J/s by adding 5 WIRING)  (Ex. 2 --  Level 1 AC Gen + 20 Wires ──► Level 2 AC Gen). 
+* **Schematic Assembly (Item Combination -- horizontal growth):** Combining specific configurations of components and energy within the panel to generate new technologies.  Fixed recipes for combinations, or open system allowing for player creativity and exploration? 
+* **Component Optimization (Item Upgrades -- vertical growth):** Spending extra Joules (or other components) to permanently improve the output of existing technology.  (e.g., Level 1 AC Gen + 20 Wires ──► Level 2 AC Gen). 
 * **Pacing Dial Options to Test:**
     1.  *Fixed Cooldown (Dial A):* Standardized flat 5-second lockout for predictable pacing. Ideal for Stage 0 Tutorial synchronization.
     2.  *Instant Gratification (Dial B):* Eliminates cooldown limits entirely upon upgrade click; rewards strategic inventory hoarding and resource dumps.
