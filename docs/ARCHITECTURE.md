@@ -276,10 +276,8 @@ function formatResources(value) {
 // formatResources(45)          -> "45"
 // formatResources(842.8)       -> "842"
 // formatResources(1250)        -> "1.25K"
-```
-
 // formatResources(982500)      -> "982K"
 // formatResources(45210000)    -> "45.21M"
 // formatResources(1254820110)  -> "1.25B"
 // formatResources(7.5e16)      -> "7.50e+16"
-
+```
