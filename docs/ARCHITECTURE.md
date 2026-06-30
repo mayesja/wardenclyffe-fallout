@@ -78,8 +78,9 @@ By decoupling our rendering engine from our math engine, consolidating our loose
 
 ---
 
-** Some examples**
+** Some examples
 ## 1. The Encapsulated State Schema
+```
 // ============================================================================
 // SINGLE SOURCE OF TRUTH: UNIFIED GAME STATE TREE
 // ============================================================================
@@ -146,9 +147,9 @@ const gameState = {
         terminalScrolledOut: false
     }
 };
-
+```
 ## 2. The Delta-Time Calculator Pattern
-
+```
 // ============================================================================
 // FLOATING TIMESTAMP FRAME DELTA ENGINE
 // ============================================================================
@@ -217,10 +218,10 @@ function updateGameLogic(dt) {
     // 4. Fire target-specific reactive rendering calls only if values actually modified
     renderTargetedUIComponents();
 }
-
+```
 
 ## 3. The Scientific-Notation / Abbreviation Helper
-
+```
 // ============================================================================
 // MOBILE VIEWPORT CONSTRAINED RESOURCE FORMATTER
 // ============================================================================
@@ -275,6 +276,8 @@ function formatResources(value) {
 // formatResources(45)          -> "45"
 // formatResources(842.8)       -> "842"
 // formatResources(1250)        -> "1.25K"
+```
+
 // formatResources(982500)      -> "982K"
 // formatResources(45210000)    -> "45.21M"
 // formatResources(1254820110)  -> "1.25B"
