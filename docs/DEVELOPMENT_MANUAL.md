@@ -169,6 +169,7 @@ The following mechanics are currently being evaluated as design experiments for 
     1.  *Fixed Cooldown (Dial A):* Standardized flat 5-second lockout for predictable pacing. Ideal for Stage 0 Tutorial synchronization.
     2.  *Instant Gratification (Dial B):* Eliminates cooldown limits entirely upon upgrade click; rewards strategic inventory hoarding and resource dumps.
     3.  *Escalating High-Stakes Cooldown (Dial C):* Adds +5 seconds per successive upgrade level but scales output exponentially. Introduces defensive vulnerabilities, forcing players to check for active corporate raid vectors before taking their grid offline for upgrades.
+* **Meta-improvements** Allow for methods to reduce costs, increase limits, lower requirement threshholds
 * **Wiring Rack lockout** Allow Path A to build Wiring Storage Rack (construction requires 150J, but Path A is limited to 100J). -- Building AC Generators also raises max Joules / Lower the cost to build storage rack  
 * **Capacitor Discharge lockout** Prevent situation where CAPACITOR DISCHARGE is used prematurely and prevents accomplishing the 1st goal (40 Wiring with a 20 Wiring storage limit). -- Raise the limit / Allow re-use / Lower the goal requirement
 * **Pneumatic Loom Joule Usage** If the Pneumatic Loom is built before any power generation, it becomes a race between the Loom and clicking CRANK DYNAMO.  Loom probably needs an OFF SWITCH.
