@@ -143,6 +143,14 @@ Upon fulfilling the chosen pathway requirements, the main interaction panel swit
 * **Asynchronous Resource Yield Modification:** Patched an exploitation vector where permanent structural state modifications (e.g., `acGenerators++`) applied instantly at the start of a countdown. Restructured click handlers to execute resource cost deductions upfront, while deferring structural state rewards until the master countdown explicitly completes at zero.
 * **Object-Oriented Callback Architecture:** Future-proofed the 1Hz master engine loop for upcoming multi-stage progression (Stages 1–4) by eliminating rigid, hardcoded string-matching tags. Transitioned the `structureInQueue` state to accept an object-oriented payload containing an executable anonymous completion function (`onComplete`). Advanced structures across all future regions can now pass custom localized completion rewards without requiring structural modifications to the core engine loop.
 
+### Milestone 8: Full State Encapsulation Refactor (August 2026)
+* **Operational Summary:** Completed a comprehensive 3-step engine refactor, eliminating over 25 loose global variables in favor of a single, deeply nested `gameState` source-of-truth object tree (`gameState.resources`, `gameState.caps`, `gameState.structures`, `gameState.queues`, `gameState.combat`, `gameState.meta`, `gameState.uiState`).
+* **Architectural Breakthroughs:**
+  * **Unified State Management:** Bound all early-game mechanics—including the Pneumatic Loom (tension settings and 10% snap lottery), Bluff-side Turbines, 50-Joule Morse code intercept, and Path A/B branching—directly to the encapsulated state tree.
+  * **Asynchronous Queue Synchronization:** Standardized global build queues to execute callbacks using structural payload references, ensuring UI rendering updates cleanly across tick intervals.
+  * **Zero Global Pollution:** Cleaned the global scope in `script.js` to ensure 100% data encapsulation, preparing the baseline engine for future multi-stage geographical transitions (Poughkeepsie, Ithaca, Niagara) and mobile viewport performance optimization.* 
+
+
 ---
 ## 5.  TODO's
 
