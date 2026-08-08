@@ -164,24 +164,24 @@ The following UI concepts improve player feedback and viewport navigation:
   * Generate a low-to-high slide when an attack occurs (sounds like a warning siren).
 * **Breakthrough Modals (Unlock Splash Screens):** Inserting simple visual text banners that display full-screen lore snapshots when Path A or Path B is initially signed, or when a major technology is unlocked or used for the first time.
 
-### B. Future Gameplay Experiments (Status: Planned / In Design)
-The following mechanics are being evaluated as design experiments for upcoming iterations to gather insights for larger collaboration blueprints:
-* **Build timers:** When higher level technologies are built, execute a countdown timer until they are "online" and ready to use. For example, building a generator has a 5-second timer before it starts generating power.
-  * *Question to test:* Should building additional technologies be blocked until the countdown timer expires (dimming build buttons)?
-  * *Status:* Began implementation in Milestone 7.
-* **Pneumatic Loom Joule Usage:** If the Pneumatic Loom is built before any power generation, it becomes a race between the Loom draining power and clicking `CRANK DYNAMO`. 
-  * *Fix:* The Loom needs an explicitly designed **OFF SWITCH / TOGGLE**.
-* **Wiring Rack lockout:** Resolve the Path A edge-case where building the Wiring Storage Rack requires 150J, but Path A is initially limited to 100J.
-  * *Potential solutions:* Allow building AC Generators to raise max Joules first, or lower the initial cost to build the storage rack.
-* **Capacitor Discharge lockout:** Prevent situations where `CAPACITOR DISCHARGE` is used prematurely and locks the player from accomplishing the 1st goal (40 Wiring with a 20 Wiring storage limit).
-  * *Potential solutions:* Raise storage limits, allow re-use, or adjust goal requirement thresholds.
-* **Schematic Assembly (Item Combination -- horizontal growth):** Combining specific configurations of components and energy within the panel to generate new technologies. Fixed recipes for combinations, or an open system allowing for player creativity and exploration?
-* **Component Optimization (Item Upgrades -- vertical growth):** Spending extra Joules (or other components) to permanently improve the output of existing technology (e.g., Level 1 AC Gen + 20 Wires ──► Level 2 AC Gen).
-* **Meta-improvements:** Implement systems that allow methods to reduce costs, increase capacity limits, and lower requirement thresholds over time.
+### B. Future Gameplay Experiments & Pacing Dials
+* **Build Timers:** When higher level technologies are built, a countdown timer ticks before they come online[cite: 8]. 
+  * *Question to benchmark:* Should building additional technologies be blocked until the countdown timer expires (dimming build buttons)?[cite: 8] *(Began implementation in Milestone 7)*[cite: 8]
+* **Meta-Improvements (General):** Mechanics allowing methods to reduce costs, increase limits, or lower requirement thresholds[cite: 8].
+* **Regional Meta-Improvement Draft ("Pick 2 of 5" System):**
+  * *Purpose & Strategy:* Serves as a testbed for meta-upgrades without creating nested "meta-meta" complexity or inflating storyline branch writing.
+  * *Mechanic:* Each stage presents a pool of 5 distinct, thematic meta-improvements targeting different operational vectors (e.g., Manual Yield, Risk Mitigation, Passive Yield, Queue Speeds, Logistics Limits).
+  * *The Lock-Out Gate:* The player may only select **2 options per stage**. Upon purchasing the second option, the remaining 3 unchosen choices lock out (`gameState.meta.stageSelections === 2`).
+  * *Replayability Impact:* Allows players following the exact same narrative story path to experience vastly different operational builds across multiple playthroughs.
+* **Schematic Assembly (Item Combination - Horizontal Growth):** Combining specific configurations of components and energy within the panel to generate new technologies[cite: 8]. Fixed recipes vs. open system allowing player creativity[cite: 8]?
+* **Component Optimization (Item Upgrades - Vertical Growth):** Spending extra Joules or components to permanently improve output of existing technology (e.g., Level 1 AC Gen + 20 Wires ──► Level 2 AC Gen)[cite: 8].
 * **Pacing Dial Options to Test:**
-  1. *Fixed Cooldown (Dial A):* Standardized flat 5-second lockout for predictable pacing. Ideal for Stage 0 Tutorial synchronization.
-  2. *Instant Gratification (Dial B):* Eliminates cooldown limits entirely upon upgrade click; rewards strategic inventory hoarding and resource dumps.
-  3. *Escalating High-Stakes Cooldown (Dial C):* Adds +5 seconds per successive upgrade level but scales output exponentially. Introduces defensive vulnerabilities, forcing players to check for active corporate raid vectors before taking their grid offline for upgrades.
+  1. *Fixed Cooldown (Dial A):* Standardized flat 5-second lockout for predictable pacing[cite: 8]. Ideal for Stage 0 Tutorial synchronization[cite: 8].
+  2. *Instant Gratification (Dial B):* Eliminates cooldown limits entirely upon upgrade click; rewards strategic inventory hoarding and resource dumps[cite: 8].
+  3. *Escalating High-Stakes Cooldown (Dial C):* Adds +5 seconds per successive upgrade level but scales output exponentially[cite: 8]. Introduces defensive vulnerabilities, forcing players to check for active corporate raid vectors before taking grid offline[cite: 8].
+* **Wiring Rack Lockout Tuning:** Address situation where Path A can attempt to build Wire Storage Rack (requires 150J, but Path A starts limited to 100J)[cite: 8]. Ensure building AC Generators properly raises max Joules or lower storage rack cost[cite: 8].
+* **Capacitor Discharge Lockout:** Prevent situation where `CAPACITOR DISCHARGE` is used prematurely and prevents accomplishing 1st goal (40 Wiring with a 20 Wiring storage limit)[cite: 8]. Options: raise limit, allow re-use, or lower goal requirement[cite: 8].
+* **Pneumatic Loom Joule Usage (Power Switch):** If Pneumatic Loom is built before power generation, it creates an aggressive race against manual `CRANK DYNAMO`[cite: 8]. Loom requires a manual `OFF / ON` toggle switch[cite: 8].
 
 ### C. Future Storyline Developments & Narrative Progression
 To create an engaging game to play, there needs to be a well-told story:
