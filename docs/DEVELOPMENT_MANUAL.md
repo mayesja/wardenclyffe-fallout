@@ -150,30 +150,54 @@ Upon fulfilling the chosen pathway requirements, the main interaction panel swit
 
 ---
 
-## 5. TODO's & FUTURE DESIGN EXPERIMENTS
+## 5. TODO'S & FUTURE DESIGN EXPERIMENTS
 
-### A. User Interface Concepts
-* **Button State Dimming:** (Implemented in Milestone 3) Button labels dim when resources are insufficient.
-* **Top Viewport Scroll Alert Banner:** (Implemented in Milestone 5) Alerts players to unread system notices when scrolled out of view.
-* **Breakthrough Modals (Unlock Splash Screens):** (Planned) Inserting visual text banners displaying full-screen lore snapshots when Path A or Path B is signed or when major technologies are first unlocked.
-* **Acoustic Landscape (HTML5 Audio API):** (Planned) Integrating raw, low-frequency synthetic synthesizer oscillators natively inside JavaScript:
-  * Electro-mechanical clicks when starting generator machinery.
-  * High-to-low slide when a loom snaps under high tension.
-  * Low-to-high siren slide during Edison Trust sabotage events.
+### A. Future User Interface Concepts (Status: Planned / Active Implementation)
+The following UI concepts improve player feedback and viewport navigation:
+* **Dim button text for unavailable options:** Make button label text dim when that button cannot be used. For example, `FORGE COPPER WIRING` should be dim when the JOULE count is too low.
+  * *Status:* Implemented in Milestone 3.
+* **Message & Warning alerts:** When a new message (cyan notices) or warning (red notices) occurs and the player has scrolled down so the messages panel is not visible, display a banner at the top of the screen ("New notice available. Click here to read."). Clicking immediately scrolls up to display the message panel.
+  * *Status:* Implemented in Milestone 5.
+* **Acoustic Landscape (HTML5 Audio API):** Integrating raw, low-frequency synthetic synthesizer oscillators natively inside the JavaScript file:
+  * Generate audio clicks every time the player starts a generator (sounds electro-mechanical).
+  * Generate a high-to-low slide when a loom snaps under high tension (sounds like losing power).
+  * Generate a low-to-high slide when an attack occurs (sounds like a warning siren).
+* **Breakthrough Modals (Unlock Splash Screens):** Inserting simple visual text banners that display full-screen lore snapshots when Path A or Path B is initially signed, or when a major technology is unlocked or used for the first time.
 
-### B. Mechanics & Balance Experiments
-* **Asynchronous Build Timers:** (Implemented in Milestone 7) Applied 5-second assembly countdowns to advanced structures.
-* **Pneumatic Loom Power Switch:** (Planned) Add an ON/OFF toggle for the Pneumatic Loom to prevent unintended early-game resource draining races against manual dynamo cranking.
-* **Schematic Assembly (Component Combination):** (Planned) Combining specific configurations of components and energy to unlock new technologies (fixed recipes vs. open player experimentation).
-* **Component Optimization (Vertical Upgrades):** (Planned) Spending extra Joules and Wire to permanently improve existing structure yields (e.g., Level 1 AC Gen + 20 Wires ──► Level 2 AC Gen).
-* **Pacing Dial Options to Benchmark:**
-  1. *Fixed Cooldown (Dial A):* Standardized 5-second lockout for predictable pacing.
-  2. *Instant Gratification (Dial B):* No cooldown limits; rewards strategic inventory dumps.
-  3. *Escalating High-Stakes Cooldown (Dial C):* Adds +5 seconds per successive upgrade level while scaling output exponentially, creating vulnerability windows during corporate raids.
+### B. Future Gameplay Experiments (Status: Planned / In Design)
+The following mechanics are being evaluated as design experiments for upcoming iterations to gather insights for larger collaboration blueprints:
+* **Build timers:** When higher level technologies are built, execute a countdown timer until they are "online" and ready to use. For example, building a generator has a 5-second timer before it starts generating power.
+  * *Question to test:* Should building additional technologies be blocked until the countdown timer expires (dimming build buttons)?
+  * *Status:* Began implementation in Milestone 7.
+* **Pneumatic Loom Joule Usage:** If the Pneumatic Loom is built before any power generation, it becomes a race between the Loom draining power and clicking `CRANK DYNAMO`. 
+  * *Fix:* The Loom needs an explicitly designed **OFF SWITCH / TOGGLE**.
+* **Wiring Rack lockout:** Resolve the Path A edge-case where building the Wiring Storage Rack requires 150J, but Path A is initially limited to 100J.
+  * *Potential solutions:* Allow building AC Generators to raise max Joules first, or lower the initial cost to build the storage rack.
+* **Capacitor Discharge lockout:** Prevent situations where `CAPACITOR DISCHARGE` is used prematurely and locks the player from accomplishing the 1st goal (40 Wiring with a 20 Wiring storage limit).
+  * *Potential solutions:* Raise storage limits, allow re-use, or adjust goal requirement thresholds.
+* **Schematic Assembly (Item Combination -- horizontal growth):** Combining specific configurations of components and energy within the panel to generate new technologies. Fixed recipes for combinations, or an open system allowing for player creativity and exploration?
+* **Component Optimization (Item Upgrades -- vertical growth):** Spending extra Joules (or other components) to permanently improve the output of existing technology (e.g., Level 1 AC Gen + 20 Wires ──► Level 2 AC Gen).
+* **Meta-improvements:** Implement systems that allow methods to reduce costs, increase capacity limits, and lower requirement thresholds over time.
+* **Pacing Dial Options to Test:**
+  1. *Fixed Cooldown (Dial A):* Standardized flat 5-second lockout for predictable pacing. Ideal for Stage 0 Tutorial synchronization.
+  2. *Instant Gratification (Dial B):* Eliminates cooldown limits entirely upon upgrade click; rewards strategic inventory hoarding and resource dumps.
+  3. *Escalating High-Stakes Cooldown (Dial C):* Adds +5 seconds per successive upgrade level but scales output exponentially. Introduces defensive vulnerabilities, forcing players to check for active corporate raid vectors before taking their grid offline for upgrades.
 
-### C. Storyline & Narrative Progression Roadmap
-* **Narrative Unfolding:** Continue shifting terminal log displays from debugging-style diagnostics to rich, atmospheric storytelling.
-* **Goal Target Cues:** Introduce dynamic story log entries prompting players on exact requirements to clear stage milestones (e.g., target defense counts, required J/sec generation rates, or storage limits).
+### C. Future Storyline Developments & Narrative Progression
+To create an engaging game to play, there needs to be a well-told story:
+* **Initial screen:** Start with absolute minimalism—a message window, a status display, and one button to press (`[ CRANK DYNAMO ]`). As the player clicks, the story unfolds step-by-step in the message window.
+* **Simple story arc:**
+  1. When enough power generators are built, the receiver kicks on and a message is received. It takes a few moments to decode.
+  2. The player is given an option: Path A (accept AC and team with Poughkeepsie) or Path B (reject and pursue self-reliant DC).
+  3. Both lead to Edison Trust attacks and unique path-specific defensive technologies.
+  4. Each path has an endgame scenario once stage requirements are fulfilled.
+* **Messages Panel Evolution:** Shift terminal log messages over time from debugging/system-style notices into rich, atmospheric narrative storytelling. (Recover and adapt historic text from Replit/React versions).
+* **Goal Target Messages:** Trigger specific narrative cues in the terminal to prompt players on the exact requirements to achieve a goal (e.g., target defense counts, required J/sec generation rates, or storage limits).
+* **4-Stage Story Progression Arc:**
+  1. **Wardenclyffe:** Initial technology, first message & story path choice, first attacks & defenses, accomplish first goal, prepare to move.
+  2. **Poughkeepsie:** Hydro generation technology explored, second message & story path choice, attacks and defenses, second goal, prepare to move.
+  3. **Ithaca:** Storage & distribution technology explored, third message & story path choice, attacks & defenses, third goal, prepare to move.
+  4. **Niagara Falls:** Endgame technology; accomplish final goal based on story path choices (yielding eight possible endings).
 * **4-Stage Regional Arc:**
   1. **Wardenclyffe:** Reboot station, intercept Morse message, pick AC vs. DC branch, defend against Edison Trust raids, migrate.
   2. **Poughkeepsie:** Explore kinetic hydro-generation, navigate corporate espionage, expand regional grid ties.
