@@ -148,6 +148,19 @@ Upon fulfilling the chosen pathway requirements, the main interaction panel swit
   * **Asynchronous Queue Synchronization:** Standardized global build queues to execute callbacks using structural payload references, ensuring UI rendering updates cleanly across tick intervals.
   * **Zero Global Pollution & Controlled Persistence:** Cleaned the global scope in `script.js` to ensure 100% data encapsulation. While `gameState` is engineered for instant `JSON.stringify()` serialization, `localStorage` auto-saving is intentionally kept disabled during development to allow instant browser-refresh resets on mobile/Chromebook viewports without DevTools.
 
+### Milestone 9: Coastal Wind Realignment & Interface Polish (August 2026)
+* **Narrative & UI Terminology Realignment:**
+  * Replaced early Stage 0 passive power generation references from "Tesla Coil" to "Bluff-Side Turbine" across `index.html`, `style.css`, and `script.js`[cite: 4].
+  * Reserved true Tesla Coils as high-tier late-game payoffs while re-anchoring early power generation in coastal wind energy[cite: 4].
+  * Updated dashboard trackers (`TURBINES`), construction button text (`[ ASSEMBLE BLUFF-SIDE TURBINE ]`), and terminal `writeLog()` entries to describe mounting turbines along coastal cliffs[cite: 4].
+* **Codebase Identifier Standardization:**
+  * Eliminated legacy naming debt by updating HTML element IDs (`#btn-assemble-coil` ──► `#btn-build-turbine`)[cite: 4].
+  * Synchronized JS DOM selector variables (`btnBuildTurbine`), render conditionals, click listeners, and Path B state handlers without impacting 1Hz tick logic or Morse code timers[cite: 4].
+* **Warehouse Expansion UI Feedback Fix:**
+  * Fixed an opacity bug where the Warehouse Expansion Spool-Rack button (`#btn-expand-warehouse`) remained fully lit when resources were insufficient[cite: 4].
+  * Injected an explicit boundary check into `renderUI()` to dim the button to `0.35` opacity whenever Joules (< 80) or Wiring (< 10) drop below construction thresholds[cite: 4].
+ 
+
 ---
 
 ## 5. TODO'S & FUTURE DESIGN EXPERIMENTS
