@@ -160,7 +160,11 @@ Upon fulfilling the chosen pathway requirements, the main interaction panel swit
   * Fixed an opacity bug where the Warehouse Expansion Spool-Rack button (`#btn-expand-warehouse`) remained fully lit when resources were insufficient[cite: 4].
   * Injected an explicit boundary check into `renderUI()` to dim the button to `0.35` opacity whenever Joules (< 80) or Wiring (< 10) drop below construction thresholds[cite: 4].
  
-
+### Milestone 10: Pneumatic Loom Power Switch & Tension Architecture (August 2026)
+* **Unified Control Selector:** Added a 4-button power/speed selector (`[ OFF ]`, `[ LOW ]`, `[ MED ]`, `[ HIGH ]`) to `index.html` and adjusted CSS grid sizing for the 512px layout frame.
+* **Default Off State Initialization:** Configured `LOOM_CONFIGS` and `btnBuildLoom` handlers to initialize newly constructed looms in a safe `'off'` standby state (0J/s drain), eliminating early-game energy-drain races against manual cranking.
+* **State-Shift Clock Reset:** Enforced strict timer resets inside `setLoomTension()`, clearing active progress (`loomProgressMs = 0`) whenever switching between any speed state (e.g., `OFF` to `LOW`, or `MED` to `OFF`).
+* **Heartbeat Skip & UI Synchronization:** Updated the 1Hz heartbeat loop to skip power consumption, progress checks, and snap lottery calculations when turned `OFF`. Integrated dynamic status indicators (`STANDBY (OFF)` in red vs. `RUNNING ([MODE])` in cyan) inside `renderUI()` and standardized crash logs with 16-bit JavaScript Unicode (`\uD83D\uDCA5`)[cite: 1].
 ---
 
 ## 5. TODO'S & FUTURE DESIGN EXPERIMENTS
