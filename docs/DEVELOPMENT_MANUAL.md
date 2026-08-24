@@ -165,6 +165,14 @@ Upon fulfilling the chosen pathway requirements, the main interaction panel swit
 * **Default Off State Initialization:** Configured `LOOM_CONFIGS` and `btnBuildLoom` handlers to initialize newly constructed looms in a safe `'off'` standby state (0J/s drain), eliminating early-game energy-drain races against manual cranking.
 * **State-Shift Clock Reset:** Enforced strict timer resets inside `setLoomTension()`, clearing active progress (`loomProgressMs = 0`) whenever switching between any speed state (e.g., `OFF` to `LOW`, or `MED` to `OFF`).
 * **Heartbeat Skip & UI Synchronization:** Updated the 1Hz heartbeat loop to skip power consumption, progress checks, and snap lottery calculations when turned `OFF`. Integrated dynamic status indicators (`STANDBY (OFF)` in red vs. `RUNNING ([MODE])` in cyan) inside `renderUI()` and standardized crash logs with 16-bit JavaScript Unicode (`\uD83D\uDCA5`)[cite: 1].
+
+### Milestone 11: Terminal Message Engine Refactor - Pass 1 & Pass 2 (August 2026)
+* **Deduplication & Counter Stacking:** Encapsulated tracking variables inside `gameState.uiState` to eliminate redundant log DOM nodes. Sequential identical messages now dynamically render inline counter badges (`[x2]`, `[x3]`) styled with amber contrast.
+* **Smart Scroll Retention:** Integrated a 30px bottom-boundary calculation inside `writeLog()`. Locked auto-scroll fires when the player is reading at the bottom, while scroll position is held steady when players manually scroll up to review past narrative entries[cite: 1].
+* **Atmospheric Flavor Pools & Taxonomy API:** Introduced `FLAVOR_POOLS` containing randomized Tesla-punk flavor text arrays for high-frequency actions (`crank`, `forgeWire`, `turbine`, `loomSnap`). Built `writeFlavorLog()` and `writeStoryLog()` wrappers to decouple mechanical feedback from unique narrative milestones[cite: 1, 2].
+* **Unicode Encoding Hardening:** Enforced strict 16-bit JavaScript Unicode escape sequences (`\u26A0\uFE0F`, `\uD83D\uDCA5`, `\uD83D\uDCE1`) across all system logs to prevent symbol corruption[cite: 1].
+
+
 ---
 
 ## 5. TODO'S & FUTURE DESIGN EXPERIMENTS
