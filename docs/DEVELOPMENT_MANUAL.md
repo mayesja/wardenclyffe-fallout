@@ -100,6 +100,21 @@ The exact moment the station reaches **50 Joules**, the receiver triggers an int
 #### Phase 4: Regional Migration
 Upon fulfilling the chosen pathway requirements, the main interaction panel switches to a single flashing interface link: `[ INITIALIZE EXPEDITION CRATE ]`. Clicking this button triggers the Migration Sequence: current local infrastructure variables are scuttled, specialized inventory data is packed into a transportable matrix state, and the viewport updates to load **Stage 1: Poughkeepsie (The Kinetic Generation)**.
 
+  - [ ] **Stage 0 Refactor - Identifier Cleanup:** Rename legacy `morseChoice` variables to `stage0_ideologicalChoice` and eliminate remaining JS backend `coil` schema references in favor of stage-specific turbine names.
+- [ ] **Expedition Packing Mechanics:** Implement the `PACK TRANSPORT CRATE` interface panel upon Stage 0 victory conditions.
+  - Separate active inventory state from packed crate inventory state.
+  - Implement minimum operational safeguards (prevent packing core win-condition tech).
+  - Dynamically recalculate power generation/storage upon packing active units.
+  - Toggle `LAUNCH EXPEDITION` and `ADD` button states based on floor/ceiling caps.
+- [ ] **Relocation Pressure Mechanics:** Integrate the Poughkeepsie incoming Morse dispatch, decoding window, and packing-phase threat escalation.
+
+### Expedition Logistics & State Separation Rules
+* **Active vs. Packed State:** Structures exist in two distinct namespaces within `gameState`:
+  * `gameState.structures[item]`: Active on the field; contributes to 1Hz generation/storage ticks.
+  * `gameState.crate[item]`: Stowed in transport; yields zero field power but carries over to Stage 1.
+* **Operational Minimum Lock:** Victory-triggering structures built during Stage 0 are flagged as operational baselines and cannot be packed into the crate. Only newly constructed units beyond the operational threshold can be stowed.
+* **Dynamic Tick Recalculation:** Packing an active unit immediately decrements `gameState.structures[item]`, dynamically lowering 1Hz energy generation/storage rates without resetting unlocked game flags or event triggers.
+  
 ---
 
 ## 4. MILESTONE LOGS & GAMEPLAY DESIGN TRACKS
@@ -228,3 +243,6 @@ To create an engaging game to play, there needs to be a well-told story:
   2. **Poughkeepsie:** Explore kinetic hydro-generation, navigate corporate espionage, expand regional grid ties.
   3. **Ithaca:** Master high-capacity energy storage, ground distribution networks, and advanced decryption.
   4. **Niagara Falls:** Construct the final regional monolith; resolve the narrative across 8 distinct branching endpoints based on historical tech choices.
+ 
+
+
