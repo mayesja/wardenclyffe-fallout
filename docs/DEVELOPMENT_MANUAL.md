@@ -187,6 +187,9 @@ Upon fulfilling the chosen pathway requirements, the main interaction panel swit
 * **Atmospheric Flavor Pools & Taxonomy API:** Introduced `FLAVOR_POOLS` containing randomized Tesla-punk flavor text arrays for high-frequency actions (`crank`, `forgeWire`, `turbine`, `loomSnap`). Built `writeFlavorLog()` and `writeStoryLog()` wrappers to decouple mechanical feedback from unique narrative milestones[cite: 1, 2].
 * **Unicode Encoding Hardening:** Enforced strict 16-bit JavaScript Unicode escape sequences (`\u26A0\uFE0F`, `\uD83D\uDCA5`, `\uD83D\uDCE1`) across all system logs to prevent symbol corruption[cite: 1].
 
+### Milestone 12: Stage 0 Identifier Standardization & Schema Disambiguation (September 2026)
+* **Stage-Scoped Branch Identifiers (Sub-Pass A):** Replaced legacy `morseChoice` DOM containers and state keys with `stage0_ideologicalChoice` across `index.html` and `script.js`. This isolates Stage 0's ideological decision tree and prevents namespace collisions with future regional intercepts.
+* **Turbine Schema Isolation (Sub-Pass B):** Standardized Stage 0 wind generation under `gameState.structures.turbines`. Removed legacy backend `coil` references from 1Hz production ticks, resource cost logic, and UI render checks, reserving "coil" strictly for high-tier late-game Tesla structures and preventing collisions with Stage 1 Hydro-Turbines.
 
 ---
 
