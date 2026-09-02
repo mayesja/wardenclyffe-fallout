@@ -193,8 +193,7 @@ Upon fulfilling the chosen pathway requirements, the main interaction panel swit
 
 ### Milestone 13: Expedition Transport Crate & Inventory Packing Engine (September 2026)
 
-http://googleusercontent.com/map_location_reference/1
-* **Transport Crate Panel Integration:** Added `#panel-transport-crate` to `index.html` and `style.css` with branch-specific floor/ceiling tracking for the upcoming move from [Tesla Science Center](http://googleusercontent.com/map_location_reference/0) to [Poughkeepsie](http://googleusercontent.com/map_location_reference/2).
+* **Transport Crate Panel Integration:** Added `#panel-transport-crate` to `index.html` and `style.css` with branch-specific floor/ceiling tracking for the upcoming move from [Tesla Science Center] to [Poughkeepsie].
 * **Operational Reserve Lock:** Implemented state checks in `script.js` to safeguard baseline operational inventory (Path A: 40 Wires / 5 AC Generators; Path B: 30 Wires), preventing victory-critical structures from being stowed into the transport crate.
 * **Dynamic Capacity Recalculation:** Stowing Leyden Jars (Path B) dynamically recalculates `joulesMax` storage capacity in real-time while deducting active field generators from 1Hz power generation ticks.
 * **Launch Validation:** Bound `[ LAUNCH EXPEDITION ]` to validate Crate Floor minimums, rendering explicit reserve warnings (`RESERVE REQ: X`) and emitting 16-bit JavaScript Unicode milestone events (`\uD83C\uDFC6`, `\uD83D\uDE80`).
