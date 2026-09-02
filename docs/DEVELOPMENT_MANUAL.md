@@ -233,6 +233,7 @@ The following UI concepts improve player feedback and viewport navigation:
 * **Wiring Rack Lockout Tuning:** Address situation where Path A can attempt to build Wire Storage Rack (requires 150J, but Path A starts limited to 100J)[cite: 8]. Ensure building AC Generators properly raises max Joules or lower storage rack cost[cite: 8].
 * **Capacitor Discharge Lockout:** Prevent situation where `CAPACITOR DISCHARGE` is used prematurely and prevents accomplishing 1st goal (40 Wiring with a 20 Wiring storage limit)[cite: 8]. Options: raise limit, allow re-use, or lower goal requirement[cite: 8].
 * **Pneumatic Loom Joule Usage (Power Switch):** If Pneumatic Loom is built before power generation, it creates an aggressive race against manual `CRANK DYNAMO`[cite: 8]. Loom requires a manual `OFF / ON` toggle switch -- added in Milestone 10.
+  * Potential Vertical Growth -- Pneumatic loom starts with OFF and LOW (2J/sec drain 1Wire/10sec)  Upgrade with additional wires and/or Joules -- opens up MED, then HIGH
 
 ### C. Future Storyline Developments & Narrative Progression
 To create an engaging game to play, there needs to be a well-told story:
