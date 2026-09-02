@@ -110,6 +110,17 @@ body {
 .log-unlock { color: var(--electric-cyan); }
 .log-warning { color: var(--ember-red); }
 
+.log-counter {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 0 4px;
+    font-size: 0.7rem;
+    font-weight: 900;
+    color: var(--bg-dark);
+    background-color: var(--amber-bright);
+    border-radius: 2px;
+}
+
 /* --- 6. THE RESOURCE READOUT DASHBOARD --- */
 .stats-grid {
     display: grid;
@@ -196,6 +207,34 @@ body {
     gap: 10px;
 }
 
+/* Step 2 Crate Layout Additions */
+.crate-inventory-display {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-subtle);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.crate-status-line {
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: var(--amber-bright);
+}
+
+.crate-controls-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    border: 1px solid var(--amber-dim);
+    background-color: var(--surface-card);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .upgrade-row, .control-header {
     display: flex;
     justify-content: space-between;
@@ -218,7 +257,7 @@ body {
 /* --- 8. TENSION TOGGLE BUTTON GROUP --- */
 .tension-button-group {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 6px;
 }
 

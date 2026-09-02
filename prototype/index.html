@@ -40,7 +40,7 @@
                     <div id="stat-wiring" class="stat-value">0</div>
                 </div>
                 <div class="stat-card">
-                    <div id="dynamic-stat-label" class="stat-label">COILS</div>
+                    <div id="dynamic-stat-label" class="stat-label">TURBINES</div>
                     <div id="stat-machines" class="stat-value">0</div>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                 <div id="panel-warehouse" class="upgrade-card hidden">
                     <div class="upgrade-row">
                         <span class="upgrade-title">EXPAND WIRE SPOOL RACK</span>
-                        <span class="upgrade-cost">Cost: 80J · 15 Wire</span>
+                        <span class="upgrade-cost">Cost: 80J · 10 Wire</span>
                     </div>
                     <p class="upgrade-desc">Expand floor logistics. Permanently increases Wire inventory storage limit by +20.</p>
                     <button id="btn-expand-warehouse" class="build-sub-btn">BUILD EXPANSION</button>
@@ -85,7 +85,8 @@
                     </div>
                     <div class="control-label">LOOM TENSION</div>
                     <div class="tension-button-group">
-                        <button id="btn-tension-low" class="tension-btn active">LOW<span class="sub">2J/s</span></button>
+                        <button id="btn-tension-off" class="tension-btn active">OFF<span class="sub">0J/s</span></button>
+                        <button id="btn-tension-low" class="tension-btn">LOW<span class="sub">2J/s</span></button>
                         <button id="btn-tension-med" class="tension-btn">MED<span class="sub">5J/s</span></button>
                         <button id="btn-tension-high" class="tension-btn text-danger">HIGH<span class="sub">15J/s</span></button>
                     </div>
@@ -98,13 +99,13 @@
                     </button>
                 </div>
 
-                <button id="btn-assemble-coil" class="brass-btn btn-special hidden">
-                    <span class="btn-text">[ ASSEMBLE TESLA COIL ]</span>
+                <button id="btn-build-turbine" class="brass-btn btn-special hidden">
+                    <span class="btn-text">[ ASSEMBLE BLUFF-SIDE TURBINE ]</span>
                     <span class="btn-subtext">Cost: 10 Wiring — +1J/sec</span>
                 </button>
 
             
-                <div id="panel-morse-encounter" class="encounter-card hidden">
+                <div id="stage0-ideological-choice" class="encounter-card hidden">
                     <div class="encounter-alert">▸ INCOMING TRANSMISSION — POUGHKEEPSIE STATION ◂</div>
                     <p class="encounter-text">The receiver clicks out a decoded message:</p>
                     <p class="encounter-quote">"POUGHKEEPSIE STATION CALLING. WE HAVE TESLA'S AC SCHEMATICS BUT NEED COPPER TO REPAIR OUR SHIELDING. WILL TRADE FOR 15 WIRING."</p>
@@ -150,6 +151,30 @@
 
                 <div id="marker-victory" class="victory-banner hidden">
                     ★ GRID SECURED. EDISON TRUST DEFEATED. ★
+                </div>
+
+                <!-- Step 2: Expedition Transport Crate Panel -->
+                <div id="panel-transport-crate" class="upgrade-card hidden">
+                    <div class="upgrade-row">
+                        <span class="upgrade-title">EXPEDITION TRANSPORT CRATE</span>
+                        <span id="crate-branch-label" class="upgrade-cost">BRANCH: UNKNOWN</span>
+                    </div>
+                    <p class="upgrade-desc">Stow surplus machinery and high-grade copper wiring to equip the Wardenclyffe outbound expedition. Operational baselines are locked to secure station grid continuity.</p>
+                    
+                    <div class="crate-inventory-display">
+                        <div id="crate-wire-status" class="crate-status-line">PACKED WIRES: 0 / 40 (MIN) [MAX 100]</div>
+                        <div id="crate-gen-status" class="crate-status-line">PACKED UNITS: 0 / 2 (MIN) [MAX 6]</div>
+                    </div>
+
+                    <div class="crate-controls-grid">
+                        <button id="btn-pack-wire" class="build-sub-btn">[ PACK WIRE ]</button>
+                        <button id="btn-pack-gen" class="build-sub-btn">[ PACK UNIT ]</button>
+                    </div>
+
+                    <button id="btn-launch-expedition" class="brass-btn btn-special">
+                        <span class="btn-text">[ LAUNCH EXPEDITION ]</span>
+                        <span id="launch-subtext" class="btn-subtext">Awaiting operational minimums...</span>
+                    </button>
                 </div>
 
                 <div id="banner-logistics-blocked" class="blocked-banner hidden">

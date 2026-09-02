@@ -12,7 +12,7 @@ const gameState = {
         morseTriggered: false,                     // Signal intercept activated at 50J
         morseDecoded: false,                       // Decoding countdown finished flag
         morseCountdown: 30,                        // Active countdown timer integer
-        morseChoice: null,                         // Permanent path choice: "A" (AC) or "B" (DC)
+        stage0_ideologicalChoice: null,            // Permanent path choice: "A" (AC) or "B" (DC)
         capacitorOvercharged: false,               // One-time emergency dump flag
         logIncrementId: 0                          // Terminal log counter ID
     },
@@ -28,12 +28,14 @@ const gameState = {
         wireStorageCap: 20                         // Maximum copper wire storage limit
     },
     // Machine and structural infrastructure tracking
+    // Machine and structural infrastructure tracking
     structures: {
         handCrank: { count: 1, baseYield: 1.0 },   // Starting manual dynamo structure
+        turbines: { count: 0, baseYield: 1.0 },    // Stage 0 Bluff-Side Hydro/Wind Turbines
         automatedLoom: { 
             built: false,                          // Unlocked pneumatic loom state
             count: 0,                              // Total looms constructed
-            tensionSetting: "low",                 // Active tension toggle ("low", "medium", "high")
+            tensionSetting: "off",                 // Active tension toggle ("off", "low", "medium", "high")
             isBroken: false                        // Broken/jammed flag for loom repair cycles
         },
         junctionBox: { built: false, count: 0 },   // Branch B defense mitigation structure
@@ -47,6 +49,12 @@ const gameState = {
         activeExpeditions: [],                     // Active outbound scouting missions
         constructionJobs: [],                      // Structure creation pipelines
         combatCooldowns: []                        // Attack delay timers
+    },
+    // Step 2 Expedition Transport Crate Storage State
+    crate: {
+        wires: 0,
+        generators: 0,                              // AC Generators (Path A) or Leyden Jars (Path B)
+        unlocked: false
     },
     // Edison Trust conflict & threat state
     combat: {
@@ -63,7 +71,11 @@ const gameState = {
     // Client view & interface state
     uiState: {
         activeTab: "station-floor",                // Currently targeted navigation tab
-        terminalScrolledOut: false                 // Sticky banner scroll alert flag
+        terminalScrolledOut: false,                // Sticky banner scroll alert flag
+        lastLogText: "",                           // Deduplication: raw text of last incoming log
+        lastLogClass: "",                          // Deduplication: style class of last log
+        lastLogCount: 1,                           // Deduplication: repeat count multiplier
+        lastLogElement: null                       // Deduplication: reference to last log DOM element
     }
 };
 
@@ -77,9 +89,36 @@ const SYSTEM_TICK_RATE_MS = 1000;    // The global heartbeat timer runs every 10
 
 // This dictionary holds the precise tuning metrics for our automated loom machinery
 const LOOM_CONFIGS = {
+    off:    { jouleDrain: 0,  wireIntervalMs: 0,     label: "OFF" },
     low:    { jouleDrain: 2,  wireIntervalMs: 10000, label: "LOW" },
     medium: { jouleDrain: 5,  wireIntervalMs: 5000,  label: "MED" },
     high:   { jouleDrain: 15, wireIntervalMs: 2000,  label: "HIGH" }
+};
+
+// Centralized atmospheric Tesla-punk flavor pools for kinetic player actions
+const FLAVOR_POOLS = {
+    crank: [
+        "Dynamo armature manually cranked. Produced 1 Joule.",
+        "Brass crank turned. Blue sparks shower from the commutator.",
+        "Flywheel spun to speed. Kinetic torque converted to raw Joules.",
+        "Heavy armature rotated against magnetic field resistance."
+    ],
+    forgeWire: [
+        "Drew hot raw copper through processing dies. Created +1 Wiring units.",
+        "Red-hot copper rod extruded into fine conductive filament.",
+        "Tension calibrated on wire drawer. +1 Wire spooled.",
+        "Ductile copper forced through diamond dies into precision wire."
+    ],
+    turbine: [
+        "Coastal cliff wind engaged. Bluff-Side Turbine online.",
+        "Bluff winds catch turbine blades. Kinetic drive engaged.",
+        "Gearing locked into main bus line. Wind turbine spinning."
+    ],
+    loomSnap: [
+        "\uD83D\uDCA5 SYSTEM CRASH: Dynamic shuttle lines snapped under High Tension load! Loom halted.",
+        "\uD83D\uDCA5 MECHANISM JAM: Tension load sheared shuttle guide pins! Loom offline.",
+        "\uD83D\uDCA5 CABLE FAILURE: Overspeed stress snapped primary weave wire! Loom halted."
+    ]
 };
 
 // Selection of warning warnings triggered when an Edison saboteur strikes the station
@@ -129,7 +168,7 @@ const btnCrank = document.getElementById("btn-crank");
 const btnForge = document.getElementById("btn-forge");
 const btnBuildLoom = document.getElementById("btn-build-loom");
 const btnOvercharge = document.getElementById("btn-overcharge");
-const btnAssembleCoil = document.getElementById("btn-assemble-coil");
+const btnBuildTurbine = document.getElementById("btn-build-turbine");
 const btnBuildAcGen = document.getElementById("btn-build-ac-gen");
 const btnBuildLeyden = document.getElementById("btn-build-leyden");
 const btnBuildFaraday = document.getElementById("btn-build-faraday");
@@ -142,9 +181,20 @@ const btnExpandWarehouse = document.getElementById("btn-expand-warehouse");
 const panelOverchargeDepleted = document.getElementById("panel-overcharge-depleted");
 const panelLoomControls = document.getElementById("panel-loom-controls");
 const btnRepairLoom = document.getElementById("btn-repair-loom");
-const panelMorseEncounter = document.getElementById("panel-morse-encounter");
+const panelMorseEncounter = document.getElementById("stage0-ideological-choice");
+
+// Step 2 Expedition Crate DOM Cache References
+const panelTransportCrate = document.getElementById("panel-transport-crate");
+const crateBranchLabel = document.getElementById("crate-branch-label");
+const crateWireStatus = document.getElementById("crate-wire-status");
+const crateGenStatus = document.getElementById("crate-gen-status");
+const btnPackWire = document.getElementById("btn-pack-wire");
+const btnPackGen = document.getElementById("btn-pack-gen");
+const btnLaunchExpedition = document.getElementById("btn-launch-expedition");
+const launchSubtext = document.getElementById("launch-subtext");
 
 // Tension Buttons Group
+const btnTensionOff = document.getElementById("btn-tension-off");
 const btnTensionLow = document.getElementById("btn-tension-low");
 const btnTensionMed = document.getElementById("btn-tension-med");
 const btnTensionHigh = document.getElementById("btn-tension-high");
@@ -178,34 +228,77 @@ function writeLog(text, type = "system") {
     // Ensure meta & uiState structures exist safely
     if (!gameState.meta) gameState.meta = {};
     if (!gameState.uiState) gameState.uiState = {};
-    
-    // Track total logs output using gameState.meta
-    gameState.meta.logIncrementId = (gameState.meta.logIncrementId || 0) + 1;
+
     gameState.meta.lastTimestamp = Date.now();
 
-    const entry = document.createElement("div");
-    entry.className = `log-entry log-${type}`;
-    entry.innerText = `[t+${gameState.meta.logIncrementId}] ${text}`;
-    
-    if (elTerminalLog) {
-        elTerminalLog.appendChild(entry);
-        // Forces the logging box container viewport to automatically scroll down to stick to latest text
-        elTerminalLog.scrollTop = elTerminalLog.scrollHeight;
+    if (!elTerminalLog) return;
 
-        // --- VIEWPORT SCROLL BOUNDARY CHECK ---
-        const logBoundingRect = elTerminalLog.getBoundingClientRect();
-        
-        // Filter out routine manual clicks to avoid alert spam
-        const isHighPriorityLog = type === "system" || type === "warning" || type === "disaster" || type === "milestone";
-        
-        // Check condition flags using gameState combat, meta, and uiState trees
-        const activeSabotage = gameState.combat ? gameState.combat.underAttack : false;
-        const activeMorseDecoding = gameState.meta.morseTriggered && !gameState.meta.morseDecoded;
+    // --- 1. USER-SCROLL RETENTION MEASUREMENT ---
+    // Calculate distance from bottom before appending or modifying DOM elements (30px threshold)
+    const scrollThreshold = 30;
+    const isAtBottom = (elTerminalLog.scrollHeight - elTerminalLog.scrollTop - elTerminalLog.clientHeight) <= scrollThreshold;
 
-        if (isHighPriorityLog && logBoundingRect.bottom < 0 && !activeSabotage && !activeMorseDecoding) {
-            gameState.uiState.terminalScrolledOut = true; // Flag scrolled out state in gameState
+    // --- 2. DEDUPLICATION / MESSAGE STACKING ---
+    const isDuplicate = (text === gameState.uiState.lastLogText) && (type === gameState.uiState.lastLogClass) && gameState.uiState.lastLogElement;
+
+    if (isDuplicate) {
+        gameState.uiState.lastLogCount++;
+
+        // Locate or create counter badge span element
+        let counterBadge = gameState.uiState.lastLogElement.querySelector(".log-counter");
+        if (!counterBadge) {
+            counterBadge = document.createElement("span");
+            counterBadge.className = "log-counter";
+            gameState.uiState.lastLogElement.appendChild(counterBadge);
         }
+        counterBadge.innerText = `[x${gameState.uiState.lastLogCount}]`;
+    } else {
+        // Increment log sequence ID only on brand-new message entries
+        gameState.meta.logIncrementId = (gameState.meta.logIncrementId || 0) + 1;
+
+        const entry = document.createElement("div");
+        entry.className = `log-entry log-${type}`;
+        entry.innerText = `[t+${gameState.meta.logIncrementId}] ${text}`;
+
+        elTerminalLog.appendChild(entry);
+
+        // Update tracking state for deduplication
+        gameState.uiState.lastLogText = text;
+        gameState.uiState.lastLogClass = type;
+        gameState.uiState.lastLogCount = 1;
+        gameState.uiState.lastLogElement = entry;
     }
+
+    // --- 3. SCROLL POSITION EXECUTION ---
+    if (isAtBottom) {
+        elTerminalLog.scrollTop = elTerminalLog.scrollHeight;
+    }
+
+    // --- 4. VIEWPORT SCROLL ALERT BANNER TRIGGER ---
+    const logBoundingRect = elTerminalLog.getBoundingClientRect();
+    const isHighPriorityLog = (type === "system" || type === "warning" || type === "disaster" || type === "milestone");
+    const activeSabotage = gameState.combat ? gameState.combat.underAttack : false;
+    const activeMorseDecoding = gameState.meta.morseTriggered && !gameState.meta.morseDecoded;
+
+    if (isHighPriorityLog && logBoundingRect.bottom < 0 && !activeSabotage && !activeMorseDecoding) {
+        gameState.uiState.terminalScrolledOut = true;
+    }
+}
+
+// Helper wrapper to output random atmospheric flavor strings from FLAVOR_POOLS
+function writeFlavorLog(poolKey, logClass = "action") {
+    const pool = FLAVOR_POOLS[poolKey];
+    if (pool && pool.length > 0) {
+        const randomIndex = Math.floor(Math.random() * pool.length);
+        writeLog(pool[randomIndex], logClass);
+    } else {
+        writeLog(`Action recorded: ${poolKey}`, logClass);
+    }
+}
+
+// Helper wrapper to output explicit narrative & story progression milestone strings
+function writeStoryLog(text, logClass = "system") {
+    writeLog(text, logClass);
 }
 
 // Enforces capacity limits on resources using the unified gameState tree
@@ -246,9 +339,9 @@ function renderUI() {
         elMaxJoules.classList.remove("hidden");
 
         // DYNAMIC DESIGNATION RENDERER ASSET OVERRIDE
-        if (gameState.meta.morseChoice === "A") {
+        if (gameState.meta.stage0_ideologicalChoice === "A") {
             elMaxJoules.innerText = "/ 150";
-        } else if (gameState.meta.morseChoice === "B" && gameState.structures.leydenJars > 0) {
+        } else if (gameState.meta.stage0_ideologicalChoice === "B" && gameState.structures.leydenJars > 0) {
             let currentMax = 100 + (gameState.structures.leydenJars * 100);
             elMaxJoules.innerText = `/ ${currentMax}`; 
         } else {
@@ -269,16 +362,15 @@ function renderUI() {
         }
     }
     
-    if (btnAssembleCoil) {
-        if (gameState.resources.wiring >= 3 || gameState.structures.handCrank.count > 1) {
-            btnAssembleCoil.classList.remove("hidden");
+    if (btnBuildTurbine) {
+        if (gameState.resources.wiring >= 3 || gameState.structures.turbines.count > 0) {
+            btnBuildTurbine.classList.remove("hidden");
         }
     }
 
     // --- CAPACITOR OVERCHARGE VISIBILITY TRIGGER ---
     // Reads branch choice and overcharge flag from gameState
-    if (gameState.meta.morseChoice === "A" && gameState.resources.wiring >= 5 && !gameState.meta.capacitorOvercharged) {
-        btnOvercharge.classList.remove("hidden");
+    if (gameState.meta.stage0_ideologicalChoice === "A" && gameState.resources.wiring >= 5 && !gameState.meta.capacitorOvercharged) {        btnOvercharge.classList.remove("hidden");
     } else {
         btnOvercharge.classList.add("hidden");
     }
@@ -296,14 +388,14 @@ function renderUI() {
     }
 
     // Render Dynamic Content in Machine Status counters depending on Branch choice in gameState
-    if (gameState.meta.morseChoice === null) {
-        elMachines.innerText = Math.max(0, gameState.structures.handCrank.count - 1);
-    } else if (gameState.meta.morseChoice === "A") {
+    if (gameState.meta.stage0_ideologicalChoice === null) {
+        elMachines.innerText = Math.max(0, gameState.structures.turbines ? gameState.structures.turbines.count : 0);
+    } else if (gameState.meta.stage0_ideologicalChoice === "A") {
         elDynamicLabel.innerText = "AC GENS";
         elMachines.innerText = gameState.structures.acGenerators || 0;
-    } else if (gameState.meta.morseChoice === "B") {
-        elDynamicLabel.innerText = "COILS";
-        elMachines.innerText = Math.max(0, gameState.structures.handCrank.count - 1);
+    } else if (gameState.meta.stage0_ideologicalChoice === "B") {
+        elDynamicLabel.innerText = "TURBINES";
+        elMachines.innerText = Math.max(0, gameState.structures.turbines ? gameState.structures.turbines.count : 0);
     }
 
     // Manage Loom Panel Control States & Snap Alert Flags
@@ -317,33 +409,57 @@ function renderUI() {
             btnRepairLoom.classList.remove("hidden");
         } else {
             const currentTension = gameState.structures.automatedLoom.tensionSetting;
-            elLoomRuntimeStatus.innerText = `RUNNING (${LOOM_CONFIGS[currentTension].label})`;
-            elLoomRuntimeStatus.className = "status-online";
+            if (currentTension === "off") {
+                elLoomRuntimeStatus.innerText = "STANDBY (OFF)";
+                elLoomRuntimeStatus.className = "text-danger";
+            } else {
+                elLoomRuntimeStatus.innerText = `RUNNING (${LOOM_CONFIGS[currentTension].label})`;
+                elLoomRuntimeStatus.className = "status-online";
+            }
             btnRepairLoom.classList.add("hidden");
+        }
+
+        // Highlight currently active tension state button and sync description
+        const activeTension = gameState.structures.automatedLoom.tensionSetting || "off";
+        
+        if (btnTensionOff) btnTensionOff.classList.toggle("active", activeTension === "off");
+        if (btnTensionLow) btnTensionLow.classList.toggle("active", activeTension === "low");
+        if (btnTensionMed) btnTensionMed.classList.toggle("active", activeTension === "medium");
+        if (btnTensionHigh) btnTensionHigh.classList.toggle("active", activeTension === "high");
+
+        if (activeTension === "off") {
+            elTensionDesc.innerText = "OFF — 0J/sec drain · Loom suspended";
+        } else if (activeTension === "low") {
+            elTensionDesc.innerText = "LOW — 2J/sec drain · 1 Wire every 10s · No snap risk";
+        } else if (activeTension === "medium") {
+            elTensionDesc.innerText = "MED — 5J/sec drain · 1 Wire every 5s · No snap risk";
+        } else if (activeTension === "high") {
+            elTensionDesc.innerText = "HIGH — 15J/sec drain · 1 Wire every 2s · 10% snap risk per increment";
         }
     }
 
+
     // Toggle Choice Encounter Overlay Panels reading from gameState.meta
-    if (gameState.meta.morseDecoded && gameState.meta.morseChoice === null) {
+    if (gameState.meta.morseDecoded && gameState.meta.stage0_ideologicalChoice === null) {
         panelMorseEncounter.classList.remove("hidden");
     } else {
         panelMorseEncounter.classList.add("hidden");
     }
 
-    // Render Active Core Branch Tech Upgrades Buttons reading from gameState.meta.morseChoice
-    if (gameState.meta.morseChoice === "A") {
+    // Render Active Core Branch Tech Upgrades Buttons reading from gameState.meta.stage0_ideologicalChoice
+    if (gameState.meta.stage0_ideologicalChoice === "A") {
         markerGridBranch.classList.remove("hidden");
         markerGridBranch.innerText = "✦ GRID SYSTEM: ALTERNATING CURRENT (AC)";
         markerGridBranch.className = "status-banner text-special";
         
         btnBuildAcGen.classList.remove("hidden");
         btnBuildFaraday.classList.remove("hidden");
-    } else if (gameState.meta.morseChoice === "B") {
+    } else if (gameState.meta.stage0_ideologicalChoice === "B") {
         markerGridBranch.classList.remove("hidden");
         markerGridBranch.innerText = "⌗ GRID SYSTEM: DIRECT CURRENT (DC)";
         markerGridBranch.className = "status-banner";
 
-        btnAssembleCoil.classList.remove("hidden");
+        btnBuildTurbine.classList.remove("hidden");
         btnBuildLeyden.classList.remove("hidden");
         btnBuildJunction.classList.remove("hidden");
     }
@@ -351,6 +467,80 @@ function renderUI() {
     // Handle Victory Banner triggers reading from gameState.meta
     if (gameState.meta.victoryAchieved) {
         markerVictory.classList.remove("hidden");
+    }
+
+    // Step 2 Expedition Transport Crate UI Renderer
+    if (gameState.crate && gameState.crate.unlocked && panelTransportCrate) {
+        panelTransportCrate.classList.remove("hidden");
+
+        const isPathA = gameState.meta.stage0_ideologicalChoice === "A";
+        const minWires = 40;
+        const maxWires = 100;
+        const minGens = isPathA ? 2 : 5;
+        const maxGens = isPathA ? 6 : 12;
+        const unitName = isPathA ? "AC GENERATOR" : "LEYDEN JAR";
+
+        // Branch indicator text
+        if (crateBranchLabel) {
+            crateBranchLabel.innerText = isPathA ? "BRANCH: AC GRID" : "BRANCH: DC MICRO-GRID";
+        }
+
+        // Available items beyond operational baseline limits
+        const baselineWires = isPathA ? 40 : 30;
+        const baselineGens = isPathA ? 5 : 0; // AC Generators (Path A) / Leyden Jars (Path B)
+        const currentGenCount = isPathA ? (gameState.structures.acGenerators || 0) : (gameState.structures.leydenJars || 0);
+
+        const availableWireToPack = Math.max(0, gameState.resources.wiring - baselineWires);
+        const availableGenToPack = Math.max(0, currentGenCount - baselineGens);
+
+        // Update packed item counts
+        if (crateWireStatus) {
+            crateWireStatus.innerText = `PACKED WIRES: ${gameState.crate.wires} / ${minWires} (MIN) [MAX ${maxWires}] (RESERVE REQ: ${baselineWires})`;        }
+        if (crateGenStatus) {
+            crateGenStatus.innerText = `PACKED ${unitName}S: ${gameState.crate.generators} / ${minGens} (MIN) [MAX ${maxGens}]`;
+        }
+
+        // Pack Wire Button state
+        if (btnPackWire) {
+            btnPackWire.innerText = `[ PACK WIRE (+1) ]`;
+            if (availableWireToPack > 0 && gameState.crate.wires < maxWires) {
+                btnPackWire.style.opacity = "1.0";
+                btnPackWire.disabled = false;
+            } else {
+                btnPackWire.style.opacity = "0.35";
+                btnPackWire.disabled = true;
+            }
+        }
+
+        // Pack Generator/Jar Button state
+        if (btnPackGen) {
+            btnPackGen.innerText = `[ PACK ${unitName} (+1) ]`;
+            if (availableGenToPack > 0 && gameState.crate.generators < maxGens) {
+                btnPackGen.style.opacity = "1.0";
+                btnPackGen.disabled = false;
+            } else {
+                btnPackGen.style.opacity = "0.35";
+                btnPackGen.disabled = true;
+            }
+        }
+
+        // Launch Button readiness state
+        if (btnLaunchExpedition) {
+            const hasMinWires = gameState.crate.wires >= minWires;
+            const hasMinGens = gameState.crate.generators >= minGens;
+
+            if (hasMinWires && hasMinGens) {
+                btnLaunchExpedition.style.opacity = "1.0";
+                btnLaunchExpedition.disabled = false;
+                if (launchSubtext) launchSubtext.innerText = "ALL MINIMUMS MET — READY FOR LAUNCH";
+            } else {
+                btnLaunchExpedition.style.opacity = "0.35";
+                btnLaunchExpedition.disabled = true;
+                if (launchSubtext) launchSubtext.innerText = `REQUIRES: ${minWires} Wires & ${minGens} ${unitName}s`;
+            }
+        }
+    } else if (panelTransportCrate) {
+        panelTransportCrate.classList.add("hidden");
     }
 
 // Handle Top Sticky Alert Bar flashing states using gameState.combat & uiState
@@ -385,7 +575,7 @@ function renderUI() {
     } else if (gameState.combat.underAttack) {
         elGridStatus.innerText = "SABOTAGED LOCKOUT";
         elGridStatus.className = "status-offline";
-    } else if (gameState.meta.morseChoice !== null) {
+    } else if (gameState.meta.stage0_ideologicalChoice !== null) {
         elGridStatus.innerText = "OPERATIONAL POWERED";
         elGridStatus.className = "status-online";
     } else {
@@ -395,17 +585,25 @@ function renderUI() {
 
     // Dynamic Button Dimming reading costs from gameState
     if (gameState.resources.joules < 10) { btnForge.style.opacity = "0.35"; } else { btnForge.style.opacity = "1.0"; }
-    if (gameState.resources.wiring < 10) { btnAssembleCoil.style.opacity = "0.35"; } else { btnAssembleCoil.style.opacity = "1.0"; }
+    if (gameState.resources.wiring < 10) { btnBuildTurbine.style.opacity = "0.35"; } else { btnBuildTurbine.style.opacity = "1.0"; }
     if (gameState.resources.joules < 50) { btnBuildLoom.style.opacity = "0.35"; } else { btnBuildLoom.style.opacity = "1.0"; }
     if (gameState.resources.joules < 20 || gameState.resources.wiring < 5 || buildCooldownRemaining > 0) { btnBuildAcGen.style.opacity = "0.35"; } else { btnBuildAcGen.style.opacity = "1.0"; }
     if (gameState.resources.wiring < 20) { btnBuildFaraday.style.opacity = "0.35"; } else { btnBuildFaraday.style.opacity = "1.0"; }
     if (gameState.resources.wiring < 5 || buildCooldownRemaining > 0) { btnBuildLeyden.style.opacity = "0.35"; } else { btnBuildLeyden.style.opacity = "1.0"; }
     if (gameState.resources.joules < 200) { btnBuildJunction.style.opacity = "0.35"; } else { btnBuildJunction.style.opacity = "1.0"; }
+    if (btnWarehouse) {
+        if (gameState.resources.joules < 80 || gameState.resources.wiring < 10) {
+            btnWarehouse.style.opacity = "0.35";
+        } else {
+            btnWarehouse.style.opacity = "1.0";
+        }
+    }
 
     // Handle Status Footers & Rates Data Output Rows
+    // Handle Status Footers & Rates Data Output Rows
     const acGens = gameState.structures.acGenerators || 0;
-    const coilCount = Math.max(0, gameState.structures.handCrank.count - 1);
-    let passiveSum = (gameState.meta.morseChoice === "A") ? (acGens * 5) : (coilCount * 1);
+    const turbineCount = gameState.structures.turbines ? gameState.structures.turbines.count : 0;
+    let passiveSum = (gameState.meta.stage0_ideologicalChoice === "A") ? (acGens * 5) : (turbineCount * 1);
     if (passiveSum > 0) {
         footGeneration.classList.remove("hidden");
         footGeneration.innerText = `+${passiveSum}J/s${gameState.combat.underAttack ? " [OFF]" : ""}`;
@@ -445,9 +643,9 @@ btnCrank.addEventListener("click", () => {
 
     let maxJouleCap = 100;
 
-    if (gameState.meta.morseChoice === "A") {
+    if (gameState.meta.stage0_ideologicalChoice === "A") {
         maxJouleCap = 150;
-    } else if (gameState.meta.morseChoice === "B" && gameState.structures.leydenJars > 0) {
+    } else if (gameState.meta.stage0_ideologicalChoice === "B" && gameState.structures.leydenJars > 0) {
         maxJouleCap = 100 + (gameState.structures.leydenJars * 100);
     }
 
@@ -455,7 +653,7 @@ btnCrank.addEventListener("click", () => {
 
     if (gameState.resources.joules < gameState.caps.joulesMax) {
         gameState.resources.joules += 1;
-        writeLog("⚡ Dynamo armature manually cranked. Produced 1 Joule.", "action");
+        writeFlavorLog("crank", "action");
 
         // Unlock Morse Decoder trigger threshold reading/writing gameState.meta
         if (gameState.resources.joules >= 50 && !gameState.meta.morseTriggered) {
@@ -464,11 +662,11 @@ btnCrank.addEventListener("click", () => {
             gameState.structures.morseReceiver.built = true;
             gameState.structures.morseReceiver.activeDecoding = true;
             
-            writeLog("The spark-gap Morse receiver springs to life! It is automatically recording an incoming long-distance frequencies pattern...", "unlock");
+            writeStoryLog("The spark-gap Morse receiver springs to life! It is automatically recording an incoming long-distance frequencies pattern...", "unlock");
             if (markerMorseDecoding) markerMorseDecoding.classList.remove("hidden");
         }
     } else {
-        writeLog("⚠️ Joule containment ceiling reached. Excess energy dispersed.", "warning");
+        writeStoryLog("\u26A0\uFE0F Joule containment ceiling reached. Excess energy dispersed.", "warning");
     }
 
     renderUI();
@@ -478,12 +676,12 @@ btnCrank.addEventListener("click", () => {
 btnForge.addEventListener("click", () => {
     if (gameState.resources.joules >= 10) {
         if (gameState.resources.wiring >= gameState.caps.wireStorageCap) {
-            writeLog("Logistics error: Stored spool rack capacity overflow limits hit. Upgrade warehouse storage capacity to forge more.", "warning");
+            writeStoryLog("Logistics error: Stored spool rack capacity overflow limits hit. Upgrade warehouse storage capacity to forge more.", "warning");
             return;
         }
         gameState.resources.joules -= 10;
         gameState.resources.wiring += 1;
-        writeLog("Drew hot raw copper through processing dies. Created +1 Wiring units.", "action");
+        writeFlavorLog("forgeWire", "action");
     }
     renderUI();
 });
@@ -494,11 +692,12 @@ btnBuildLoom.addEventListener("click", () => {
     if (gameState.resources.joules >= 50) {
         gameState.resources.joules -= 50;
         
-        // Update structural state in gameState
+        // Update structural state in gameState (explicitly defaulting to OFF)
         gameState.structures.automatedLoom.built = true;
         gameState.structures.automatedLoom.count = 1;
+        gameState.structures.automatedLoom.tensionSetting = "off";
         
-        writeLog("Constructed automated mechanical Pneumatic Loom system. Fabric production lines online.", "unlock");
+        writeLog("Constructed automated mechanical Pneumatic Loom system. System in STANDBY (OFF).", "unlock");
     }
     renderUI();
 });
@@ -522,27 +721,22 @@ btnRepairLoom.addEventListener("click", () => {
 function setLoomTension(mode) {
     if (gameState.structures.automatedLoom.isBroken) return;
     
+    // Timer Reset Rule: Reset progress on any state switch
+    if (gameState.structures.automatedLoom.tensionSetting !== mode) {
+        loomProgressMs = 0;
+    }
+
     // Save tension setting into gameState tree
     gameState.structures.automatedLoom.tensionSetting = mode;
     
-    // Reset toggle styles manually inside DOM list array
-    btnTensionLow.classList.remove("active");
-    btnTensionMed.classList.remove("active");
-    btnTensionHigh.classList.remove("active");
-
-    if (mode === "low") {
-        btnTensionLow.classList.add("active");
-        elTensionDesc.innerText = "LOW — 2J/sec drain · 1 Wire every 10s · No snap risk";
-    } else if (mode === "medium") {
-        btnTensionMed.classList.add("active");
-        elTensionDesc.innerText = "MED — 5J/sec drain · 1 Wire every 5s · No snap risk";
-    } else if (mode === "high") {
-        btnTensionHigh.classList.add("active");
-        elTensionDesc.innerText = "HIGH — 15J/sec drain · 1 Wire every 2s · 10% snap risk per increment";
-    }
     writeLog(`Pneumatic loom cycle frequency regulator adjusted to [${mode.toUpperCase()} TENSION].`, "action");
+    
+    // Refresh UI to update active button styles and descriptions
+    renderUI();
 }
 
+
+if (btnTensionOff) btnTensionOff.addEventListener("click", () => setLoomTension("off"));
 btnTensionLow.addEventListener("click", () => setLoomTension("low"));
 btnTensionMed.addEventListener("click", () => setLoomTension("medium"));
 btnTensionHigh.addEventListener("click", () => setLoomTension("high"));
@@ -591,7 +785,7 @@ btnOvercharge.addEventListener("click", () => {
 btnChoiceAC.addEventListener("click", () => {
     if (gameState.resources.wiring >= 15) {
         gameState.resources.wiring -= 15;
-        gameState.meta.morseChoice = "A";
+        gameState.meta.stage0_ideologicalChoice = "A";
         gameState.combat.trustActivated = true; // Edison trust begins tracking
         gameState.combat.nextAttackTime = 30;   // Arm first sabotage window
         panelMorseEncounter.classList.add("hidden");
@@ -601,7 +795,7 @@ btnChoiceAC.addEventListener("click", () => {
 
         document.getElementById("btn-expand-warehouse").querySelector(".btn-subtext").innerText = "Cost: 80J, 10 Wiring — Expands max wire storage cap by +20";
 
-        writeLog("Agreement Signed. Poughkeepsie Station shares Alternating Current blueprints. \u26A0\uFE0F Warning: The Edison Trust has declared our project an illegal patent infringement!", "warning");
+        writeStoryLog("Agreement Signed. Poughkeepsie Station shares Alternating Current blueprints. \u26A0\uFE0F Warning: The Edison Trust has declared our project an illegal patent infringement!", "warning");
     }
     renderUI();
 });
@@ -610,7 +804,7 @@ btnChoiceAC.addEventListener("click", () => {
 btnChoiceDC.addEventListener("click", () => {
     if (gameState.resources.wiring >= 10) {
         gameState.resources.wiring -= 10;
-        gameState.meta.morseChoice = "B";
+        gameState.meta.stage0_ideologicalChoice = "B";
         
         // Path B starts with 0 Leyden Jars (Max = 100J until first Jar built)
         gameState.structures.leydenJars = 0;
@@ -619,27 +813,29 @@ btnChoiceDC.addEventListener("click", () => {
         gameState.combat.nextAttackTime = 45;
         panelMorseEncounter.classList.add("hidden");
         markerMorseDecoding.classList.add("hidden");
-        writeLog("Transmission Denied. Locked keys down. We will turtle behind local isolation fields and store power natively inside Leyden arrays.", "unlock");
+        writeStoryLog("Transmission Denied. Locked keys down. We will shelter behind local isolation fields and store power natively inside Leyden arrays.", "unlock");
+    }
+    renderUI();
+});
+
+
+// Assemble Bluff-Side Turbine Stack
+btnBuildTurbine.addEventListener("click", () => {
+    if (gameState.resources.wiring >= 10) {
+        gameState.resources.wiring -= 10;
+        
+        // Increment handCrank / coil count in gameState structures
+        // Increment Bluff-Side Turbines count in gameState structures
+        gameState.structures.turbines.count++;
+        const turbineTotal = gameState.structures.turbines.count;
+        
+        writeFlavorLog("turbine", "unlock");
+        writeStoryLog(`Turbine assembly #${turbineTotal} mounted along coastal cliff (+1J/s).`, "unlock");
     }
     renderUI();
 });
 
 // Branch Specific Builders Buttons
-
-// Assemble Tesla Coil Resonator Stack
-btnAssembleCoil.addEventListener("click", () => {
-    if (gameState.resources.wiring >= 10) {
-        gameState.resources.wiring -= 10;
-        
-        // Increment handCrank / coil count in gameState structures
-        gameState.structures.handCrank.count++;
-        const coilTotal = gameState.structures.handCrank.count - 1;
-        
-        writeLog(`Resonator stack calibrated. Tesla Coil array assembly #${coilTotal} online. (+1J/s)`, "unlock");
-    }
-    renderUI();
-});
-
 // Build AC Generator Upgrade
 btnBuildAcGen.addEventListener("click", () => {
     if (buildCooldownRemaining > 0) {
@@ -756,12 +952,12 @@ setInterval(() => {
     // --------------------------------------
     let generatedJoules = 0;
     
-    if (gameState.meta.morseChoice === "A") {
+    if (gameState.meta.stage0_ideologicalChoice === "A") {
         const acGens = gameState.structures.acGenerators || 0;
         generatedJoules = acGens * 5; 
     } else {
-        const activeCoils = Math.max(0, gameState.structures.handCrank.count - 1);
-        generatedJoules = activeCoils * 1; 
+        const activeTurbines = gameState.structures.turbines ? gameState.structures.turbines.count : 0;
+        generatedJoules = activeTurbines * 1; 
     }
     
     gameState.resources.joules += generatedJoules;
@@ -770,7 +966,7 @@ setInterval(() => {
     // Part C: Automated Loom Processing Logic
     // --------------------------------------
     const loom = gameState.structures.automatedLoom;
-    if (loom.built && !loom.isBroken && gameState.resources.wiring < gameState.caps.wireStorageCap) {
+    if (loom.built && !loom.isBroken && loom.tensionSetting !== "off" && gameState.resources.wiring < gameState.caps.wireStorageCap) {
         const activeConfig = LOOM_CONFIGS[loom.tensionSetting];
         
         if (gameState.resources.joules >= activeConfig.jouleDrain) {
@@ -782,7 +978,7 @@ setInterval(() => {
 
                 if (loom.tensionSetting === "high" && Math.random() < 0.10) {
                     loom.isBroken = true;
-                    writeLog("💥 SYSTEM CRASH: Dynamic shuttle lines snapped under High Tension load! Loom halted.", "warning");
+                    writeFlavorLog("loomSnap", "warning");
                 } else {
                     gameState.resources.wiring += 1;
                     writeLog("Automated loom shuttle finishes cycle unit tracking block. Wire +1 produced.", "system");
@@ -811,8 +1007,8 @@ setInterval(() => {
             
             if (markerMorseDecoding) markerMorseDecoding.classList.add("hidden");
             
-            writeLog("\uD83D\uDCE1 SIGNAL FULLY DECODED. Open transmission lines from Poughkeepsie Station are requiring immediate field response commands.", "unlock");
-            
+            writeStoryLog("\uD83D\uDCE1 SIGNAL FULLY DECODED. Open transmission lines from Poughkeepsie Station are requiring immediate field response commands.", "unlock");
+
             // Force dynamic overlay display toggle on tick completion
             if (panelMorseEncounter) {
                 panelMorseEncounter.classList.remove("hidden");
@@ -832,7 +1028,7 @@ setInterval(() => {
             const msgIndex = Math.floor(Math.random() * ATTACK_MESSAGES.length);
             writeLog(`⚠ EXTRALIEGAL ATTACK: ${ATTACK_MESSAGES[msgIndex]} Stored resources damaged!`, "warning");
 
-            let lossWiring = (gameState.meta.morseChoice === "A") ? 5 : 3;
+            let lossWiring = (gameState.meta.stage0_ideologicalChoice === "A") ? 5 : 3;
             const jBoxes = gameState.structures.junctionBox.count || 0;
             if (jBoxes > 0) {
                 lossWiring = Math.max(0, Math.floor(lossWiring / (2 * jBoxes)));
@@ -841,7 +1037,7 @@ setInterval(() => {
 
             const fCages = gameState.structures.faradayCages || 0;
             const safetyBuffer = fCages * 15;
-            const baseIntervalWindow = (gameState.meta.morseChoice === "A") ? 30 : 45;
+            const baseIntervalWindow = (gameState.meta.stage0_ideologicalChoice === "A") ? 30 : 45;
             gameState.combat.nextAttackTime = baseIntervalWindow + safetyBuffer + Math.floor(Math.random() * 20);
         }
     }
@@ -853,11 +1049,12 @@ setInterval(() => {
         buildCooldownRemaining--;
         
         if (buildCooldownRemaining > 0) {
-            if (gameState.meta.morseChoice === "A" && btnBuildAcGen) {
+            if (gameState.meta.stage0_ideologicalChoice === "A" && btnBuildAcGen) {
                 btnBuildAcGen.querySelector(".btn-text").innerText = `[ Assembling... ${buildCooldownRemaining}s ]`;
-            } else if (gameState.meta.morseChoice === "B" && btnBuildLeyden) {
+            } else if (gameState.meta.stage0_ideologicalChoice === "B" && btnBuildLeyden) {
                 btnBuildLeyden.querySelector(".btn-text").innerText = `[ Assembling... ${buildCooldownRemaining}s ]`;
             }
+        
         } else {
             if (btnBuildAcGen) btnBuildAcGen.querySelector(".btn-text").innerText = "[ BUILD AC GENERATOR ]";
             if (btnBuildLeyden) btnBuildLeyden.querySelector(".btn-text").innerText = "[ BUILD LEYDEN JAR ]";
@@ -876,18 +1073,18 @@ setInterval(() => {
     // Part G: Win Condition Evaluation
     // --------------------------------------
     const acGens = gameState.structures.acGenerators || 0;
-    const activeCoils = Math.max(0, gameState.structures.handCrank.count - 1);
+    const activeTurbines = gameState.structures.turbines ? gameState.structures.turbines.count : 0;
 
-    if (gameState.meta.morseChoice === "A" && acGens >= 5 && gameState.resources.wiring >= 40) {
+    if (gameState.meta.stage0_ideologicalChoice === "A" && acGens >= 5 && gameState.resources.wiring >= 40) {
         if (!gameState.meta.victoryAchieved) {
-            writeLog("🏆 VICTORY ACHIEVED! Alternating Current power grid fully stabilized and secured against Edison Trust interference!", "milestone");
-        }
+            writeLog("\uD83C\uDFC6 VICTORY ACHIEVED! Alternating Current power grid fully stabilized and secured against Edison Trust interference!", "milestone");        }
         gameState.meta.victoryAchieved = true;
-    } else if (gameState.meta.morseChoice === "B" && activeCoils >= 10 && gameState.resources.wiring >= 30) {
+        if (gameState.crate) gameState.crate.unlocked = true;
+    } else if (gameState.meta.stage0_ideologicalChoice === "B" && activeTurbines >= 10 && gameState.resources.wiring >= 30) {
         if (!gameState.meta.victoryAchieved) {
-            writeLog("🏆 VICTORY ACHIEVED! Isolated Direct Current micro-grid completely fortified and operational!", "milestone");
-        }
+            writeLog("\uD83C\uDFC6 VICTORY ACHIEVED! Isolated Direct Current micro-grid completely fortified and operational!", "milestone");        }
         gameState.meta.victoryAchieved = true;
+        if (gameState.crate) gameState.crate.unlocked = true;
     }
 
     renderUI();
@@ -918,6 +1115,73 @@ elAlertBanner.addEventListener("click", () => {
     }
 });
 
+// ==========================================
+// 9. EXPEDITION TRANSPORT CRATE EVENT HANDLERS
+// ==========================================
+
+if (btnPackWire) {
+    btnPackWire.addEventListener("click", () => {
+        const isPathA = gameState.meta.stage0_ideologicalChoice === "A";
+        const baselineWires = isPathA ? 40 : 30;
+        const maxWires = 100;
+
+        if (gameState.resources.wiring > baselineWires && gameState.crate.wires < maxWires) {
+            gameState.resources.wiring -= 1;
+            gameState.crate.wires += 1;
+            writeLog(`Packed +1 Copper Wiring into Transport Crate. (Crate Wires: ${gameState.crate.wires})`, "action");
+        } else {
+            writeLog("Cannot pack wire: Operational baseline reached or Crate wire capacity full.", "warning");
+        }
+        renderUI();
+    });
+}
+
+if (btnPackGen) {
+    btnPackGen.addEventListener("click", () => {
+        const isPathA = gameState.meta.stage0_ideologicalChoice === "A";
+        const maxGens = isPathA ? 6 : 12;
+        const unitName = isPathA ? "AC Generator" : "Leyden Jar";
+
+        if (isPathA) {
+            const baselineGens = 5; // Operational baseline for AC path
+            if ((gameState.structures.acGenerators || 0) > baselineGens && gameState.crate.generators < maxGens) {
+                gameState.structures.acGenerators -= 1;
+                gameState.crate.generators += 1;
+                writeLog(`Packed +1 ${unitName} into Transport Crate. Active generation adjusted. (Crate Units: ${gameState.crate.generators})`, "action");
+            } else {
+                writeLog(`Cannot pack ${unitName}: Baseline capacity locked or Crate ceiling met.`, "warning");
+            }
+        } else {
+            const baselineJars = 0; // Baseline for Leyden Jars
+            if ((gameState.structures.leydenJars || 0) > baselineJars && gameState.crate.generators < maxGens) {
+                gameState.structures.leydenJars -= 1;
+                gameState.crate.generators += 1;
+                
+                // Recalculate max Joule capacity on packing a Jar
+                const newMax = 100 + (gameState.structures.leydenJars * 100);
+                gameState.caps.joulesMax = newMax;
+
+                writeLog(`Packed +1 ${unitName} into Transport Crate. Storage capacity re-indexed to ${newMax}J. (Crate Units: ${gameState.crate.generators})`, "action");
+            } else {
+                writeLog(`Cannot pack ${unitName}: Crate ceiling met or no extra jars available.`, "warning");
+            }
+        }
+        renderUI();
+    });
+}
+
+if (btnLaunchExpedition) {
+    btnLaunchExpedition.addEventListener("click", () => {
+        const isPathA = gameState.meta.stage0_ideologicalChoice === "A";
+        const minWires = 40;
+        const minGens = isPathA ? 2 : 5;
+
+        if (gameState.crate.wires >= minWires && gameState.crate.generators >= minGens) {
+            writeStoryLog("\uD83D\uDE80 EXPEDITION LAUNCHED! The crate is sealed and strapped to the rail line. Wardenclyffe pioneers advance to Stage 1!", "milestone");        }
+        renderUI();
+    });
+}
+
 // Links standard layout buttons to text targets and sets opening message.
-writeLog("System initialization sequence complete. Field station primary terminal online.", "system");
+writeStoryLog("System initialization sequence complete. Field station primary terminal online.", "system");
 renderUI();
