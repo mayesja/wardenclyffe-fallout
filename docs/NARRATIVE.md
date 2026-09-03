@@ -44,8 +44,8 @@ Make the challenge and technology math fair but competitive:
 
 | TECHNOLOGY | COST | BUILD TIME | OUTPUT |
 | --- | --- | --- | --- |
-| Bluff-side Turbines | Cost: 10 Wire & 20 Joules (120 Joule-equivalents) | Build time: 5 seconds | Output: 1 Joule/second |
-| AC Generators | Cost: 25 Wire & 50 Joules (300 Joule-equivalents) | Build time: 10 seconds | Output: 5 Joules/second |
+| Bluff-side Turbines | 10 Wire & 20 Joules (120 Joule-equivalents) | 5 seconds | 1 Joule/second |
+| AC Generators | 25 Wire & 50 Joules (300 Joule-equivalents) | 10 seconds | 5 Joules/second |
 
 
 ### The Evolution of the Tesla Coil
