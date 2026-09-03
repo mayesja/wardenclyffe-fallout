@@ -42,7 +42,7 @@ To ground the game in a physical engineering reality, Stage 0 focuses entirely o
 ### Stage 0: Triggers & Math
 Make the challenge and technology math fair but competitive:
 
-
+| TECHNOLOGY | COST | BUILD TIME | OUTPUT |
 | --- | --- | --- | --- |
 | Bluff-side Turbines | Cost: 10 Wire & 20 Joules (120 Joule-equivalents) | Build time: 5 seconds | Output: 1 Joule/second |
 | AC Generators | Cost: 25 Wire & 50 Joules (300 Joule-equivalents) | Build time: 10 seconds | Output: 5 Joules/second |
