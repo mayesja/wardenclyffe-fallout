@@ -16,7 +16,7 @@ The gameplay follows a strict forward-only model inspired by *Universal Papercli
 
 ---
 
-## 2. THE DEFINITIVE REGIONAL GAMEPLAY LOOP
+## 2. REGIONAL GAMEPLAY LOOP
 
 Every automated outpost operates on a standardized, escalating lifecycle:
 
@@ -31,7 +31,7 @@ Every automated outpost operates on a standardized, escalating lifecycle:
 
 ---
 
-## 3. THE REASSESSED TECHNOLOGY TREE & THE REAL-WORLD COILS
+## 3. THE REASSESSED TECHNOLOGY TREE & MATH, AND THE REAL-WORLD COILS
 
 ### Stage 0: Primitive Survival Tech
 To ground the game in a physical engineering reality, Stage 0 focuses entirely on mechanical reclamation:
@@ -39,6 +39,10 @@ To ground the game in a physical engineering reality, Stage 0 focuses entirely o
 *   `[ FORGE COPPER WIRING ]`: The foundational material sink.
 *   `[ BUILD PNEUMATIC LOOM ]`: Relieves the player of manual forging, turning Joules into automatic Wiring.
 *   `[ RECLAIM BLUFF-SIDE TURBINE ]`: *Replaces early-game Tesla Coils.* A crude mechanical generator on the coastal cliffs providing basic passive generation (+1J/sec).
+### Stage 0: Triggers & Math
+Make the challenge and technology math fair but competitive:
+| Bluff-side Turbines | Cost: 10 Wire & 20 Joules (120 Joule-equivalents) | Build time: 5 seconds | Output: 1 Joule/second
+
 
 ### The Evolution of the Tesla Coil
 Tesla Coils are saved for later stages, transforming them from boring generators into high-tier, specialized narrative payoffs:
