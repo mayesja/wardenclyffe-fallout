@@ -192,12 +192,16 @@ Upon fulfilling the chosen pathway requirements, the main interaction panel swit
 * **Turbine Schema Isolation (Sub-Pass B):** Standardized Stage 0 wind generation under `gameState.structures.turbines`. Removed legacy backend `coil` references from 1Hz production ticks, resource cost logic, and UI render checks, reserving "coil" strictly for high-tier late-game Tesla structures and preventing collisions with Stage 1 Hydro-Turbines.
 
 ### Milestone 13: Expedition Transport Crate & Inventory Packing Engine (September 2026)
-
 * **Transport Crate Panel Integration:** Added `#panel-transport-crate` to `index.html` and `style.css` with branch-specific floor/ceiling tracking for the upcoming move from [Tesla Science Center] to [Poughkeepsie].
 * **Operational Reserve Lock:** Implemented state checks in `script.js` to safeguard baseline operational inventory (Path A: 40 Wires / 5 AC Generators; Path B: 30 Wires), preventing victory-critical structures from being stowed into the transport crate.
 * **Dynamic Capacity Recalculation:** Stowing Leyden Jars (Path B) dynamically recalculates `joulesMax` storage capacity in real-time while deducting active field generators from 1Hz power generation ticks.
 * **Launch Validation:** Bound `[ LAUNCH EXPEDITION ]` to validate Crate Floor minimums, rendering explicit reserve warnings (`RESERVE REQ: X`) and emitting 16-bit JavaScript Unicode milestone events (`\uD83C\uDFC6`, `\uD83D\uDE80`).
 
+### Milestone 14: Pass A UI Cleanups, Wire Rack Caps, & Vertical Loom Upgrades (September 2026)
+* **UI Streamlining:** Converted `#btn-capacitor-discharge` to hidden state during Stage 0 to reserve high-voltage overcharge mechanics for future combat/defense phases.
+* **Escalating Storage Caps:** Implemented 5-tier Wire Rack storage progression (20 to 100 Wires max) with 5-second build timers and escalating Joules costs (15J, 30J, 50J, 75J, 110J) designed to stay below the 150J hard cap. DOM buttons auto-remove upon reaching 100 max capacity.
+* **Vertical Structure Upgrade Engine:** Built 3-tier vertical upgrade pipeline for the Pneumatic Loom (OFF/LOW ──► MED ──► HIGH). Added tier validation guards to `setLoomTension()` to prevent premature speed selection before spending upgrade costs.
+* **Unicode Safety:** Revalidated all UI icon strings to strictly enforce 16-bit JavaScript Unicode escape sequences (`\u26A0\uFE0F`, `\uD83D\uDCE1`).
   
 ---
 
