@@ -27,7 +27,11 @@ const gameState = {
         joulesMax: 100.0,                          // Maximum Joule capacity ceiling
         wireStorageCap: 20                         // Maximum copper wire storage limit
     },
-    // Machine and structural infrastructure tracking
+    // Upgrade Progression Tier Tracking
+    upgrades: {
+        rackTier: 0,                               // 0: Unbuilt, 1: Initial (20), 2: +20 (40), 3: +20 (60), 4: +20 (80), 5: +20 (100)
+        loomSpeedTier: 1                           // 1: Base (OFF/LOW unlocked), 2: MED unlocked, 3: HIGH unlocked
+    },
     // Machine and structural infrastructure tracking
     structures: {
         handCrank: { count: 1, baseYield: 1.0 },   // Starting manual dynamo structure
@@ -89,10 +93,10 @@ const SYSTEM_TICK_RATE_MS = 1000;    // The global heartbeat timer runs every 10
 
 // This dictionary holds the precise tuning metrics for our automated loom machinery
 const LOOM_CONFIGS = {
-    off:    { jouleDrain: 0,  wireIntervalMs: 0,     label: "OFF" },
-    low:    { jouleDrain: 2,  wireIntervalMs: 10000, label: "LOW" },
-    medium: { jouleDrain: 5,  wireIntervalMs: 5000,  label: "MED" },
-    high:   { jouleDrain: 15, wireIntervalMs: 2000,  label: "HIGH" }
+    off:    { jouleDrain: 0,  wireIntervalMs: 0,     label: "OFF " },
+    low:    { jouleDrain: 2,  wireIntervalMs: 10000, label: "LOW " },
+    medium: { jouleDrain: 5,  wireIntervalMs: 5000,  label: "MED " },
+    high:   { jouleDrain: 15, wireIntervalMs: 2000,  label: "HIGH " }
 };
 
 // Centralized atmospheric Tesla-punk flavor pools for kinetic player actions
@@ -178,7 +182,15 @@ const btnChoiceDC = document.getElementById("btn-choiceDC");
 
 const panelWarehouse = document.getElementById("panel-warehouse");
 const btnExpandWarehouse = document.getElementById("btn-expand-warehouse");
+const warehouseCostReadout = document.getElementById("warehouse-cost-readout");
+const warehouseDesc = document.getElementById("warehouse-desc");
 const panelOverchargeDepleted = document.getElementById("panel-overcharge-depleted");
+
+// Loom Speed Upgrade Controls
+const panelLoomUpgrade = document.getElementById("panel-loom-upgrade");
+const btnUpgradeLoom = document.getElementById("btn-upgrade-loom");
+const loomUpgradeLabel = document.getElementById("loom-upgrade-label");
+const loomUpgradeSubtext = document.getElementById("loom-upgrade-subtext");
 const panelLoomControls = document.getElementById("panel-loom-controls");
 const btnRepairLoom = document.getElementById("btn-repair-loom");
 const panelMorseEncounter = document.getElementById("stage0-ideological-choice");
@@ -218,6 +230,20 @@ const footLoom = document.getElementById("foot-loom");
 const footThreat = document.getElementById("foot-threat");
 const footDefenses = document.getElementById("foot-defenses");
 
+// Wire Rack Cost & Capacity Table (Strictly under 150J cap)
+const RACK_TIER_CONFIG = [
+    { tier: 0, costJ: 15,  cap: 20,  label: "BUILD INITIAL RACK (+20 CAP)", subtext: "Cost: 15 Joules" },
+    { tier: 1, costJ: 30,  cap: 40,  label: "EXPAND RACK (+20 / 40 CAP)",   subtext: "Cost: 30 Joules" },
+    { tier: 2, costJ: 50,  cap: 60,  label: "EXPAND RACK (+20 / 60 CAP)",   subtext: "Cost: 50 Joules" },
+    { tier: 3, costJ: 75,  cap: 80,  label: "EXPAND RACK (+20 / 80 CAP)",   subtext: "Cost: 75 Joules" },
+    { tier: 4, costJ: 110, cap: 100, label: "EXPAND RACK (+20 / 100 CAP)",  subtext: "Cost: 110 Joules" }
+];
+
+// Loom Tier Upgrade Requirements
+const LOOM_UPGRADE_CONFIG = [
+    { targetTier: 2, costJ: 50,  costW: 30, label: "[ UPGRADE LOOM: MED ]",  subtext: "Requires 50 Joules & 30 Wires" },
+    { targetTier: 3, costJ: 100, costW: 50, label: "[ UPGRADE LOOM: HIGH ]", subtext: "Requires 100 Joules & 50 Wires" }
+];
 
 // ==========================================
 // 4. CORE ENGINE UTILITY FUNCTIONS
@@ -382,9 +408,39 @@ function renderUI() {
         bannerLogisticsBlocked.classList.add("hidden");
     }
 
-    // Toggle Warehouse Expansion Card Panel Visibility
+    // Toggle Warehouse Expansion Card Panel Visibility & Rack Progression
     if (gameState.structures.automatedLoom.built) {
         panelWarehouse.classList.remove("hidden");
+
+        const currentRackTier = gameState.upgrades ? gameState.upgrades.rackTier : 0;
+        if (currentRackTier >= 5 || gameState.caps.wireStorageCap >= 100) {
+            // Permanently hide build expansion button and cost readout at max storage
+            if (btnExpandWarehouse) btnExpandWarehouse.classList.add("hidden");
+            if (warehouseCostReadout) warehouseCostReadout.classList.add("hidden");
+            if (warehouseDesc) warehouseDesc.innerText = "Wire spool rack logistics fully expanded (Maximum 100 Wires Storage Cap reached).";
+        } else {
+            const nextConfig = RACK_TIER_CONFIG[currentRackTier];
+            if (nextConfig) {
+                if (btnExpandWarehouse) {
+                    btnExpandWarehouse.classList.remove("hidden");
+                    btnExpandWarehouse.innerText = nextConfig.label;
+                    if (buildCooldownRemaining > 0) {
+                        btnExpandWarehouse.style.opacity = "0.35";
+                        btnExpandWarehouse.disabled = true;
+                    } else if (gameState.resources.joules >= nextConfig.costJ) {
+                        btnExpandWarehouse.style.opacity = "1.0";
+                        btnExpandWarehouse.disabled = false;
+                    } else {
+                        btnExpandWarehouse.style.opacity = "0.35";
+                        btnExpandWarehouse.disabled = true;
+                    }
+                }
+                if (warehouseCostReadout) {
+                    warehouseCostReadout.classList.remove("hidden");
+                    warehouseCostReadout.innerText = nextConfig.subtext;
+                }
+            }
+        }
     }
 
     // Render Dynamic Content in Machine Status counters depending on Branch choice in gameState
@@ -419,6 +475,11 @@ function renderUI() {
             btnRepairLoom.classList.add("hidden");
         }
 
+        // Enforce Speed Button Lock States based on loomSpeedTier
+        const loomTier = gameState.upgrades ? gameState.upgrades.loomSpeedTier : 1;
+        if (btnTensionMed) btnTensionMed.disabled = (loomTier < 2);
+        if (btnTensionHigh) btnTensionHigh.disabled = (loomTier < 3);
+
         // Highlight currently active tension state button and sync description
         const activeTension = gameState.structures.automatedLoom.tensionSetting || "off";
         
@@ -426,6 +487,30 @@ function renderUI() {
         if (btnTensionLow) btnTensionLow.classList.toggle("active", activeTension === "low");
         if (btnTensionMed) btnTensionMed.classList.toggle("active", activeTension === "medium");
         if (btnTensionHigh) btnTensionHigh.classList.toggle("active", activeTension === "high");
+
+        // Handle Loom Upgrade Button Visibility and Tiers
+        if (loomTier >= 3) {
+            if (panelLoomUpgrade) panelLoomUpgrade.classList.add("hidden");
+        } else {
+            if (panelLoomUpgrade) panelLoomUpgrade.classList.remove("hidden");
+            const upgradeConfig = LOOM_UPGRADE_CONFIG[loomTier - 1];
+            if (upgradeConfig) {
+                if (loomUpgradeLabel) loomUpgradeLabel.innerText = upgradeConfig.label;
+                if (loomUpgradeSubtext) loomUpgradeSubtext.innerText = upgradeConfig.subtext;
+
+                if (gameState.resources.joules >= upgradeConfig.costJ && gameState.resources.wiring >= upgradeConfig.costW) {
+                    if (btnUpgradeLoom) {
+                        btnUpgradeLoom.style.opacity = "1.0";
+                        btnUpgradeLoom.disabled = false;
+                    }
+                } else {
+                    if (btnUpgradeLoom) {
+                        btnUpgradeLoom.style.opacity = "0.35";
+                        btnUpgradeLoom.disabled = true;
+                    }
+                }
+            }
+        }
 
         if (activeTension === "off") {
             elTensionDesc.innerText = "OFF — 0J/sec drain · Loom suspended";
@@ -600,7 +685,6 @@ function renderUI() {
     }
 
     // Handle Status Footers & Rates Data Output Rows
-    // Handle Status Footers & Rates Data Output Rows
     const acGens = gameState.structures.acGenerators || 0;
     const turbineCount = gameState.structures.turbines ? gameState.structures.turbines.count : 0;
     let passiveSum = (gameState.meta.stage0_ideologicalChoice === "A") ? (acGens * 5) : (turbineCount * 1);
@@ -720,6 +804,16 @@ btnRepairLoom.addEventListener("click", () => {
 // Loom Speed Tuning Selectors
 function setLoomTension(mode) {
     if (gameState.structures.automatedLoom.isBroken) return;
+
+    const currentLoomTier = gameState.upgrades ? gameState.upgrades.loomSpeedTier : 1;
+    if (mode === "medium" && currentLoomTier < 2) {
+        writeLog("\u26A0\uFE0F MED tension locked. Requires Loom Speed Upgrade Tier 2.", "warning");
+        return;
+    }
+    if (mode === "high" && currentLoomTier < 3) {
+        writeLog("\u26A0\uFE0F HIGH tension locked. Requires Loom Speed Upgrade Tier 3.", "warning");
+        return;
+    }
     
     // Timer Reset Rule: Reset progress on any state switch
     if (gameState.structures.automatedLoom.tensionSetting !== mode) {
@@ -733,7 +827,7 @@ function setLoomTension(mode) {
     
     // Refresh UI to update active button styles and descriptions
     renderUI();
-}
+}J
 
 
 if (btnTensionOff) btnTensionOff.addEventListener("click", () => setLoomTension("off"));
@@ -742,22 +836,63 @@ btnTensionMed.addEventListener("click", () => setLoomTension("medium"));
 btnTensionHigh.addEventListener("click", () => setLoomTension("high"));
 
 
-// Warehouse Expansion Upgrade Handler
-const btnWarehouse = document.getElementById("btn-expand-warehouse");
+// Wire Spool Rack Expansion Handler (5-second Timer & Tier Costs)
+if (btnExpandWarehouse) {
+    btnExpandWarehouse.addEventListener("click", () => {
+        if (buildCooldownRemaining > 0) {
+            writeLog("\u26A0\uFE0F Floor construction lines busy. Awaiting structural frame assembly.", "warning");
+            return;
+        }
 
-if (btnWarehouse) {
-    btnWarehouse.addEventListener("click", () => {
-        // Requirements: 80 Joules and 10 Wiring
-        if (gameState.resources.joules >= 80 && gameState.resources.wiring >= 10) {
-            gameState.resources.joules -= 80;
-            gameState.resources.wiring -= 10;
+        if (!gameState.upgrades) gameState.upgrades = { rackTier: 0, loomSpeedTier: 1 };
+        const currentTier = gameState.upgrades.rackTier;
 
-            // Expand wire storage cap by +20 in gameState.caps
-            gameState.caps.wireStorageCap = (gameState.caps.wireStorageCap || 20) + 20;
+        if (currentTier >= 5 || gameState.caps.wireStorageCap >= 100) {
+            writeLog("Maximum Wire Rack capacity (100) already reached.", "warning");
+            return;
+        }
 
-            writeLog(`Warehouse storage capacity expanded! Max wire storage increased to ${gameState.caps.wireStorageCap}.`, "unlock");
+        const config = RACK_TIER_CONFIG[currentTier];
+        if (gameState.resources.joules >= config.costJ) {
+            gameState.resources.joules -= config.costJ;
+            buildCooldownRemaining = 5; // 5-second build timer
+
+            gameState.queues.constructionJobs.push({
+                id: `RACK_TIER_${currentTier + 1}`,
+                onComplete: () => {
+                    gameState.upgrades.rackTier++;
+                    gameState.caps.wireStorageCap = config.cap;
+                    writeLog(`\uD83D\uDD27 Wire Spool Rack expansion complete! Capacity increased to ${config.cap} Wires.`, "unlock");
+                    renderUI();
+                }
+            });
+
+            writeLog(`Initiating Wire Spool Rack construction tier (5s build time)...`, "action");
         } else {
-            writeLog("Insufficient resources. Requires 80 Joules and 10 Wiring to construct additional storage racks.", "warning");
+            writeLog(`Insufficient Joules. Requires ${config.costJ} Joules for this rack expansion tier.`, "warning");
+        }
+        renderUI();
+    });
+}
+
+// Vertical Pneumatic Loom Speed Tier Upgrade Handler
+if (btnUpgradeLoom) {
+    btnUpgradeLoom.addEventListener("click", () => {
+        if (!gameState.upgrades) gameState.upgrades = { rackTier: 0, loomSpeedTier: 1 };
+        const loomTier = gameState.upgrades.loomSpeedTier;
+
+        if (loomTier >= 3) return;
+
+        const config = LOOM_UPGRADE_CONFIG[loomTier - 1];
+        if (gameState.resources.joules >= config.costJ && gameState.resources.wiring >= config.costW) {
+            gameState.resources.joules -= config.costJ;
+            gameState.resources.wiring -= config.costW;
+            gameState.upgrades.loomSpeedTier++;
+
+            const unlockedMode = gameState.upgrades.loomSpeedTier === 2 ? "MED" : "HIGH";
+            writeLog(`\u26A1 Pneumatic Loom drive mechanisms upgraded! Unlocked [${unlockedMode}] speed setting.`, "unlock");
+        } else {
+            writeLog(`Insufficient resources. Requires ${config.costJ} Joules and ${config.costW} Wires.`, "warning");
         }
         renderUI();
     });

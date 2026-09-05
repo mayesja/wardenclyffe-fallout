@@ -313,6 +313,20 @@ body {
     letter-spacing: 0.05em;
 }
 
+/* Loom Speed Upgrade Scaffolding */
+.loom-upgrade-container {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.tension-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    border-color: var(--border-subtle) !important;
+}
+
 /* Animation Framework */
 @keyframes alarm-pulse {
     0%, 100% { opacity: 1; }

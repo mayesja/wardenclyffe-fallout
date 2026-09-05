@@ -63,15 +63,16 @@
 
                 <div id="panel-warehouse" class="upgrade-card hidden">
                     <div class="upgrade-row">
-                        <span class="upgrade-title">EXPAND WIRE SPOOL RACK</span>
-                        <span class="upgrade-cost">Cost: 80J · 10 Wire</span>
+                        <span class="upgrade-title">WIRE SPOOL RACK</span>
+                        <span id="warehouse-cost-readout" class="upgrade-cost">Cost: 15 Joules</span>
                     </div>
-                    <p class="upgrade-desc">Expand floor logistics. Permanently increases Wire inventory storage limit by +20.</p>
-                    <button id="btn-expand-warehouse" class="build-sub-btn">BUILD EXPANSION</button>
+                    <p id="warehouse-desc" class="upgrade-desc">Expand floor logistics. Permanently increases Wire inventory storage limit by +20 (Max 100).</p>
+                    <button id="btn-expand-warehouse" class="build-sub-btn">BUILD INITIAL RACK (+20 CAP)</button>
                 </div>
 
-                <button id="btn-overcharge" class="brass-btn btn-danger hidden">
-                    <span class="btn-text">[ CAPACITOR OVERCHARGE ]</span>
+<!-- Overcharge Button suppressed in Stage 0 per Pass A UI cleanup -->
+                <button id="btn-overcharge" class="brass-btn btn-danger hidden" style="display: none !important;">
+                        <span class="btn-text">[ CAPACITOR OVERCHARGE ]</span>
                     <span class="btn-subtext">ONE-TIME · Dumps all Joules into Wiring</span>
                 </button>
                 <div id="panel-overcharge-depleted" class="depleted-banner hidden">
@@ -92,6 +93,12 @@
                     </div>
                     <div id="tension-description" class="control-footer">
                         LOW — 2J/sec drain · 1 Wire every 10s · No snap risk
+                    </div>
+                    <div id="panel-loom-upgrade" class="loom-upgrade-container">
+                        <button id="btn-upgrade-loom" class="brass-btn btn-special">
+                            <span id="loom-upgrade-label" class="btn-text">[ UPGRADE LOOM: MED ]</span>
+                            <span id="loom-upgrade-subtext" class="btn-subtext">Requires 50 Joules &amp; 30 Wires</span>
+                        </button>
                     </div>
                     <button id="btn-repair-loom" class="brass-btn btn-danger hidden">
                         <span class="btn-text">[ REPAIR LOOM ]</span>
@@ -185,8 +192,8 @@
 
         <footer class="game-footer">
             <span id="foot-joules">J: 0</span>
-            <span id="foot-wiring">W: 0 / 20</span>
             <span id="foot-generation" class="hidden"></span>
+            <span id="foot-wiring">W: 0 / 20</span>
             <span id="foot-loom" class="hidden"></span>
             <span id="foot-threat" class="hidden">TRUST ⚠</span>
             <span id="foot-defenses" class="hidden"></span>
