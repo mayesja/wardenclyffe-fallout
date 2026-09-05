@@ -42,3 +42,29 @@ Because your phone and Chromebook live on separate local security profiles, we u
   * *Fix*: Append `/prototype/index.html` to the very end of your phone's address bar to explicitly force the server to look inside the subfolder structure.
 * **Symptom: Red error codes appear in the Chromebook browser console.**
   * *Fix*: Open your Linux terminal, run `git status` to ensure no files were corrupted during the system reboot, and verify your variable bindings in `script.js`.
+
+
+---
+
+GitHub updating from terminal
+
+# 1. Fetch the latest metadata from your remote GitHub repository
+git fetch origin
+
+# 2. Stash your uncommitted local code edits in a safe temporary stack
+git stash
+
+# 3. Pull down and merge the updated Markdown docs from GitHub (main branch)
+git pull origin main
+
+# 4. Re-apply your uncommitted local edits back on top of the updated files
+git stash pop
+
+# 1. Stage all modified prototype files and docs
+git add .
+
+# 2. Commit the updates with a clear message
+git commit -m "Desc of changes"
+
+# 3. Push everything to GitHub
+git push origin main
