@@ -8,7 +8,7 @@ This document outlines the structural, mechanical, and narrative overhaul for **
 
 The gameplay follows a strict forward-only model inspired by *Universal Paperclips*. Players cannot return to past locations; instead, completing a region triggers a **Migration Sequence** where the player physically abandons the station and advances to the next frontier.
 
-*   **Stage 0: Wardenclyffe (The Isolated Awakening):** Setting the baseline tutorial. Focuses on manual kinetic friction, dead silence, and awakening an abandoned coastal bunker in the wake of Tesla's death.
+*   **Stage 0: Wardenclyffe (The Isolated Awakening):** Setting the baseline tutorial. Focuses on manual kinetic friction, dead silence, and awakening an abandoned coastal bunker in the wake of social and industrial collapse.
 *   **Stage 1: Poughkeepsie (The Kinetic Generation):** Harnessing the heavy currents of the Hudson River to transition into automated, industrial power generation.
 *   **Stage 2: Ithaca (The Gorge Fortress & Betrayal):** Shifting focus to long-distance transmission, data protection, and localized grid survival inside rocky gorges. Features a major plot twist.
 *   **Stage 3: Niagara Falls (The Macro-Harnessing Endgame):** Scaling wires and Joules exponentially by tapping the infinite kinetic force of the falls with colossal resonant monoliths to permanently crack the Edison Trust's monopoly.
