@@ -203,6 +203,22 @@ Upon fulfilling the chosen pathway requirements, the main interaction panel swit
 * **Vertical Structure Upgrade Engine:** Built 3-tier vertical upgrade pipeline for the Pneumatic Loom (OFF/LOW ──► MED ──► HIGH). Added tier validation guards to `setLoomTension()` to prevent premature speed selection before spending upgrade costs.
 * **Unicode Safety:** Revalidated all UI icon strings to strictly enforce 16-bit JavaScript Unicode escape sequences (`\u26A0\uFE0F`, `\uD83D\uDCE1`).
   
+
+### Milestone 14:  Stage 1 Transition & Opening Hydro Loop (September 2026)
+
+* **Stage 0 Departure Morse Signal Intercepts:**
+  * Implemented 30-second Morse signal decode countdown sequence triggered upon fulfilling Stage 0 stabilization requirements.
+  * Added path-dependent incoming dispatches from Poughkeepsie Station Relay (Path A vs. Path B) to signal the migration north and unlock the Stage 0 Expedition Transport Crate.
+* **Stage 1 Migration & Layout Reset:**
+  * Integrated `launchExpedition()` stage transition handler, advancing game state to Stage 1 (`gameState.meta.currentStage = 1`).
+  * Implemented transition UI wipe sequence—clearing Wardenclyffe-specific building cards while preserving the Header HUD, Terminal Viewport, Footer, and permanent `CRANK DYNAMO` button (NOT PRESENT YET).
+  * Added initial Stage 1 transition dispatches (Dispatch 2.01: Bunker Seal & Dispatch 2.02: Poughkeepsie Field Office Arrival).
+* **Unpacking & Asymmetric Crisis Loops:**
+  * Created `unpackExpeditionCrate()` handler to process imported crate inventory, (STOPPED HERE, FURTHER DEVELOPMENT NEEDED)
+* **UI Systems & Priority Cleanup:**
+  * Decoupled construction job cooldown timers across structure panels to prevent build-time cross-contamination between Wire Spool Racks, Leyden Jars, and AC Generators.
+  * Established strict `#alert-banner` rendering priority hierarchy (Edison Sabotage > Stage 0 Departure Morse > Initial Station Morse > Terminal Viewport Scroll Alert).
+
 ---
 
 ## 5. TODO'S & FUTURE DESIGN EXPERIMENTS
