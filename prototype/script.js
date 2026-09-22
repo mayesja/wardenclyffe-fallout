@@ -12,6 +12,8 @@ const gameState = {
         morseTriggered: false,                     // Signal intercept activated at 50J
         morseDecoded: false,                       // Decoding countdown finished flag
         morseCountdown: 30,                        // Active countdown timer integer
+        departureMorseTriggered: false,            // Stage 0 departure Morse signal triggered flag
+        departureMorseDecoded: false,              // Stage 0 departure Morse signal decoded flag
         stage0_ideologicalChoice: null,            // Permanent path choice: "A" (AC) or "B" (DC)
         capacitorOvercharged: false,               // One-time emergency dump flag
         logIncrementId: 0                          // Terminal log counter ID
@@ -182,6 +184,8 @@ const btnChoiceDC = document.getElementById("btn-choiceDC");
 
 const panelWarehouse = document.getElementById("panel-warehouse");
 const btnExpandWarehouse = document.getElementById("btn-expand-warehouse");
+const warehouseTimer = document.getElementById("warehouse-timer");
+const warehouseTimeRemaining = document.getElementById("warehouse-time-remaining");
 const warehouseCostReadout = document.getElementById("warehouse-cost-readout");
 const warehouseDesc = document.getElementById("warehouse-desc");
 const panelOverchargeDepleted = document.getElementById("panel-overcharge-depleted");
@@ -219,8 +223,13 @@ const bannerLoomStatus = document.getElementById("loom-status-banner");
 const bannerThreatStatus = document.getElementById("threat-status-banner");
 const bannerLogisticsBlocked = document.getElementById("banner-logistics-blocked");
 const markerMorseDecoding = document.getElementById("marker-morse-decoding");
+const markerDepartureMorseDecoding = document.getElementById("marker-departure-morse-decoding");
 const markerGridBranch = document.getElementById("marker-grid-branch");
 const markerVictory = document.getElementById("marker-victory");
+
+const stationTitle = document.getElementById("station-title");
+const btnUnpackCrate = document.getElementById("btn-unpack-crate");
+const stage1Container = document.getElementById("stage-1-container");
 
 // Footer Quick-stats readouts
 const footJoules = document.getElementById("foot-joules");
@@ -302,9 +311,11 @@ function writeLog(text, type = "system") {
 
     // --- 4. VIEWPORT SCROLL ALERT BANNER TRIGGER ---
     const logBoundingRect = elTerminalLog.getBoundingClientRect();
-    const isHighPriorityLog = (type === "system" || type === "warning" || type === "disaster" || type === "milestone");
+    // Exclude routine system logs; only alert for critical events
+    const isHighPriorityLog = (type === "warning" || type === "disaster" || type === "milestone" || type === "unlock");
     const activeSabotage = gameState.combat ? gameState.combat.underAttack : false;
-    const activeMorseDecoding = gameState.meta.morseTriggered && !gameState.meta.morseDecoded;
+    const activeMorseDecoding = (gameState.meta.morseTriggered && !gameState.meta.morseDecoded) || 
+                                (gameState.meta.departureMorseTriggered && !gameState.meta.departureMorseDecoded);
 
     if (isHighPriorityLog && logBoundingRect.bottom < 0 && !activeSabotage && !activeMorseDecoding) {
         gameState.uiState.terminalScrolledOut = true;
@@ -360,6 +371,63 @@ function renderUI() {
     if (footJoules) footJoules.innerText = `J: ${Math.floor(gameState.resources.joules)}`;
     if (footWiring) footWiring.innerText = `W: ${gameState.resources.wiring} / ${gameState.caps.wireStorageCap}`;
 
+    // Update Header Station Title based on Current Stage
+    if (stationTitle) {
+        const stageTitles = {
+            0: "▓▒░ WARDENCLYFFE FIELD STATION ░▒▓",
+            1: "▓▒░ POUGHKEEPSIE FIELD STATION ░▒▓",
+            2: "▓▒░ ITHACA FIELD STATION ░▒▓",
+            3: "▓▒░ NIAGARA FALLS CORE STATION ░▒▓"
+        };
+        stationTitle.innerText = stageTitles[gameState.meta.currentStage] || stageTitles[0];
+    }
+
+    // --- STAGE 1 UI LOCKOUT GUARD ---
+    if (gameState.meta.currentStage === 1) {
+        // 1. Hide all Stage 0 buttons, panels, and indicators
+        const stage0IDs = [
+            "btn-forge",
+            "btn-build-loom",
+            "btn-build-turbine",
+            "btn-overcharge",
+            "btn-build-ac-gen",
+            "btn-build-leyden",
+            "btn-build-faraday",
+            "btn-build-junction",
+            "panel-warehouse",
+            "panel-loom-controls",
+            "panel-transport-crate",
+            "stage0-ideological-choice",
+            "marker-grid-branch",
+            "marker-victory",
+            "banner-logistics-blocked",
+            "panel-overcharge-depleted"
+        ];
+
+        stage0IDs.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.add("hidden");
+        });
+
+        // 2. Hide Loom readout from footer
+        const footLoom = document.getElementById("foot-loom");
+        if (footLoom) footLoom.classList.add("hidden");
+
+        // 3. Ensure Stage 1 container and UNPACK CRATE button are visible
+        const stage1Container = document.getElementById("stage-1-container");
+        const btnUnpackCrate = document.getElementById("btn-unpack-crate");
+
+        if (stage1Container) stage1Container.classList.remove("hidden");
+        if (btnUnpackCrate) {
+            btnUnpackCrate.classList.remove("hidden");
+            btnUnpackCrate.className = "brass-btn btn-special";
+            btnUnpackCrate.innerHTML = '<span class="btn-text">[ UNPACK EXPEDITION CRATE ]</span><span class="btn-subtext">Transfer stowed inventory to Poughkeepsie Station</span>';
+        }
+
+        // Return early so the rest of renderUI does NOT run
+        return;
+    }
+
     // Always show the current energy storage ceiling layout
     if (elMaxJoules) {
         elMaxJoules.classList.remove("hidden");
@@ -375,30 +443,49 @@ function renderUI() {
         }
     }
 
-    // Toggle Visibility of Action Buttons based on Progression thresholds in gameState
-    if (btnForge) {
-        if (gameState.resources.joules >= 10 || gameState.resources.wiring > 0) {
-            btnForge.classList.remove("hidden");
-        }
-    }
-    
-    if (btnBuildLoom) {
-        if (gameState.resources.wiring >= 2 || gameState.structures.automatedLoom.built) {
-            btnBuildLoom.classList.remove("hidden");
-        }
-    }
-    
-    if (btnBuildTurbine) {
-        if (gameState.resources.wiring >= 3 || gameState.structures.turbines.count > 0) {
-            btnBuildTurbine.classList.remove("hidden");
-        }
-    }
+    // --- STAGE-BASED INTERFACE ROUTING ---
+    if (gameState.meta.currentStage === 1) {
+        // Explicitly force hide Stage 0 action buttons and panels when in Stage 1
+        if (btnForge) btnForge.classList.add("hidden");
+        if (btnBuildLoom) btnBuildLoom.classList.add("hidden");
+        if (btnBuildTurbine) btnBuildTurbine.classList.add("hidden");
+        if (btnOvercharge) btnOvercharge.classList.add("hidden");
+        if (panelWarehouse) panelWarehouse.classList.add("hidden");
+        if (panelLoomControls) panelLoomControls.classList.add("hidden");
+        if (panelTransportCrate) panelTransportCrate.classList.add("hidden");
+        if (btnBuildAcGen) btnBuildAcGen.classList.add("hidden");
+        if (btnBuildLeyden) btnBuildLeyden.classList.add("hidden");
+        if (btnBuildFaraday) btnBuildFaraday.classList.add("hidden");
+        if (btnBuildJunction) btnBuildJunction.classList.add("hidden");
 
-    // --- CAPACITOR OVERCHARGE VISIBILITY TRIGGER ---
-    // Reads branch choice and overcharge flag from gameState
-    if (gameState.meta.stage0_ideologicalChoice === "A" && gameState.resources.wiring >= 5 && !gameState.meta.capacitorOvercharged) {        btnOvercharge.classList.remove("hidden");
+        // Ensure Stage 1 container & UNPACK CRATE button are visible
+        if (stage1Container) stage1Container.classList.remove("hidden");
+        if (btnUnpackCrate) btnUnpackCrate.classList.remove("hidden");
     } else {
-        btnOvercharge.classList.add("hidden");
+        // Standard Stage 0 Visibility Triggers
+        if (btnForge) {
+            if (gameState.resources.joules >= 10 || gameState.resources.wiring > 0) {
+                btnForge.classList.remove("hidden");
+            }
+        }
+        
+        if (btnBuildLoom) {
+            if (gameState.resources.wiring >= 2 || gameState.structures.automatedLoom.built) {
+                btnBuildLoom.classList.remove("hidden");
+            }
+        }
+        
+        if (btnBuildTurbine) {
+            if (gameState.resources.wiring >= 3 || gameState.structures.turbines.count > 0) {
+                btnBuildTurbine.classList.remove("hidden");
+            }
+        }
+
+        if (gameState.meta.stage0_ideologicalChoice === "A" && gameState.resources.wiring >= 5 && !gameState.meta.capacitorOvercharged) {
+            btnOvercharge.classList.remove("hidden");
+        } else {
+            btnOvercharge.classList.add("hidden");
+        }
     }
     
     // Handle Logistics Spool-Rack Overflow Overload banners
@@ -407,7 +494,6 @@ function renderUI() {
     } else {
         bannerLogisticsBlocked.classList.add("hidden");
     }
-
     // Toggle Warehouse Expansion Card Panel Visibility & Rack Progression
     if (gameState.structures.automatedLoom.built) {
         panelWarehouse.classList.remove("hidden");
@@ -417,23 +503,37 @@ function renderUI() {
             // Permanently hide build expansion button and cost readout at max storage
             if (btnExpandWarehouse) btnExpandWarehouse.classList.add("hidden");
             if (warehouseCostReadout) warehouseCostReadout.classList.add("hidden");
+            if (warehouseTimer) warehouseTimer.classList.add("hidden");
             if (warehouseDesc) warehouseDesc.innerText = "Wire spool rack logistics fully expanded (Maximum 100 Wires Storage Cap reached).";
         } else {
             const nextConfig = RACK_TIER_CONFIG[currentRackTier];
-            if (nextConfig) {
+
+            // 1. Handle Active Global Build Cooldown Timer
+            const activeJob = gameState.queues.constructionJobs[0];
+            const isRackJob = activeJob && activeJob.id && activeJob.id.startsWith("RACK_TIER_");
+
+            if (buildCooldownRemaining > 0 && isRackJob) {
+                if (btnExpandWarehouse) {
+                    btnExpandWarehouse.classList.remove("hidden");
+                    btnExpandWarehouse.innerText = "CONSTRUCTING...";
+                    btnExpandWarehouse.style.opacity = "0.5";
+                    btnExpandWarehouse.disabled = true;
+                }
+                if (warehouseTimer) warehouseTimer.classList.remove("hidden");
+                if (warehouseTimeRemaining) {
+                    warehouseTimeRemaining.innerText = buildCooldownRemaining;
+                }
+            } else if (nextConfig) {
+                // 2. Handle Idle Ready State
+                if (warehouseTimer) warehouseTimer.classList.add("hidden");
+
                 if (btnExpandWarehouse) {
                     btnExpandWarehouse.classList.remove("hidden");
                     btnExpandWarehouse.innerText = nextConfig.label;
-                    if (buildCooldownRemaining > 0) {
-                        btnExpandWarehouse.style.opacity = "0.35";
-                        btnExpandWarehouse.disabled = true;
-                    } else if (gameState.resources.joules >= nextConfig.costJ) {
-                        btnExpandWarehouse.style.opacity = "1.0";
-                        btnExpandWarehouse.disabled = false;
-                    } else {
-                        btnExpandWarehouse.style.opacity = "0.35";
-                        btnExpandWarehouse.disabled = true;
-                    }
+
+                    const canAfford = gameState.resources.joules >= nextConfig.costJ;
+                    btnExpandWarehouse.style.opacity = canAfford ? "1.0" : "0.35";
+                    btnExpandWarehouse.disabled = !canAfford;
                 }
                 if (warehouseCostReadout) {
                     warehouseCostReadout.classList.remove("hidden");
@@ -632,7 +732,16 @@ function renderUI() {
     if (gameState.combat.underAttack) {
         elAlertBanner.classList.remove("hidden");
         elAlertBanner.style.backgroundColor = "var(--ember-red)";
-        elAlertText.innerText = `⚠ SECURITY ALERT — EDISON SABOTAGE ACTIVE (${gameState.combat.attackCountdown || 10}s) ⚠`;
+        elAlertText.innerText = `\u26A0 SECURITY ALERT \u2014 EDISON SABOTAGE ACTIVE (${gameState.combat.attackCountdown || 10}s) \u26A0`;
+    } else if (gameState.meta.departureMorseTriggered && !gameState.meta.departureMorseDecoded) {
+        const displaySeconds = (typeof gameState.meta.morseCountdown === "number" && !isNaN(gameState.meta.morseCountdown)) 
+            ? gameState.meta.morseCountdown 
+            : 30;
+
+        elAlertBanner.classList.remove("hidden");
+        elAlertBanner.classList.remove("scroll-alert");
+        elAlertBanner.style.backgroundColor = "var(--electric-cyan)";
+        elAlertText.innerText = `\u25B6 DECODING DEPARTURE SIGNAL FROM POUGHKEEPSIE (${displaySeconds}s) \u25C0`;
     } else if (gameState.meta.morseTriggered && !gameState.meta.morseDecoded) {
         // Fallback guard to ensure countdown is a valid number
         const displaySeconds = (typeof gameState.meta.morseCountdown === "number" && !isNaN(gameState.meta.morseCountdown)) 
@@ -642,12 +751,12 @@ function renderUI() {
         elAlertBanner.classList.remove("hidden");
         elAlertBanner.classList.remove("scroll-alert");
         elAlertBanner.style.backgroundColor = "var(--electric-cyan)";
-        elAlertText.innerText = `▸ DECODING SIGNAL FROM POUGHKEEPSIE STATION (${displaySeconds}s) ◂`;
+        elAlertText.innerText = `\u25B6 DECODING SIGNAL FROM POUGHKEEPSIE STATION (${displaySeconds}s) \u25C0`;
     } else if (gameState.uiState.terminalScrolledOut) {
         elAlertBanner.classList.remove("hidden");
         elAlertBanner.classList.add("scroll-alert");
         elAlertBanner.style.backgroundColor = "";
-        elAlertText.innerText = "▸ NEW LOG ENTRY AVAILABLE — CLICK TO VIEW TERMINAL ◂";
+        elAlertText.innerText = "\u25B6 NEW LOG ENTRY AVAILABLE \u2014 CLICK TO VIEW TERMINAL \u25C0";
     } else {
         elAlertBanner.classList.add("hidden");
         elAlertBanner.classList.remove("scroll-alert");
@@ -672,15 +781,14 @@ function renderUI() {
     if (gameState.resources.joules < 10) { btnForge.style.opacity = "0.35"; } else { btnForge.style.opacity = "1.0"; }
     if (gameState.resources.wiring < 10) { btnBuildTurbine.style.opacity = "0.35"; } else { btnBuildTurbine.style.opacity = "1.0"; }
     if (gameState.resources.joules < 50) { btnBuildLoom.style.opacity = "0.35"; } else { btnBuildLoom.style.opacity = "1.0"; }
-    if (gameState.resources.joules < 20 || gameState.resources.wiring < 5 || buildCooldownRemaining > 0) { btnBuildAcGen.style.opacity = "0.35"; } else { btnBuildAcGen.style.opacity = "1.0"; }
-    if (gameState.resources.wiring < 20) { btnBuildFaraday.style.opacity = "0.35"; } else { btnBuildFaraday.style.opacity = "1.0"; }
-    if (gameState.resources.wiring < 5 || buildCooldownRemaining > 0) { btnBuildLeyden.style.opacity = "0.35"; } else { btnBuildLeyden.style.opacity = "1.0"; }
+    if (gameState.resources.joules < 20 || gameState.resources.wiring < 5) { btnBuildAcGen.style.opacity = "0.35"; } else { btnBuildAcGen.style.opacity = "1.0"; }    if (gameState.resources.wiring < 20) { btnBuildFaraday.style.opacity = "0.35"; } else { btnBuildFaraday.style.opacity = "1.0"; }
+    if (gameState.resources.wiring < 5) { btnBuildLeyden.style.opacity = "0.35"; } else { btnBuildLeyden.style.opacity = "1.0"; }
     if (gameState.resources.joules < 200) { btnBuildJunction.style.opacity = "0.35"; } else { btnBuildJunction.style.opacity = "1.0"; }
-    if (btnWarehouse) {
+    if (btnExpandWarehouse) {
         if (gameState.resources.joules < 80 || gameState.resources.wiring < 10) {
-            btnWarehouse.style.opacity = "0.35";
+            btnExpandWarehouse.style.opacity = "0.35";
         } else {
-            btnWarehouse.style.opacity = "1.0";
+            btnExpandWarehouse.style.opacity = "1.0";
         }
     }
 
@@ -827,7 +935,7 @@ function setLoomTension(mode) {
     
     // Refresh UI to update active button styles and descriptions
     renderUI();
-}J
+}
 
 
 if (btnTensionOff) btnTensionOff.addEventListener("click", () => setLoomTension("off"));
@@ -928,7 +1036,11 @@ btnChoiceAC.addEventListener("click", () => {
         
         gameState.caps.joulesMax = 150;
 
-        document.getElementById("btn-expand-warehouse").querySelector(".btn-subtext").innerText = "Cost: 80J, 10 Wiring — Expands max wire storage cap by +20";
+        const warehouseBtn = document.getElementById("btn-expand-warehouse");
+        const warehouseSubtext = warehouseBtn ? warehouseBtn.querySelector(".btn-subtext") : null;
+        if (warehouseSubtext) {
+            warehouseSubtext.innerText = "Cost: 80J, 10 Wiring — Expands max wire storage cap by +20";
+        }
 
         writeStoryLog("Agreement Signed. Poughkeepsie Station shares Alternating Current blueprints. \u26A0\uFE0F Warning: The Edison Trust has declared our project an illegal patent infringement!", "warning");
     }
@@ -1063,6 +1175,24 @@ btnBuildJunction.addEventListener("click", () => {
     renderUI();
 });
 
+/* --- STAGE 0 DEPARTURE MORSE INTERCEPT TRIGGER CHECK --- */
+function checkDepartureMorseTrigger() {
+    // Guard: Ensure trigger executes ONCE per playthrough
+    if (gameState.meta.departureMorseTriggered) return;
+
+    // Stage 0 defense/stabilization requirement check (victory condition achieved)
+    if (gameState.meta.victoryAchieved) {
+        gameState.meta.departureMorseTriggered = true;
+        gameState.meta.morseCountdown = 30; // Initialize 30-second decode countdown
+        gameState.structures.morseReceiver.activeDecoding = true;
+
+        writeStoryLog("The spark-gap Morse receiver energizes! Intercepting high-frequency transmission from Poughkeepsie Relay...", "unlock");
+
+        if (markerDepartureMorseDecoding) {
+            markerDepartureMorseDecoding.classList.remove("hidden");
+        }
+    }
+}
 
 // ==========================================
 // 7. THE MASTER INTERVAL TICK ENGINE (1Hz) (100% GAMESTATE BOUND)
@@ -1151,6 +1281,38 @@ setInterval(() => {
         }
     }
 
+// --------------------------------------
+    // Part D2: Departure Morse Decoder Timeline Progression Countdown
+    // --------------------------------------
+    if (gameState.meta && gameState.meta.departureMorseTriggered && !gameState.meta.departureMorseDecoded) {
+        if (typeof gameState.meta.morseCountdown !== "number" || isNaN(gameState.meta.morseCountdown)) {
+            gameState.meta.morseCountdown = 30;
+        }
+
+        gameState.meta.morseCountdown--;
+
+        if (gameState.meta.morseCountdown <= 0) {
+            gameState.meta.departureMorseDecoded = true;
+            if (!gameState.structures) gameState.structures = {};
+            if (!gameState.structures.morseReceiver) gameState.structures.morseReceiver = { built: true, activeDecoding: false };
+            gameState.structures.morseReceiver.activeDecoding = false;
+
+            if (markerDepartureMorseDecoding) markerDepartureMorseDecoding.classList.add("hidden");
+
+            // Evaluate ideological choice path and write verbatim intercept message
+            if (gameState.meta.stage0_ideologicalChoice === "A") {
+                writeLog("\u26A1 INCOMING MORSE [SIGNAL-NORTH]\nFROM: POUGHKEEPSIE STATION RELAY\nRE: LONG-ISLAND SIGNAL DETECTED\n\"WARDENCLYFFE: YOUR RIPPLE IS BLINDING ON OUR DIALS. TRUST MOBILIZING FROM NYC TO PIN YOUR POSITION. SEAL COATINGS. BOOT AUTO-PILOT RELAYS. PACK AC GENERATORS AND HEAVY WIRE TO FREIGHT LINE IMMEDIATELY. HUDSON RIVER MILLHOUSE READY. MOVE NORTH.\"", "unlock");
+            } else {
+                writeLog("\u26A1 INCOMING MORSE [SIGNAL-NORTH]\nFROM: POUGHKEEPSIE STATION RELAY\nRE: MASKED DROP DETECTED\n\"WARDENCLYFFE: HEAVY STATIC DROP DETECTED. EXCELLENT ISOLATION MASKING, BUT LOCAL SCOUTS CONDUCTING BLOCK-BY-BLOCK GRID AUDITS. LOCK CELLAR VAULTS TO AUTO-PILOT. PACK CHARGED LEYDEN JARS AND HEAVY WIRE TO NORTHERN FREIGHT. HUDSON RIVER MILLHOUSE CLEAR. MOVE NORTH.\"", "unlock");
+            }
+
+            // Unlock and reveal transport crate only after departure signal processing
+            if (gameState.crate) {
+                gameState.crate.unlocked = true;
+            }
+        }
+    }
+
     // --------------------------------------
     // Part E: Edison Trust Raid Scheduler Logic
     // --------------------------------------
@@ -1178,33 +1340,45 @@ setInterval(() => {
     }
 
 // --------------------------------------
-    // Part F: Global Build Queue Cooldown Decrement & Completion
-    // --------------------------------------
-    if (buildCooldownRemaining > 0) {
-        buildCooldownRemaining--;
-        
-        if (buildCooldownRemaining > 0) {
-            if (gameState.meta.stage0_ideologicalChoice === "A" && btnBuildAcGen) {
-                btnBuildAcGen.querySelector(".btn-text").innerText = `[ Assembling... ${buildCooldownRemaining}s ]`;
-            } else if (gameState.meta.stage0_ideologicalChoice === "B" && btnBuildLeyden) {
-                btnBuildLeyden.querySelector(".btn-text").innerText = `[ Assembling... ${buildCooldownRemaining}s ]`;
-            }
-        
-        } else {
-            if (btnBuildAcGen) btnBuildAcGen.querySelector(".btn-text").innerText = "[ BUILD AC GENERATOR ]";
-            if (btnBuildLeyden) btnBuildLeyden.querySelector(".btn-text").innerText = "[ BUILD LEYDEN JAR ]";
+// Part F: Global Build Queue Cooldown Decrement & Completion
+// --------------------------------------
+if (buildCooldownRemaining > 0) {
+    buildCooldownRemaining--;
+    
+    // Only update button text if the active queued job is an AC_GEN or LEYDEN_JAR
+    const activeJob = gameState.queues.constructionJobs[0];
+    const jobId = activeJob ? activeJob.id : "";
 
-            // Process job from gameState.queues.constructionJobs queue
-            if (gameState.queues.constructionJobs && gameState.queues.constructionJobs.length > 0) {
-                const job = gameState.queues.constructionJobs.shift(); // Shift job off queue
-                if (typeof job.onComplete === "function") {
-                    job.onComplete(); // Triggers onComplete, incrementing generator count
-                }
+    if (buildCooldownRemaining > 0) {
+        if (jobId === "AC_GEN" && btnBuildAcGen) {
+            const btnText = btnBuildAcGen.querySelector(".btn-text");
+            if (btnText) btnText.innerText = `[ Assembling... ${buildCooldownRemaining}s ]`;
+        } else if (jobId === "LEYDEN_JAR" && btnBuildLeyden) {
+            const btnText = btnBuildLeyden.querySelector(".btn-text");
+            if (btnText) btnText.innerText = `[ Assembling... ${buildCooldownRemaining}s ]`;
+        }
+    } else {
+        // Reset specific structure button labels upon queue completion
+        if (btnBuildAcGen) {
+            const btnText = btnBuildAcGen.querySelector(".btn-text");
+            if (btnText) btnText.innerText = "[ BUILD AC GENERATOR ]";
+        }
+        if (btnBuildLeyden) {
+            const btnText = btnBuildLeyden.querySelector(".btn-text");
+            if (btnText) btnText.innerText = "[ BUILD LEYDEN JAR ]";
+        }
+
+        // Process job from gameState.queues.constructionJobs queue
+        if (gameState.queues.constructionJobs && gameState.queues.constructionJobs.length > 0) {
+            const job = gameState.queues.constructionJobs.shift();
+            if (typeof job.onComplete === "function") {
+                job.onComplete();
             }
         }
     }
+}
 
-// --------------------------------------
+    // --------------------------------------
     // Part G: Win Condition Evaluation
     // --------------------------------------
     const acGens = gameState.structures.acGenerators || 0;
@@ -1214,13 +1388,16 @@ setInterval(() => {
         if (!gameState.meta.victoryAchieved) {
             writeLog("\uD83C\uDFC6 VICTORY ACHIEVED! Alternating Current power grid fully stabilized and secured against Edison Trust interference!", "milestone");        }
         gameState.meta.victoryAchieved = true;
-        if (gameState.crate) gameState.crate.unlocked = true;
+        // crate unlock deferred to departure Morse intercept decode completion
     } else if (gameState.meta.stage0_ideologicalChoice === "B" && activeTurbines >= 10 && gameState.resources.wiring >= 30) {
         if (!gameState.meta.victoryAchieved) {
             writeLog("\uD83C\uDFC6 VICTORY ACHIEVED! Isolated Direct Current micro-grid completely fortified and operational!", "milestone");        }
         gameState.meta.victoryAchieved = true;
-        if (gameState.crate) gameState.crate.unlocked = true;
+        // crate unlock deferred to departure Morse intercept decode completion
     }
+
+    /* --- STAGE 0 DEPARTURE MORSE TRIGGER CALL --- */
+    checkDepartureMorseTrigger();
 
     renderUI();
 }, SYSTEM_TICK_RATE_MS);
@@ -1307,13 +1484,79 @@ if (btnPackGen) {
 
 if (btnLaunchExpedition) {
     btnLaunchExpedition.addEventListener("click", () => {
+        console.log("LAUNCH BUTTON CLICKED!");
+
         const isPathA = gameState.meta.stage0_ideologicalChoice === "A";
         const minWires = 40;
         const minGens = isPathA ? 2 : 5;
 
-        if (gameState.crate.wires >= minWires && gameState.crate.generators >= minGens) {
-            writeStoryLog("\uD83D\uDE80 EXPEDITION LAUNCHED! The crate is sealed and strapped to the rail line. Wardenclyffe pioneers advance to Stage 1!", "milestone");        }
-        renderUI();
+        console.log("Current Crate Wires:", gameState.crate ? gameState.crate.wires : "undefined");
+        console.log("Current Crate Gens:", gameState.crate ? gameState.crate.generators : "undefined");
+        console.log("Required Wires:", minWires, "Required Gens:", minGens);
+
+        if (gameState.crate && gameState.crate.wires >= minWires && gameState.crate.generators >= minGens) {
+            console.log("Requirements met! Launching...");
+
+            // 1. Advance stage counter to Stage 1 (Poughkeepsie)
+            gameState.meta.currentStage = 1;
+
+            // 2. Hard-reset local resource balances back to baseline zero
+            gameState.resources.joules = 0;
+            gameState.resources.wiring = 0;
+
+            // 3. Clear Stage 0 structures so the game loop stops passive generation (+0 J/s)
+            if (gameState.structures) {
+                if (gameState.structures.turbines) gameState.structures.turbines.count = 0;
+                gameState.structures.acGenerators = 0;
+                gameState.structures.leydenJars = 0;
+                if (gameState.structures.automatedLoom) {
+                    gameState.structures.automatedLoom.built = false;
+                    gameState.structures.automatedLoom.speedSetting = 0;
+                    gameState.structures.automatedLoom.tensionSetting = "off";
+                    gameState.structures.automatedLoom.isBroken = false;
+                }
+            }
+
+            // 4. Output transition story dispatch messages to terminal log (log history remains untouched)
+            writeStoryLog("\u26A1 [SYSTEM] EXPEDITION LAUNCH CONFIRMED\nPrimary vault doors sealed at 0400 hrs. Wardenclyffe core isolated at 70ft depth; auto-pilot relays live on low baseline draw. Station running autonomously in silent background. Freight transit along Hudson Line complete.", "unlock");
+            
+            writeStoryLog("\uD83D\uDCE1 [LOG] POUGHKEEPSIE FIELD OFFICE\nOperations established inside Hudson River millhouse. Unpacking Expedition Crate. Manual crank dynamo bolted to timber framing. Long-distance line confirms Wardenclyffe auto-pilot signal holds steady across Long Island Sound.", "unlock");
+
+            // 5. Explicitly hide Stage 0 panels
+            const stage0PanelIDs = [
+                "panel-warehouse",
+                "panel-overcharge",
+                "panel-transport-crate",
+                "panel-loom-controls",
+                "panel-loom-upgrade",
+                "stage0-ideological-choice",
+                "marker-grid-branch"
+            ];
+            
+            stage0PanelIDs.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.add("hidden");
+            });
+
+            if (btnLaunchExpedition) btnLaunchExpedition.classList.add("hidden");
+
+            // 6. Reveal Stage 1 container and ensure UNPACK CRATE button is styled correctly
+            const stage1Container = document.getElementById("stage-1-container");
+            const btnUnpackCrate = document.getElementById("btn-unpack-crate");
+            
+            if (stage1Container) stage1Container.classList.remove("hidden");
+            if (btnUnpackCrate) {
+                btnUnpackCrate.classList.remove("hidden");
+                // Convert to full brass terminal button formatting if needed
+                btnUnpackCrate.className = "brass-btn btn-special";
+                btnUnpackCrate.innerHTML = '<span class="btn-text">[ UNPACK EXPEDITION CRATE ]</span><span class="btn-subtext">Transfer stowed inventory to Poughkeepsie Station</span>';
+            }
+
+            // 7. Trigger UI re-render
+            renderUI();
+        } else {
+            console.log("Launch requirements NOT met yet.");
+        }
     });
 }
 

@@ -15,7 +15,7 @@
     <div class="app-container">
         
         <header class="game-header">
-            <div class="station-title">▓▒░ WARDENCLYFFE FIELD STATION ░▒▓</div>
+            <div id="station-title" class="station-title">▓▒░ WARDENCLYFFE FIELD STATION ░▒▓</div>
             <div class="status-row">
                 <span>LOCAL GRID STATUS</span>
                 <span id="grid-status" class="status-offline">OFFLINE</span>
@@ -60,7 +60,6 @@
                     <span class="btn-text">[ BUILD PNEUMATIC LOOM ]</span>
                     <span class="btn-subtext">Cost: 50 Joules — Automates wiring</span>
                 </button>
-
                 <div id="panel-warehouse" class="upgrade-card hidden">
                     <div class="upgrade-row">
                         <span class="upgrade-title">WIRE SPOOL RACK</span>
@@ -68,6 +67,9 @@
                     </div>
                     <p id="warehouse-desc" class="upgrade-desc">Expand floor logistics. Permanently increases Wire inventory storage limit by +20 (Max 100).</p>
                     <button id="btn-expand-warehouse" class="build-sub-btn">BUILD INITIAL RACK (+20 CAP)</button>
+                    <div id="warehouse-timer" class="build-timer hidden">
+                        CONSTRUCTING RACKS: <span id="warehouse-time-remaining">5</span>s
+                    </div>
                 </div>
 
 <!-- Overcharge Button suppressed in Stage 0 per Pass A UI cleanup -->
@@ -160,6 +162,12 @@
                     ★ GRID SECURED. EDISON TRUST DEFEATED. ★
                 </div>
 
+                <!-- Stage 0 Departure Morse Intercept Decoding Banner -->
+                <div id="marker-departure-morse-decoding" class="status-banner hidden">
+                    ▸ DEPARTURE MORSE RECEIVER ACTIVE — DECODING... ◂
+                    <div class="morse-animation">— · — · &nbsp; · — · · &nbsp; — — —</div>
+                </div>
+
                 <!-- Step 2: Expedition Transport Crate Panel -->
                 <div id="panel-transport-crate" class="upgrade-card hidden">
                     <div class="upgrade-row">
@@ -187,6 +195,14 @@
                 <div id="banner-logistics-blocked" class="blocked-banner hidden">
                     ⚠ LOGISTICS BLOCKED: WIRE STORAGE WAREHOUSE FULL
                 </div>
+
+            <!-- STAGE 1: POUGHKEEPSIE CONTAINER -->
+                <div id="stage-1-container" class="hidden">
+                    <div class="action-card">
+                        <button id="btn-unpack-crate" class="action-btn primary-btn">UNPACK CRATE</button>
+                    </div>
+                </div>
+
             </div>
         </main>
 

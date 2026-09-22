@@ -336,3 +336,21 @@ body {
     0% { opacity: 0.4; }
     100% { opacity: 1; }
 }
+
+/* --- 11. STAGE 1 CONTAINER LAYOUT --- */
+#stage-1-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+#stage-1-container .action-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#btn-unpack-crate {
+    width: 100%;
+}
